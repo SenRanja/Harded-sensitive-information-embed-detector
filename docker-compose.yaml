@@ -1,0 +1,9 @@
+version: "3"
+services:
+  gitleaks_docker:
+    build: .
+    container_name: gitleaks_http
+    ports:
+      - "8000:8000"
+    restart: always
+    

@@ -1,0 +1,7 @@
+port: 8000
+gitleaks_exe_path: ./gitleaks
+gitleaks_report_file: .gitleaks.json
+TomlRule1: ./config/gitleaks-n-all-kill.toml
+TomlRule2: ./config/gitleaks-all-kill.toml
+exit-code: 0
+save_to_local_path: ./upload/
