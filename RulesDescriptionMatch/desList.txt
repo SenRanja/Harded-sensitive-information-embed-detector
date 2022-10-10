@@ -1,0 +1,147 @@
+global allow lists
+应用凭证--Adafruit API Key
+应用凭证--Adobe Client ID (OAuth Web)
+应用凭证--Adobe Client Secret
+应用凭证--Age secret key
+应用凭证--Airtable API Key
+应用凭证--Algolia API Key
+应用凭证--Alibaba AccessKey ID
+应用凭证--Alibaba Secret Key
+应用凭证--Asana Client ID
+应用凭证--Asana Client Secret
+应用凭证--Atlassian API token
+应用凭证--AWS
+应用凭证--Beamer API token
+应用凭证--Bitbucket Client ID
+应用凭证--Bitbucket Client Secret
+应用凭证--Bittrex Access Key
+应用凭证--Bittrex Secret Key
+应用凭证--Clojars API token
+应用凭证--Codecov Access Token
+应用凭证--Coinbase Access Token
+应用凭证--Confluent Access Token
+应用凭证--Confluent Secret Key
+应用凭证--Contentful delivery API token
+应用凭证--Databricks API token
+应用凭证--Datadog Access Token
+应用凭证--Discord API key
+应用凭证--Discord client ID
+应用凭证--Discord client secret
+应用凭证--Doppler API token
+应用凭证--Droneci Access Token
+应用凭证--Dropbox API secret
+应用凭证--Dropbox long lived API token
+应用凭证--Dropbox short lived API token
+应用凭证--Duffel API token
+应用凭证--Dynatrace API token
+应用凭证--EasyPost API token
+应用凭证--EasyPost test API token
+应用凭证--Etsy Access Token
+应用凭证--Facebook
+应用凭证--Fastly API key
+应用凭证--Finicity API token
+应用凭证--Finicity Client Secret
+应用凭证--Finnhub Access Token
+应用凭证--Flickr Access Token
+应用凭证--Flutterwave Encryption Key
+应用凭证--Finicity Public Key
+应用凭证--Flutterwave Secret Key
+应用凭证--Frame.io API token
+应用凭证--Freshbooks Access Token
+应用凭证--GCP API key
+通用API--Generic API Key
+VCS凭证--GitHub App Token
+VCS凭证--GitHub OAuth Access Token
+VCS凭证--GitHub Personal Access Token
+VCS凭证--GitHub Refresh Token
+VCS凭证--GitLab Personal Access Token
+VCS凭证--Gitter Access Token
+应用凭证--GoCardless API token
+应用凭证--HashiCorp Terraform user/org API token
+应用凭证--Heroku API Key
+应用凭证--HubSpot API Token
+应用凭证--Intercom API Token
+JWT--JSON Web Token
+应用凭证--Kraken Access Token
+应用凭证--Kucoin Access Token
+应用凭证--Kucoin Secret Key
+应用凭证--Launchdarkly Access Token
+应用凭证--Linear API Token
+应用凭证--Linear Client Secret
+应用凭证--LinkedIn Client ID
+应用凭证--LinkedIn Client secret
+应用凭证--Lob API Key
+应用凭证--Lob Publishable API Key
+应用凭证--Mailchimp API key
+应用凭证--Mailgun private API token
+应用凭证--Mailgun public validation key
+webhook--Mailgun webhook signing key
+应用凭证--MapBox API token
+应用凭证--Mattermost Access Token
+应用凭证--MessageBird API token
+应用凭证--MessageBird client ID
+应用凭证--Netlify Access Token
+应用凭证--New Relic ingest browser API token
+应用凭证--New Relic user API ID
+应用凭证--New Relic user API Key
+编程语言凭证--npm access token
+应用凭证--Nytimes Access Token
+应用凭证--Okta Access Token
+应用凭证--Plaid API Token
+应用凭证--Plaid Client ID
+应用凭证--Plaid Secret key
+应用凭证--PlanetScale API token
+应用凭证--PlanetScale OAuth token
+应用凭证--PlanetScale password
+测试阶段API--Postman API token
+证书--Private Key
+编程语言凭证--Pulumi API token
+编程语言凭证--PyPI upload token
+编程语言凭证--RapidAPI Access Token
+编程语言凭证--Rubygem API token
+应用凭证--Sendbird Access ID
+应用凭证--Sendbird Access Token
+应用凭证--SendGrid API token
+应用凭证--Sendinblue API token
+应用凭证--Sentry Access Token
+应用凭证--Shippo API token
+应用凭证--Shopify access token
+应用凭证--Shopify custom access token
+应用凭证--Shopify private app access token
+应用凭证--Shopify shared secret
+应用凭证--Sidekiq Secret
+应用凭证--Sidekiq Sensitive URL
+应用凭证--Slack token
+Webhook--Slack Webhook
+应用凭证--Square Access Token
+应用凭证--Squarespace Access Token
+应用凭证--Stripe
+应用凭证--SumoLogic Access ID
+应用凭证--SumoLogic Access Token
+应用凭证--Travis CI Access Token
+应用凭证--Twilio API Key
+应用凭证--Twitch API token
+应用凭证--Twitter Access Secret
+应用凭证--Twitter Access Token
+应用凭证--Twitter API Key
+应用凭证--Twitter API Secret
+应用凭证--Twitter Bearer Token
+应用凭证--Typeform API token
+应用凭证--Vault Batch Token
+应用凭证--Vault Service Token
+应用凭证--Yandex Access Token
+应用凭证--Yandex API Key
+应用凭证--Yandex AWS Access Token
+应用凭证--Zendesk Secret Key
+应用凭证--Tencent Cloud AccessKey ID
+应用凭证--Huawei Cloud AccessKey ID
+应用凭证--Huawei Cloud Secret Key
+应用凭证--Baidu Cloud AccessKey ID
+应用凭证--JingDong Cloud AccessKey ID
+应用凭证--Ctyun AccessKey ID/Secret
+应用凭证--cmecloud AccessKey ID/Secret
+应用凭证--Tencent Connect Secret
+应用凭证--WeiXin Developer App ID
+应用凭证--WeiXin Developer App Secret
+应用凭证--Qiye WeiXin Developer App ID
+应用凭证--Qiye WeiXin Developer App Secret

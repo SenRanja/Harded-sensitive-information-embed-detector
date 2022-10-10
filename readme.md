@@ -1,30 +1,52 @@
 
-# 去工行干活儿
+# 背景
 
-8.18-8.30在工商银行进行了硬编码的服务
+8.18-8.30 在工商银行进行了硬编码的服务
 
-8.31要求gitleaks进行docker化
+8.31 贝总要求gitleaks进行docker化
 
-2002.9.5基本完毕
+2022.9.5 基本完毕Gitleaks Docker
 
-# 过程
+2022/10/10 依照温海林要求更新下部署文档
 
-## Dockerfile
+# Gitleaks Docker
 
+## 部署
+
+dockerfile经过打包之后，生成的image仅40MB左右。
+
+### 组成部分介绍
+
+程序除了Dockerfile和docker-compose.yaml之外，主要有两部分组成:
+
+* http
+* gitleaks
+
+![](images/mdmd2022-10-10-14-09-06.png)
+
+http主要负责提供web接口；gitleaks为优化过的gitleaks。这两个内容都需要
+
+```shell
+set GOOS=linux
+set GOARCH=amd64
+go build
 ```
-FROM amd64/alpine:3.14
 
-ADD ./GitleaksDir /webscan/
+获得名为`gitleaks`和`http`的二进制文件。如图，有`GitleaksDir`的目录，里面已放入我编译好的二进制文件。
 
-WORKDIR /webscan
+![](images/mdmd2022-10-10-14-15-20.png)
 
-EXPOSE 8000
+其中的`config`目录存放一些基本的配置文件以及规则。
 
-ENTRYPOINT ["/webscan/http"]
-```
+### 如何部署
 
-经过打包之后，生成的image仅23MB左右。
+需要将`Dockerfile`、`docker-compose.yaml`以及`GitleaksDir`目录拖入服务器中即可。
 
+![](images/mdmd2022-10-10-14-17-16.png)
+
+![](images/mdmd2022-10-10-14-18-15.png)
+
+在该目录下运行`docker-compose up -d`命令，就可以启动程序。docker的映射端口可随意更改。
 
 ## 程序工作流程
 
@@ -32,6 +54,7 @@ http在接收参数后，赋值file到本地目录，就向客户端发送一个
 
 调用子进程扫描完项目后，回连SDM的back_url发送json，然后删除本地的项目的临时目录。
 
+docker服务不需要出网，对硬编码的扫描是本地扫描。
 
 ## 源代码
 
@@ -55,9 +78,9 @@ http在接收参数后，赋值file到本地目录，就向客户端发送一个
 
 # TODO
 
-- [ ] 优化toml中的规则命名，使得sdm进行统计时可以区别大类统计与详细统计模式
-- [ ] 异常处理，如果遇到类似sca.zip的这类文件，扫描时长过于长
-
+- [x] 优化toml中的规则命名，使得sdm进行统计时可以区别大类统计与详细统计模式
+- [x] 异常处理，如果遇到类似sca.zip的这类文件，扫描时长过于长
+- [x] 解决git log 扫描问题：发现程序本身使用git扫描，该问题和任鑫之前遗留了较长时间，单纯是因为没有安装git，已解决。
 
 
 
