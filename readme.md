@@ -11,9 +11,18 @@
 
 # 主要目录说明
 
+### Docker相关部分
+
+Dockerfile及docker-compose.yaml 生成Docker使用
 http gitleaksDocker的HTTP服务部分
 gitleaks gitleaksDocker的二进制扫描服务部分
-GitleaksDir 放已经编译好的程序，方便生成docker
+GitleaksDir 放已经编译好的程序以及规则，方便生成docker
+
+### 要求打包凭证检测程序
+
+HardCodeDetectorBuild 2022-11-2要求打包凭证检测程序
+
+### 过度文件
 
 RulesDescriptionMatch 非正式目录，给任鑫提供接口时的过度文件
 
