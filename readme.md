@@ -9,6 +9,16 @@
 
 2022/10/10 依照温海林要求更新下部署文档
 
+# 主要目录说明
+
+http gitleaksDocker的HTTP服务部分
+gitleaks gitleaksDocker的二进制扫描服务部分
+GitleaksDir 放已经编译好的程序，方便生成docker
+
+RulesDescriptionMatch 非正式目录，给任鑫提供接口时的过度文件
+
+
+
 # Gitleaks Docker
 
 ## 部署
