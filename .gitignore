@@ -1,2 +1,5 @@
 gitleaks/upload/
 *.zip
+.idea
+.vscode
+
