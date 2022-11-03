@@ -20,7 +20,7 @@ GitleaksDir 放已经编译好的程序以及规则，方便生成docker
 
 ### 要求打包凭证检测程序
 
-HardCodeDetectorBuild 2022-11-2要求打包凭证检测程序
+SecretDetection 2022-11-2要求打包凭证检测程序
 
 ### 过度文件
 
