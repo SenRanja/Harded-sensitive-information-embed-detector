@@ -1,0 +1,139 @@
+title = "BlingSec Extends"
+
+[extend]
+useDefault = true
+
+# 腾讯云规则
+# https://cloud.tencent.com/developer/article/1385239?from=15425
+[[rules]]
+description = "Tencent Cloud AccessKey ID"
+id = "tencent-cloud-access-key-id"
+regex = '''(?i)\b((AKID)(?i)[a-z0-9]{32})(?:['|\"|\n|\r|\s|\x60]|$)'''
+secretGroup = 1
+keywords = [
+    "akid",
+]
+stopwords= [
+    "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
+]
+
+# 华为云规则
+[[rules]]
+description = "Huawei Cloud AccessKey ID"
+id = "huawei-cloud-access-key-id"
+regex = '''(?i)\b((?i)[a-f0-9]{32})(?:['|\"|\n|\r|\s|\x60]|$)'''
+secretGroup = 1
+keywords = [
+    "huawei",
+]
+
+[[rules]]
+description = "Huawei Cloud Secret Key"
+id = "huawei-cloud-secret-key"
+regex = '''(?i)\b((?i)[a-f0-9]{64})(?:['|\"|\n|\r|\s|\x60]|$)'''
+secretGroup = 1
+keywords = [
+    "huawei",
+]
+
+# 百度云规则
+[[rules]]
+description = "Baidu Cloud AccessKey ID"
+id = "generic-api-key"
+regex = '''(?i)(?:key|api|token|secret|client|passwd|password|auth|access)(?:[0-9a-z\-_\t .]{0,20})(?:[\s|']|[\s|"]){0,3}(?:=|>|:=|\|\|:|<=|=>|:)(?:'|\"|\s|=|\x60){0,5}([0-9a-z\-_.=]{10,150})(?:['|\"|\n|\r|\s|\x60]|$)'''
+secretGroup = 1
+keywords = [
+    "baidu",
+]
+
+# 金山云：AK开头，但样本太少
+# TODO:
+
+
+# 京东云
+# https://docs.jdcloud.com/cn/object-storage-service/sdk-go
+[[rules]]
+description = "JingDong Cloud AccessKey ID"
+id = "jd-cloud-access-key-id"
+regex = '''(?i)\b((?i)[a-f0-9]{32})(?:['|\"|\n|\r|\s|\x60]|$)'''
+secretGroup = 1
+keywords = [
+    "jdcloud",
+]
+
+# 天翼云
+[[rules]]
+description = "Ctyun AccessKey ID/Secret"
+id = "ctyun-access-key-id"
+regex = '''(?i)\b((?i)[a-f0-9]{32})(?:['|\"|\n|\r|\s|\x60]|$)'''
+secretGroup = 1
+keywords = [
+    "ctyun",
+]
+
+# 移动云
+[[rules]]
+description = "cmecloud AccessKey ID/Secret"
+id = "cmecloud-access-key-id"
+regex = '''(?i)\b((?i)[a-f0-9]{32})(?:['|\"|\n|\r|\s|\x60]|$)'''
+secretGroup = 1
+keywords = [
+    "cmecloud",
+]
+
+# 联通云：cucloud.cn
+# TODO:
+
+# 腾讯开发者
+# eg: qMsHsFezmAbBFC5iLFFRW0VmclSfVeym
+[[rules]]
+description = "Tencent Connect Secret"
+id = "tencent-connect-key-id"
+regex = '''(?i)\b((?i)[a-z0-9]{32})(?:['|\"|\n|\r|\s|\x60]|$)'''
+secretGroup = 1
+keywords = [
+    "qq",
+]
+
+# 微信开发者
+# wx541e206dd166434a
+[[rules]]
+description = "WeiXin Developer App ID"
+id = "weixin-developer-app-id"
+regex = '''(?i)\b((wx)(?i)[a-f0-9]{16})(?:['|\"|\n|\r|\s|\x60]|$)'''
+secretGroup = 1
+keywords = [
+    "weixin",
+]
+
+[[rules]]
+description = "WeiXin Developer App Secret"
+id = "weixin-developer-app-secret"
+regex = '''(?i)\b((?i)[a-f0-9]{32})(?:['|\"|\n|\r|\s|\x60]|$)'''
+secretGroup = 1
+keywords = [
+    "weixin",
+]
+
+# 企业微信开发者
+# wwaa6fb8ff1b81
+[[rules]]
+description = "Qiye WeiXin Developer App ID"
+id = "qiye-weixin-developer-app-id"
+regex = '''(?i)\b((ww)(?i)[a-f0-9]{12})(?:['|\"|\n|\r|\s|\x60]|$)'''
+secretGroup = 1
+keywords = [
+    "qyapi",
+    "weixin",
+]
+
+# CxydMDAEscOL7Hqbqphf77rY3HpVsJDu4cizL
+[[rules]]
+description = "Qiye WeiXin Developer App Secret"
+id = "qiye-weixin-developer-app-secret"
+regex = '''(?i)\b((?i)[a-z0-9]{37})(?:['|\"|\n|\r|\s|\x60]|$)'''
+secretGroup = 1
+keywords = [
+    "qyapi",
+    "weixin",
+]

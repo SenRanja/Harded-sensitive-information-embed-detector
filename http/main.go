@@ -1,0 +1,408 @@
+package main
+
+import (
+	"archive/zip"
+	"bytes"
+	"encoding/json"
+	"fmt"
+	"github.com/google/uuid"
+	"github.com/spf13/viper"
+	"http/config"
+	"io"
+	"io/ioutil"
+	"log"
+	"net/http"
+	"os"
+	"os/exec"
+	"path/filepath"
+	"time"
+)
+
+func main() {
+	Viper := InitConfig()
+	port := Viper.GetString("port")
+	fmt.Println("HTTP服务启动，监听端口：" + port)
+	mux := &GitLeaksHttpStruct{}
+	http.ListenAndServe(":"+port, mux)
+}
+
+//新建HTTP的 mux 结构体，用于进行 http.ListenAndServe() 作为第二个参数传入
+type GitLeaksHttpStruct struct {
+}
+
+//用于实现 mux 的ServeHTTP 成员方法
+func (mux *GitLeaksHttpStruct) ServeHTTP(w http.ResponseWriter, r *http.Request) {
+
+	fmt.Println("接收到HTTP连接，来自 " + r.RemoteAddr)
+
+	// 在此处进行手动路由处理
+	switch r.URL.Path {
+	case "/static_zip_scanAction":
+		static_zip_scanAction(w, r)
+		return
+	case "/get_descriptions_0":
+		get_descriptions_0(w, r)
+		return
+	case "/get_descriptions_1":
+		get_descriptions_1(w, r)
+		return
+	default:
+		RootAction(w, r)
+		return
+	}
+}
+
+// 路由: / , 仅响应一串文字
+func RootAction(w http.ResponseWriter, r *http.Request) {
+	body, _ := ioutil.ReadAll(r.Body)
+	ret := r.URL.String() + "\n" + string(body)
+	w.Write([]byte(ret))
+}
+
+// 路由: /git_scan ，接收 post文本传参 的 git clone凭证，用来进行gitclone
+func get_descriptions_0(w http.ResponseWriter, r *http.Request) {
+	resJson, err := config.RuleJson("gitleaks-n-all-kill")
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	w.Header().Set("Content-Type", "application/json")
+	fmt.Fprintf(w, string(resJson))
+}
+
+// 路由: /git_scan ，接收 post文本传参 的 git clone凭证，用来进行gitclone
+func get_descriptions_1(w http.ResponseWriter, r *http.Request) {
+	resJson, err := config.RuleJson("gitleaks-all-kill")
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	w.Header().Set("Content-Type", "application/json")
+	fmt.Fprintf(w, string(resJson))
+
+}
+
+// 路由: /static_zip_scan ，接收 post表单传参 数据
+func static_zip_scanAction(w http.ResponseWriter, r *http.Request) {
+
+	//我这里设置 256MByte，注意，256MByte == (256*8) << 20Mbit
+	//我这里设置 256MByte，注意，2KByte == (2*8) << 10
+	var back_url, scan_mode, ScanSourceMode string
+	r.ParseMultipartForm((1 * 8) << 10)
+	if r.MultipartForm != nil {
+		//这个只能处理 form-data 传参中的文本传参，不能处理文件类型
+		values := r.MultipartForm.Value
+
+		for formName, formValue := range values {
+			for _, value := range formValue {
+				if formName == "back_url" {
+					back_url = value
+					fmt.Println("接收到back_url", back_url)
+				}
+				if formName == "scan_mode" {
+					scan_mode = value
+					fmt.Println("接收到scan_mode", scan_mode)
+				}
+			}
+		}
+	}
+	fmt.Println("接收到参数: " + scan_mode + back_url)
+
+	formFile, header, err := r.FormFile("file")
+	if err != nil {
+		fmt.Print(err)
+	}
+	defer formFile.Close()
+	fmt.Println("正在接收文件")
+
+	// 获取zip的目标路径
+	ZipDestFileDir, err := GenerateZipDestFileDir()
+	if err != nil {
+		fmt.Print(err)
+	}
+
+	// 获取zip的文件路径及名字
+	ZipDestFilePath := fmt.Sprintf("%s/%s", ZipDestFileDir, header.Filename)
+	fmt.Println("接收文件完毕，正在复制至" + ZipDestFilePath)
+
+	// 创建zip的文件目录
+	destFile, err := os.Create(ZipDestFilePath)
+	if err != nil {
+		fmt.Printf("Create failed: %s\n", err.Error())
+	}
+
+	// 用于SDM -> Gitleaks Docker 下发任务后 的响应代码，返回json，成功和失败的json结构体
+	type JsonReceived struct {
+		ReceivedCode int
+		JsonErrDes   string
+	}
+
+	// 将原本的zip文件复制到目标目录 ZipDestFilePath 中
+	_, err = io.Copy(destFile, formFile)
+	if err != nil {
+		fmt.Print(err)
+
+		DetailRec := JsonReceived{0, err.Error()}
+		JSRec, _ := json.Marshal(DetailRec)
+		w.Header().Set("Connection", "close")
+		w.Header().Set("Content-Type", "application/json")
+		w.Write(JSRec)
+
+		return
+	}
+
+	destFile.Close()
+	fmt.Println("复制文件完毕，至 " + ZipDestFilePath)
+
+	go func() {
+		// 此时响应代码断开连接
+
+		DetailRec := JsonReceived{1, "success received"}
+		JSRec, _ := json.Marshal(DetailRec)
+		w.Header().Set("Connection", "close")
+		w.Header().Set("Content-Type", "application/json")
+		//w.Write(JSRec)
+		err = json.NewEncoder(w).Encode(&DetailRec)
+		if err != nil {
+			fmt.Print(err)
+		}
+		fmt.Println("对下发请求HTTP进行响应", string(JSRec))
+	}()
+
+	//进行解压缩
+	_, err = Unzip(ZipDestFilePath, ZipDestFileDir)
+	if err != nil {
+		fmt.Print(err)
+	}
+	fmt.Println("解压完毕 ")
+
+	//	删除zip包
+	err = os.Remove(ZipDestFilePath)
+	if err != nil {
+		fmt.Print(err)
+	}
+	fmt.Println("压缩包删除完毕 ")
+
+	go func() {
+		Viper := InitConfig()
+		GitLeakEXE := Viper.GetString("gitleaks_exe_path")
+		GitLeakReportFile := Viper.GetString("gitleaks_report_file")
+		var TomlRule string
+		TomlRule1 := Viper.GetString("TomlRule1")
+		TomlRule2 := Viper.GetString("TomlRule2")
+		ExitCode := Viper.GetString("exit-code")
+
+		if scan_mode == "0" {
+			TomlRule = TomlRule1
+		} else if scan_mode == "1" {
+			TomlRule = TomlRule2
+		}
+
+		var ErrFlag bool
+		ErrFlag = false
+
+		_, err := os.Stat(filepath.Join(ZipDestFileDir, ".git"))
+		var GitPath string
+		if os.IsNotExist(err) {
+			//fmt.Println("直接目录中没有.git目录")
+			files, _ := ioutil.ReadDir(ZipDestFileDir)
+			if len(files) == 1 {
+				_, err := os.Stat(filepath.Join(ZipDestFileDir, files[0].Name(), ".git"))
+				if err != nil {
+					if os.IsNotExist(err) {
+						GitPath = ""
+					}
+				} else {
+					GitPath = filepath.Join(ZipDestFileDir, files[0].Name())
+				}
+
+			}
+
+		} else {
+			GitPath = ZipDestFileDir
+			//fmt.Println(".git目录位置: ", dstUnzipDir)
+		}
+
+		var no_git string
+		if GitPath == "" {
+			no_git = "--no-git"
+			GitPath = ZipDestFileDir
+		} else {
+			no_git = ""
+		}
+
+	CHANGE_2_NOGIT:
+		fmt.Println("确认扫描目录:", GitPath)
+		fmt.Println("确认输出json文件: ", filepath.Join(ZipDestFileDir, GitLeakReportFile))
+		cmd := exec.Command(GitLeakEXE, "detect", no_git, "-f", "json", "-r", filepath.Join(ZipDestFileDir, GitLeakReportFile), "-v", "-s", GitPath, "-c", TomlRule, "--exit-code", ExitCode)
+		// ./gitleaks detect -f json -r test_tmp.json -v -s -c --exit-code 0
+		var stdout, stderr bytes.Buffer
+		cmd.Stdout = &stdout
+		cmd.Stderr = &stderr
+		fmt.Println("启动命令行扫描")
+		err = cmd.Run()
+
+		outStr, errStr := string(stdout.Bytes()), string(stderr.Bytes())
+
+		fmt.Println("标准输出：")
+		fmt.Println(outStr)
+		fmt.Println("标准输出结束")
+		fmt.Println("错误输出：")
+		fmt.Println(errStr)
+		fmt.Println("错误输出结束")
+
+		if err != nil {
+			log.Fatalf("cmd.Run() failed with %s\n", err)
+		}
+
+		_, err = os.Stat(filepath.Join(ZipDestFileDir, GitLeakReportFile))
+
+		if os.IsNotExist(err) {
+			if no_git == "" && ErrFlag == false {
+				fmt.Println("线上扫码git获取json结果失败，转为 no-git扫描")
+				no_git = "--no-git"
+				goto CHANGE_2_NOGIT
+			}
+			ErrFlag = true
+
+		}
+
+		type JsonErr struct {
+			ErrCode    int
+			JsonErrDes string
+		}
+
+		if ErrFlag {
+			fmt.Println("扫描结果json文件获取失败")
+			DetailErr := fmt.Sprintf("err:%v outStr:%v errStr:%v", err.Error(), outStr, errStr)
+			fmt.Println(DetailErr)
+			jsonErr := JsonErr{1, DetailErr}
+			js, err := json.Marshal(jsonErr)
+			if err != nil {
+				fmt.Print(err)
+			}
+			go ResponseToSDM(js, back_url, ScanSourceMode)
+		} else {
+			fmt.Println("扫描结果json文件获取成功")
+			ResJsonData, err := ioutil.ReadFile(filepath.Join(ZipDestFileDir, ".gitleaks.json"))
+			if err != nil {
+				fmt.Print(err)
+			}
+			go ResponseToSDM(ResJsonData, back_url, ScanSourceMode)
+
+		}
+
+		// 最后删除上传者的目录
+		//os.RemoveAll(ZipDestFileDir)
+		//fmt.Println("压缩包删除完毕")
+	}()
+
+}
+
+func ResponseToSDM(jsonstr []byte, back_url, ScanSourceMode string) {
+	//Viper := InitConfig()
+	//SDM_uri := Viper.GetString("sdm_uri")
+
+	SDM_uri := back_url
+
+	req, err := http.NewRequest("POST", SDM_uri, bytes.NewBuffer(jsonstr))
+
+	if err != nil {
+		fmt.Print(err)
+		return
+	}
+
+	req.Header.Set("Content-Type", "application/json")
+	client := &http.Client{}
+
+	fmt.Println("[#] 回连back_url进行响应", SDM_uri)
+
+	//reqBody, _ := io.ReadAll(req.Body)
+	//fmt.Println(string(reqBody))
+	//fmt.Println(req.)
+
+	resp, err := client.Do(req)
+	if err != nil {
+		fmt.Print(err)
+		return
+	}
+
+	fmt.Println("[#] Header")
+	fmt.Println(resp.Header)
+	b, err := io.ReadAll(resp.Body)
+	fmt.Println("[#] resp Body")
+	fmt.Println(string(b))
+	fmt.Println("[#] resp.Request")
+	fmt.Println(resp.Request)
+
+	defer resp.Body.Close()
+
+}
+
+func Unzip(src, dst string) (string, error) {
+	zr, err := zip.OpenReader(src)
+	defer zr.Close()
+	if err != nil {
+		fmt.Println(err)
+	}
+	flag := false
+	var retDirName string
+	for _, file := range zr.File {
+		path := filepath.Join(dst, file.Name)
+		if flag == false {
+			retDirName = file.Name
+		}
+		flag = true
+
+		// 如果是目录，就创建目录
+		if file.FileInfo().IsDir() {
+			if err := os.MkdirAll(path, file.Mode()); err != nil {
+				fmt.Println(err)
+			}
+			// 因为是目录，跳过当前循环，因为后面都是文件的处理
+			continue
+		}
+
+		// 获取到 Reader
+		fr, err := file.Open()
+		if err != nil {
+			fmt.Println(err)
+		}
+
+		// 创建要写出的文件对应的 Write
+		fw, err := os.OpenFile(path, os.O_CREATE|os.O_RDWR|os.O_TRUNC, file.Mode())
+		if err != nil {
+			fmt.Println(err)
+		}
+
+		io.Copy(fw, fr)
+
+		fw.Close()
+		fr.Close()
+	}
+	return retDirName, nil
+}
+
+func GenerateZipDestFileDir() (string, error) {
+	Viper := InitConfig()
+
+	//时间戳 加 uuid 创建目录名字， 避免gotoutine会把同时上传的zip文件放在相同目录中
+	SandBoxDirName := time.Now().Format("20060102150405") + "-" + uuid.New().String()
+	ZipDestFileDir := Viper.GetString("save_to_local_path") + SandBoxDirName
+	err := os.Mkdir(ZipDestFileDir, os.ModePerm)
+	if err != nil {
+		return "", err
+	}
+	return ZipDestFileDir, nil
+}
+
+func InitConfig() *viper.Viper {
+	config := viper.New()
+	config.AddConfigPath("./config/")
+	config.SetConfigName("local_config")
+	config.SetConfigType("yaml")
+	if err := config.ReadInConfig(); err != nil {
+		panic(err)
+	}
+	return config
+}
