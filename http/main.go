@@ -22,16 +22,16 @@ func main() {
 	Viper := InitConfig()
 	port := Viper.GetString("port")
 	fmt.Println("HTTP服务启动，监听端口：" + port)
-	mux := &GitLeaksHttpStruct{}
+	mux := &SecretDetectionHttpStruct{}
 	http.ListenAndServe(":"+port, mux)
 }
 
 //新建HTTP的 mux 结构体，用于进行 http.ListenAndServe() 作为第二个参数传入
-type GitLeaksHttpStruct struct {
+type SecretDetectionHttpStruct struct {
 }
 
 //用于实现 mux 的ServeHTTP 成员方法
-func (mux *GitLeaksHttpStruct) ServeHTTP(w http.ResponseWriter, r *http.Request) {
+func (mux *SecretDetectionHttpStruct) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 
 	fmt.Println("接收到HTTP连接，来自 " + r.RemoteAddr)
 
@@ -61,7 +61,8 @@ func RootAction(w http.ResponseWriter, r *http.Request) {
 
 // 路由: /git_scan ，接收 post文本传参 的 git clone凭证，用来进行gitclone
 func get_descriptions_0(w http.ResponseWriter, r *http.Request) {
-	resJson, err := config.RuleJson("gitleaks-n-all-kill")
+	data, err := config.Asset("SecretDetection-n-all-kill.toml")
+	resJson, err := config.RuleJson(data)
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -72,7 +73,8 @@ func get_descriptions_0(w http.ResponseWriter, r *http.Request) {
 
 // 路由: /git_scan ，接收 post文本传参 的 git clone凭证，用来进行gitclone
 func get_descriptions_1(w http.ResponseWriter, r *http.Request) {
-	resJson, err := config.RuleJson("gitleaks-all-kill")
+	data, err := config.Asset("SecretDetection-all-kill.toml")
+	resJson, err := config.RuleJson(data)
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -131,7 +133,7 @@ func static_zip_scanAction(w http.ResponseWriter, r *http.Request) {
 		fmt.Printf("Create failed: %s\n", err.Error())
 	}
 
-	// 用于SDM -> Gitleaks Docker 下发任务后 的响应代码，返回json，成功和失败的json结构体
+	// 用于SDM ->  Docker 下发任务后 的响应代码，返回json，成功和失败的json结构体
 	type JsonReceived struct {
 		ReceivedCode int
 		JsonErrDes   string
@@ -185,8 +187,8 @@ func static_zip_scanAction(w http.ResponseWriter, r *http.Request) {
 
 	go func() {
 		Viper := InitConfig()
-		GitLeakEXE := Viper.GetString("gitleaks_exe_path")
-		GitLeakReportFile := Viper.GetString("gitleaks_report_file")
+		SecretDetectionEXE := Viper.GetString("SecretDetection_exe_path")
+		DetectReportFile := Viper.GetString("SecretDetection_report_file")
 		var TomlRule string
 		TomlRule1 := Viper.GetString("TomlRule1")
 		TomlRule2 := Viper.GetString("TomlRule2")
@@ -223,19 +225,10 @@ func static_zip_scanAction(w http.ResponseWriter, r *http.Request) {
 			//fmt.Println(".git目录位置: ", dstUnzipDir)
 		}
 
-		var no_git string
-		if GitPath == "" {
-			no_git = "--no-git"
-			GitPath = ZipDestFileDir
-		} else {
-			no_git = ""
-		}
-
-	CHANGE_2_NOGIT:
 		fmt.Println("确认扫描目录:", GitPath)
-		fmt.Println("确认输出json文件: ", filepath.Join(ZipDestFileDir, GitLeakReportFile))
-		cmd := exec.Command(GitLeakEXE, "detect", no_git, "-f", "json", "-r", filepath.Join(ZipDestFileDir, GitLeakReportFile), "-v", "-s", GitPath, "-c", TomlRule, "--exit-code", ExitCode)
-		// ./gitleaks detect -f json -r test_tmp.json -v -s -c --exit-code 0
+		fmt.Println("确认输出json文件: ", filepath.Join(ZipDestFileDir, DetectReportFile))
+		cmd := exec.Command(SecretDetectionEXE, "detect", "-f", "json", "-r", filepath.Join(ZipDestFileDir, DetectReportFile), "-v", "-s", GitPath, "-c", TomlRule, "--exit-code", ExitCode)
+		// ./SecretDetection detect -f json -r test_tmp.json -v -s -c --exit-code 0
 		var stdout, stderr bytes.Buffer
 		cmd.Stdout = &stdout
 		cmd.Stderr = &stderr
@@ -255,16 +248,10 @@ func static_zip_scanAction(w http.ResponseWriter, r *http.Request) {
 			log.Fatalf("cmd.Run() failed with %s\n", err)
 		}
 
-		_, err = os.Stat(filepath.Join(ZipDestFileDir, GitLeakReportFile))
+		_, err = os.Stat(filepath.Join(ZipDestFileDir, DetectReportFile))
 
 		if os.IsNotExist(err) {
-			if no_git == "" && ErrFlag == false {
-				fmt.Println("线上扫码git获取json结果失败，转为 no-git扫描")
-				no_git = "--no-git"
-				goto CHANGE_2_NOGIT
-			}
-			ErrFlag = true
-
+			fmt.Println("获取json结果失败，未生成结果文件")
 		}
 
 		type JsonErr struct {
@@ -284,7 +271,7 @@ func static_zip_scanAction(w http.ResponseWriter, r *http.Request) {
 			go ResponseToSDM(js, back_url, ScanSourceMode)
 		} else {
 			fmt.Println("扫描结果json文件获取成功")
-			ResJsonData, err := ioutil.ReadFile(filepath.Join(ZipDestFileDir, ".gitleaks.json"))
+			ResJsonData, err := ioutil.ReadFile(filepath.Join(ZipDestFileDir, DetectReportFile))
 			if err != nil {
 				fmt.Print(err)
 			}
@@ -293,8 +280,8 @@ func static_zip_scanAction(w http.ResponseWriter, r *http.Request) {
 		}
 
 		// 最后删除上传者的目录
-		//os.RemoveAll(ZipDestFileDir)
-		//fmt.Println("压缩包删除完毕")
+		os.RemoveAll(ZipDestFileDir)
+		fmt.Println("压缩包删除完毕")
 	}()
 
 }

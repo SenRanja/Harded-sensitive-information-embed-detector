@@ -1,31 +1,33 @@
 
 # 背景
 
-8.18-8.30 在工商银行进行了硬编码的服务
+2022-11-16 开始在docker中隐藏规则文件，全面消除gitleaks标识，移除单独的打包目录项目，移动到本项目中。
 
-8.31 贝总要求gitleaks进行docker化
+SecretDetection 2022-11-2要求打包凭证检测程序
+
+2022/10/10 依照温海林要求更新下部署文档
 
 2022.9.5 基本完毕Gitleaks Docker
 
-2022/10/10 依照温海林要求更新下部署文档
+8.31 贝总要求gitleaks进行docker化
+
+8.18-8.30 在工商银行进行了硬编码的服务
+
 
 # 主要目录说明
 
 ### Docker相关部分
 
 Dockerfile及docker-compose.yaml 生成Docker使用
-http gitleaksDocker的HTTP服务部分
-gitleaks gitleaksDocker的二进制扫描服务部分
-GitleaksDir 放已经编译好的程序以及规则，方便生成docker
-
-### 要求打包凭证检测程序
-
-SecretDetection 2022-11-2要求打包凭证检测程序
+http 是Docker的HTTP服务部分
+SecretDetection 是Docker的二进制扫描服务部分
+SecretDetectionDir 放已经编译好的程序以及规则，方便生成docker
 
 ### 过度文件
 
 RulesDescriptionMatch 非正式目录，给任鑫提供接口时的过度文件
 
+SecretDetectionDriver 用来批量查看不同熵值扫描的影响
 
 
 # Gitleaks Docker

@@ -1,6 +1,7 @@
 package config
 
 import (
+	"bytes"
 	"encoding/json"
 	"fmt"
 	"github.com/spf13/viper"
@@ -97,22 +98,26 @@ type Allowlist struct {
 	StopWords []string
 }
 
-func RuleJson(TomlRuleFilename string) ([]byte, error) {
+func RuleJson(TomlRuleFilename []byte) ([]byte, error) {
 
-	viper.SetConfigName(TomlRuleFilename)
+	//viper.SetConfigName(TomlRuleFilename)
+	//viper.AddConfigPath("./config/")
 	viper.SetConfigType("toml")
-	viper.AddConfigPath("./config/")
-	err := viper.ReadInConfig()
+	//err := viper.ReadInConfig()
+	//if err != nil {
+	//	panic(err.Error())
+	//}
+	//if err := viper.ReadInConfig(); err != nil {
+	//	if _, ok := err.(viper.ConfigFileNotFoundError); ok {
+	//		// Config file not found; ignore error if desired
+	//		fmt.Printf("%s文件没有找到", TomlRuleFilename)
+	//	} else {
+	//		// Config file was found but another error was produced
+	//	}
+	//}
+	err := viper.ReadConfig(bytes.NewBuffer(TomlRuleFilename))
 	if err != nil {
-		panic(err.Error())
-	}
-	if err := viper.ReadInConfig(); err != nil {
-		if _, ok := err.(viper.ConfigFileNotFoundError); ok {
-			// Config file not found; ignore error if desired
-			fmt.Printf("%s文件没有找到", TomlRuleFilename)
-		} else {
-			// Config file was found but another error was produced
-		}
+		fmt.Println("viper读取bindata打包文件失败")
 	}
 	var vc ViperConfig
 	err = viper.Unmarshal(&vc)

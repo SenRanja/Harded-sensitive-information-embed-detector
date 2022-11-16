@@ -1,0 +1,7 @@
+port: 8000
+SecretDetection_exe_path: ./SecretDetection_elf
+SecretDetection_report_file: .SD.json
+TomlRule1: ./config/SecretDetection-n-all-kill.toml
+TomlRule2: ./config/SecretDetection-all-kill.toml
+exit-code: 0
+save_to_local_path: ./upload/
