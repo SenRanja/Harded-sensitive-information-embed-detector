@@ -203,27 +203,37 @@ func static_zip_scanAction(w http.ResponseWriter, r *http.Request) {
 		var ErrFlag bool
 		ErrFlag = false
 
+		fmt.Println("ZipDestFileDir： ", ZipDestFileDir)
+
 		_, err := os.Stat(filepath.Join(ZipDestFileDir, ".git"))
 		var GitPath string
 		if os.IsNotExist(err) {
-			//fmt.Println("直接目录中没有.git目录")
+			fmt.Println("直接目录中没有.git目录，进行二层处理")
 			files, _ := ioutil.ReadDir(ZipDestFileDir)
 			if len(files) == 1 {
 				_, err := os.Stat(filepath.Join(ZipDestFileDir, files[0].Name(), ".git"))
 				if err != nil {
 					if os.IsNotExist(err) {
-						GitPath = ""
+						fmt.Println("直接目录中没有.git目录，二层也没有.git目录")
+						GitPath = ZipDestFileDir
 					}
 				} else {
+					fmt.Println("直接目录中没有.git目录，二层存在.git目录")
 					GitPath = filepath.Join(ZipDestFileDir, files[0].Name())
 				}
 
+			} else {
+				fmt.Println("直接目录中没有.git目录，且二层目录数量不为1，即非.git非压缩多一层目录导致")
+				GitPath = ZipDestFileDir
 			}
 
 		} else {
+			fmt.Println("直接目录存在.git目录")
 			GitPath = ZipDestFileDir
 			//fmt.Println(".git目录位置: ", dstUnzipDir)
 		}
+
+		fmt.Println("-s 扫描路径 GitPath: ", GitPath)
 
 		fmt.Println("确认扫描目录:", GitPath)
 		fmt.Println("确认输出json文件: ", filepath.Join(ZipDestFileDir, DetectReportFile))

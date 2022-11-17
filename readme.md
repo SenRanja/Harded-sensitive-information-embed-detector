@@ -20,7 +20,7 @@ SecretDetection 2022-11-2要求打包凭证检测程序
 
 Dockerfile及docker-compose.yaml 生成Docker使用
 http 是Docker的HTTP服务部分
-SecretDetection 是Docker的二进制扫描服务部分
+SecretDetection 是Docker的二进制扫描服务部分，工具的使用和打包方法请详见该目录下说明文件。
 SecretDetectionDir 放已经编译好的程序以及规则，方便生成docker
 
 ### 过度文件
@@ -41,7 +41,7 @@ dockerfile经过打包之后，生成的image仅40MB左右。
 程序除了Dockerfile和docker-compose.yaml之外，主要有两部分组成:
 
 * http
-* gitleaks
+* SecretDetection
 
 ![](images/mdmd2022-10-10-14-09-06.png)
 
@@ -53,7 +53,7 @@ set GOARCH=amd64
 go build
 ```
 
-获得名为`gitleaks`和`http`的二进制文件。如图，有`GitleaksDir`的目录，里面已放入我编译好的二进制文件。
+获得名为`SecretDetection`和`http`的二进制文件。如图，有`SecretDetectionDir`的目录，里面已放入我编译好的二进制文件。
 
 ![](images/mdmd2022-10-10-14-15-20.png)
 
@@ -61,7 +61,7 @@ go build
 
 ### 如何部署
 
-需要将`Dockerfile`、`docker-compose.yaml`以及`GitleaksDir`目录拖入服务器中即可。
+需要将`Dockerfile`、`docker-compose.yaml`以及`SecretDetectionDir`目录拖入服务器中即可。
 
 ![](images/mdmd2022-10-10-14-17-16.png)
 
@@ -81,7 +81,7 @@ docker服务不需要出网，对硬编码的扫描是本地扫描。
 
 目录 `http` 使用golang的`net/http`写的http服务，命令行调用gitleaks进行工作，大部分配置可以从`config/local_config.yaml`直接进行配置
 
-目录 `gitleaks` 是经过优化后的gitleaks，对其中的线程数、参数等信息进行了更改。
+目录 `SecretDetection` 是经过优化后的SecretDetection，对其中的线程数、参数等信息进行了更改。
 
 `config/gitleaks.toml`没什么用了其实，程序使用的`gitleaks-all-kill.toml`和`gitleaks-n-all-kill.toml`更多一些。`gitleaks-all-kill.toml`中有非常容易导致误报的规则，用来进行疯狂模式的硬编码匹配；`gitleaks-n-all-kill.toml`较为标准一些，误报率低。
 

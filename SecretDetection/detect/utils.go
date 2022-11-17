@@ -44,6 +44,7 @@ func augmentGitFinding(finding report.Finding, textFragment *gitdiff.TextFragmen
 // needed to on average encode the data. So, the higher the entropy, the more random the data, the
 // more bits needed to encode that data.
 // 香农熵计算
+// 此处不区分大小写
 func shannonEntropy(data string) (entropy float64) {
 	if data == "" {
 		return 0
@@ -60,6 +61,17 @@ func shannonEntropy(data string) (entropy float64) {
 		freq := float64(count) * invLength
 		entropy -= freq * math.Log2(freq)
 	}
+
+	//item := fmt.Sprintf("%s\t%d\t%d\t%f\n", data, len(data), len(charCounts), entropy)
+	//filePath := "C:/Users/ranja/Videos/entrophy.txt"
+	//file, err := os.OpenFile(filePath, os.O_APPEND|os.O_CREATE, 0666)
+	//if err != nil {
+	//	fmt.Println("打开文件失败", err)
+	//}
+	//defer file.Close()
+	//write := bufio.NewWriter(file)
+	//write.WriteString(item)
+	//write.Flush()
 
 	return entropy
 }

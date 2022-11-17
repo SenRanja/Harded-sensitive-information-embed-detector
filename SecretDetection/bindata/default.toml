@@ -2667,10 +2667,7 @@ id = "tencent-cloud-access-key-id"
 regex = '''(?i)\b((AKID)(?i)[a-z0-9]{32})(?:['|\"|\n|\r|\s|\x60]|$)'''
 secretGroup = 1
 keywords = [
-    "akid",
-]
-stopwords= [
-    "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
+    "akid", "tencent", "tx"
 ]
 
 # 华为云规则
@@ -2695,8 +2692,8 @@ keywords = [
 # 百度云规则
 [[rules]]
 description = "应用凭证--Baidu Cloud AccessKey ID"
-id = "generic-api-key"
-regex = '''(?i)(?:key|api|token|secret|client|passwd|password|auth|access)(?:[0-9a-z\-_\t .]{0,20})(?:[\s|']|[\s|"]){0,3}(?:=|>|:=|\|\|:|<=|=>|:)(?:'|\"|\s|=|\x60){0,5}([0-9a-z\-_.=]{10,150})(?:['|\"|\n|\r|\s|\x60]|$)'''
+id = "generic-baidu-api"
+regex = '''(?i)(?:key|api|token|secret|client|passwd|password|auth|access)((?i)[0-9a-z\-_\t .]{18,20})(?:[\s|']|[\s|"]){0,3}(?:=|>|:=|\|\|:|<=|=>|:)(?:'|\"|\s|=|\x60){0,5}([0-9a-z\-_.=]{10,150})(?:['|\"|\n|\r|\s|\x60]|$)'''
 secretGroup = 1
 keywords = [
     "baidu",
@@ -2748,7 +2745,7 @@ id = "tencent-connect-key-id"
 regex = '''(?i)\b((?i)[a-z0-9]{32})(?:['|\"|\n|\r|\s|\x60]|$)'''
 secretGroup = 1
 keywords = [
-    "qq",
+    "qq", "Tencent",
 ]
 
 # 微信开发者
@@ -2759,7 +2756,7 @@ id = "weixin-developer-app-id"
 regex = '''(?i)\b((wx)(?i)[a-f0-9]{16})(?:['|\"|\n|\r|\s|\x60]|$)'''
 secretGroup = 1
 keywords = [
-    "weixin",
+    "weixin", "wx",
 ]
 
 [[rules]]
@@ -2768,7 +2765,7 @@ id = "weixin-developer-app-secret"
 regex = '''(?i)\b((?i)[a-f0-9]{32})(?:['|\"|\n|\r|\s|\x60]|$)'''
 secretGroup = 1
 keywords = [
-    "weixin",
+    "weixin", "wx", "qy",
 ]
 
 # 企业微信开发者
@@ -2781,6 +2778,8 @@ secretGroup = 1
 keywords = [
     "qyapi",
     "weixin",
+    "wx",
+    "qy",
 ]
 
 
@@ -2792,6 +2791,8 @@ secretGroup = 1
 keywords = [
     "qyapi",
     "weixin",
+    "wx",
+    "qy",
 ]
 
 
