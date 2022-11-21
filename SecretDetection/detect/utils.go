@@ -5,8 +5,10 @@ import (
 	"crypto/sha1"
 	"encoding/json"
 	"fmt"
+	regexp "github.com/dlclark/regexp2"
 	"github.com/gitleaks/go-gitdiff/gitdiff"
 	"github.com/rs/zerolog/log"
+	"io/ioutil"
 	"math"
 	"strings"
 )
@@ -123,4 +125,112 @@ func containsDigit(s string) bool {
 
 	}
 	return false
+}
+
+func UpAndDownRate(s string) float32 {
+	if len(s) <= 2 {
+		panic(fmt.Errorf("升降值计算，字符过少"))
+	}
+	var charList []rune
+	var UpOrDown uint8
+	// UpOrDown 向上为 1 ，向下为 0
+
+	InterruptNum := 0
+	for _, singleChar := range s {
+		charList = append(charList, rune(singleChar))
+	}
+	for index, _ := range s {
+		if index == 0 {
+			continue
+		} else {
+			if charList[index] > charList[index-1] {
+				if UpOrDown != 1 {
+					UpOrDown = 1
+					InterruptNum += 1
+				}
+			} else if charList[index] < charList[index-1] {
+				if UpOrDown != 0 {
+					UpOrDown = 0
+					InterruptNum += 1
+				}
+			}
+		}
+	}
+	return float32(InterruptNum) / float32(len(s))
+}
+
+func Split2WordList(s string) float32 {
+	if len(s) <= 2 {
+		panic(fmt.Errorf("单词识别率计算，字符过少"))
+	}
+
+	//将含有>=3的数字个数直接认为是密钥
+	reg_digitNum, err := regexp.Compile(`\d`, 0)
+	if err != nil {
+		panic(fmt.Errorf("正则表达式编译出现错误"))
+	}
+	if len(regexp2FindAllString(reg_digitNum, s)) >= 3 {
+		return 0
+	}
+
+	var wordListTotal []string
+
+	lowAlphaMatchList := regexp2FindAllString(lowAlphaMatchRegexp, s)
+	wordListTotal = append(wordListTotal, lowAlphaMatchList...)
+	allCaptainAlphaMatchList := regexp2FindAllString(allCaptainAlphaMatchRegexp, s)
+	wordListTotal = append(wordListTotal, allCaptainAlphaMatchList...)
+
+	if len(wordListTotal) == 0 {
+		return 0
+	}
+
+	var HumanbeingCanReadWordsNum = 0
+	for _, single := range wordListTotal {
+		if strings.Contains(wordListText, strings.ToLower(single)) {
+			HumanbeingCanReadWordsNum++
+		} else {
+			if len(single) >= 8 {
+				if strings.Contains(wordListText, strings.ToLower(single[:len(single)-4])) {
+					HumanbeingCanReadWordsNum++
+				}
+			}
+		}
+	}
+
+	return float32(HumanbeingCanReadWordsNum) / float32(len(wordListTotal))
+}
+
+var lowAlphaMatchRegexp, allCaptainAlphaMatchRegexp *regexp.Regexp
+var err error
+
+var wordListText string
+
+func init() {
+	lowAlphaMatchRegexp, err = regexp.Compile(`([A-Z][a-z]+|[a-z]+)(?=\b|\d|[A-Z\-_]|[\-_\.])`, 0)
+	if err != nil {
+		panic(fmt.Errorf("正则表达式编译出现错误"))
+	}
+
+	allCaptainAlphaMatchRegexp, err = regexp.Compile(`[A-Z]{2,}(?=\b|\d|[A-Z\-_][a-zA-Z\-_]|[\-_\.])`, 0)
+	if err != nil {
+		panic(fmt.Errorf("正则表达式编译出现错误"))
+	}
+
+	var wordFilePath = "E:/BiLing/20220905-gitleaks-Docker/SecretDetection/bindata/american-english"
+	wordListTextBytes, err := ioutil.ReadFile(wordFilePath)
+	if err != nil {
+		fmt.Println("单词本文件读取失败")
+	}
+	wordListText = strings.ToLower(string(wordListTextBytes))
+
+}
+
+func regexp2FindAllString(re *regexp.Regexp, s string) []string {
+	var matches []string
+	m, _ := re.FindStringMatch(s)
+	for m != nil {
+		matches = append(matches, m.String())
+		m, _ = re.FindNextMatch(m)
+	}
+	return matches
 }

@@ -240,37 +240,25 @@ func (d *Detector) detectRule(fragment Fragment, rule config.Rule) []report.Find
 				continue
 			}
 
-			if strings.HasPrefix(rule.RuleID, "generic") {
-				// 这里包含数字才会认为是匹配到的东西
-				if !containsDigit(secret) {
-					continue
-				}
-			}
+			UpDownRate := UpAndDownRate(finding.Secret)
+			WordsRate := Split2WordList(finding.Secret)
+			fmt.Println("[secret]", finding.Secret)
+			fmt.Println("[升降值]", UpDownRate)
+			fmt.Println("[单词识别率]", WordsRate)
+
+			//if strings.HasPrefix(rule.RuleID, "generic") {
+
+			//	// 这里包含数字才会认为是匹配到的东西，我感觉不太科学，故注释
+			//	if !containsDigit(secret) {
+			//		continue
+			//	}
+			//}
 
 		}
 		findings = append(findings, finding)
 	}
 	return findings
 }
-
-//var wordListText string
-//
-//func init() {
-//	var wordFilePath = "E:/BiLing/20220905-gitleaks-Docker/SecretDetection/bindata/american-english"
-//	wordListTextBytes, err := ioutil.ReadFile(wordFilePath)
-//	if err != nil {
-//		fmt.Println("单词本文件读取失败")
-//	}
-//	wordListText = string(wordListTextBytes)
-//	//split2words("")
-//}
-
-//func split2words(secret string) bool {
-//	regexp.Match(pat, []byte(searchIn))
-//	//if strings.Contains(wordListText, ) {
-//	//	continue
-//	//}
-//}
 
 // GitScan accepts a *gitdiff.File channel which contents a git history generated from
 // the output of `git log -p ...`. startGitScan will look at each file (patch) in the history

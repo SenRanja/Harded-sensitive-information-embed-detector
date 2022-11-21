@@ -3,9 +3,9 @@ module SecretDetection
 go 1.17
 
 require (
+	github.com/dlclark/regexp2 v1.7.0
 	github.com/fatih/semgroup v1.2.0
 	github.com/gitleaks/go-gitdiff v0.7.6
-	github.com/google/uuid v1.1.2
 	github.com/rs/zerolog v1.26.1
 	github.com/spf13/cobra v1.2.1
 	github.com/spf13/viper v1.8.1
