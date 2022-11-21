@@ -242,17 +242,20 @@ func (d *Detector) detectRule(fragment Fragment, rule config.Rule) []report.Find
 
 			UpDownRate := UpAndDownRate(finding.Secret)
 			WordsRate := Split2WordList(finding.Secret)
-			fmt.Println("[secret]", finding.Secret)
-			fmt.Println("[升降值]", UpDownRate)
-			fmt.Println("[单词识别率]", WordsRate)
+			//fmt.Println("[secret]", finding.Secret)
+			//fmt.Println("[升降值]", UpDownRate)
+			//fmt.Println("[单词识别率]", WordsRate)
 
-			//if strings.HasPrefix(rule.RuleID, "generic") {
+			if strings.HasPrefix(rule.RuleID, "generic") {
 
-			//	// 这里包含数字才会认为是匹配到的东西，我感觉不太科学，故注释
-			//	if !containsDigit(secret) {
-			//		continue
-			//	}
-			//}
+				// 这里包含数字才会认为是匹配到的东西，我感觉不太科学，故注释
+				//if !containsDigit(secret) {
+				//	continue
+				//}
+				if UpDownRate <= 0.4 || WordsRate >= 0.34 {
+					continue
+				}
+			}
 
 		}
 		findings = append(findings, finding)
