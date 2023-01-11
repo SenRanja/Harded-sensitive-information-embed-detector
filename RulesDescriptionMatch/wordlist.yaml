@@ -1,5 +1,6 @@
 secretList:
    - 12345678-ABCD-ABCD-ABCD-1234567890AB
+#   - 12345678-ABCD-ABCD-ABCD-1234567890AB
 #  - abcdefghijklmnopqrstuvwxyz
 #  - dangerouslyReplaceNodeWithMarkupByID
 #  - 0123456789abcdefABCDEF

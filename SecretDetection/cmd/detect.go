@@ -78,15 +78,16 @@ func runDetect(cmd *cobra.Command, args []string) {
 	}
 
 	var noGit bool
-	noGit = false
 	_, err = os.Stat(filepath.Join(source, ".git"))
 	if os.IsNotExist(err) {
 		noGit = true
 	}
 
+	noGit, _ = cmd.Flags().GetBool("no-git")
+
 	// start the detector scan
 	if noGit {
-		fmt.Println("[#] 检测到环境非git仓库目录，开始检测。")
+		fmt.Println("[#] 检测扫描模式为no-git")
 		findings, err = detector.DetectFiles(source)
 		if err != nil {
 			// don't exit on error, just log it

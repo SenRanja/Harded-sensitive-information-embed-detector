@@ -240,19 +240,19 @@ func (d *Detector) detectRule(fragment Fragment, rule config.Rule) []report.Find
 				continue
 			}
 
-			UpDownRate := UpAndDownRate(finding.Secret)
-			WordsRate := Split2WordList(finding.Secret)
-			//fmt.Println("[secret]", finding.Secret)
-			//fmt.Println("[升降值]", UpDownRate)
-			//fmt.Println("[单词识别率]", WordsRate)
-
 			if strings.HasPrefix(rule.RuleID, "generic") {
 
 				// 这里包含数字才会认为是匹配到的东西，我感觉不太科学，故注释
 				//if !containsDigit(secret) {
 				//	continue
 				//}
-				if UpDownRate <= 0.4 || WordsRate >= 0.34 {
+				UpDownRate := UpAndDownRate(finding.Secret)
+				WordsRate := Split2WordList(finding.Secret)
+				//fmt.Println("[S]", finding.Secret)
+				//fmt.Println("UpDown", UpDownRate)
+				//fmt.Println("WordsRate", WordsRate)
+
+				if UpDownRate <= 0.4 || WordsRate >= 0.32 {
 					continue
 				}
 			}
@@ -362,6 +362,7 @@ func (d *Detector) DetectFiles(source string) ([]report.Finding, error) {
 				//下面进行文件名正则匹配和文件大小的选择性不检测，避免卡死
 				// 比如，大于2MB的文件选择不扫描
 				if fInfo.Mode().IsRegular() && !TargetFileNameExp.MatchString(fInfo.Name()) && fInfo.Size() < 4*1024*1024 {
+
 					paths <- path
 				}
 				return nil
@@ -385,9 +386,12 @@ func (d *Detector) DetectFiles(source string) ([]report.Finding, error) {
 				return nil // skip binary files
 			}
 
+			relativePath, _ := filepath.Rel(source, p)
+			relativePath = filepath.ToSlash(relativePath)
+
 			fragment := Fragment{
 				Raw:      string(b),
-				FilePath: p,
+				FilePath: relativePath,
 			}
 			for _, finding := range d.Detect(fragment) {
 				// need to add 1 since line counting starts at 1

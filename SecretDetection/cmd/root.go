@@ -44,6 +44,7 @@ func init() {
 	rootCmd.PersistentFlags().StringP("log-level", "l", "info", "日志等级 (trace, debug, info, warn, error, fatal)")
 	rootCmd.PersistentFlags().BoolP("verbose", "v", true, "详情")
 	rootCmd.PersistentFlags().Bool("redact", false, "--redact 遮挡输出的凭证信息")
+	rootCmd.PersistentFlags().Bool("no-git", false, "--no-git 是否静态扫描")
 	err := viper.BindPFlag("config", rootCmd.PersistentFlags().Lookup("config"))
 	if err != nil {
 		log.Fatal().Msgf("err binding config %s", err.Error())

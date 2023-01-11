@@ -22,7 +22,7 @@ def execTarget(q, entrophy, entrophyResultDir):
             cwd=entrophyResultDir,
         )
         try:
-            scanSecretExec.wait(60*4)
+            scanSecretExec.wait(60*5)
             # outs, errs = scanSecretExec.communicate(timeout=2)
             # print(outs, errs)
         except Exception as err:
@@ -47,7 +47,7 @@ if __name__ == "__main__":
     for i in targetPaths['gitpaths']:
         q.put(i)
 
-    pool_num = 8
+    pool_num = 3
     pool = Pool(pool_num)
     mp_list = []
     for i in range(pool_num):

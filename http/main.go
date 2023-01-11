@@ -185,66 +185,154 @@ func static_zip_scanAction(w http.ResponseWriter, r *http.Request) {
 	}
 	fmt.Println("压缩包删除完毕 ")
 
-	go func() {
-		Viper := InitConfig()
-		SecretDetectionEXE := Viper.GetString("SecretDetection_exe_path")
-		DetectReportFile := Viper.GetString("SecretDetection_report_file")
-		var TomlRule string
-		TomlRule1 := Viper.GetString("TomlRule1")
-		TomlRule2 := Viper.GetString("TomlRule2")
-		ExitCode := Viper.GetString("exit-code")
+	Viper := InitConfig()
+	SecretDetectionEXE := Viper.GetString("SecretDetection_exe_path")
+	DetectReportFile := Viper.GetString("SecretDetection_report_file")
+	var TomlRule string
+	TomlRule1 := Viper.GetString("TomlRule1")
+	TomlRule2 := Viper.GetString("TomlRule2")
+	ExitCode := Viper.GetString("exit-code")
 
-		if scan_mode == "0" {
-			TomlRule = TomlRule1
-		} else if scan_mode == "1" {
-			TomlRule = TomlRule2
-		}
+	if scan_mode == "0" {
+		TomlRule = TomlRule1
+	} else if scan_mode == "1" {
+		TomlRule = TomlRule2
+	}
 
-		var ErrFlag bool
-		ErrFlag = false
+	var ErrFlag bool
+	ErrFlag = false
 
-		fmt.Println("ZipDestFileDir： ", ZipDestFileDir)
+	fmt.Println("ZipDestFileDir： ", ZipDestFileDir)
 
-		_, err := os.Stat(filepath.Join(ZipDestFileDir, ".git"))
-		var GitPath string
-		if os.IsNotExist(err) {
-			fmt.Println("直接目录中没有.git目录，进行二层处理")
-			files, _ := ioutil.ReadDir(ZipDestFileDir)
-			if len(files) == 1 {
-				_, err := os.Stat(filepath.Join(ZipDestFileDir, files[0].Name(), ".git"))
-				if err != nil {
-					if os.IsNotExist(err) {
-						fmt.Println("直接目录中没有.git目录，二层也没有.git目录")
-						GitPath = ZipDestFileDir
-					}
-				} else {
-					fmt.Println("直接目录中没有.git目录，二层存在.git目录")
-					GitPath = filepath.Join(ZipDestFileDir, files[0].Name())
+	// 这里需要看压缩包解压后，是不是把所有文件又放在新建的文件夹的顶级目录
+	// 因为对一个目录压缩后，再进行解压，会有两种情况（无法从其他特征判断）：
+	// 1. 解压后一堆文件就在当前目录
+	// 2. 解压后，进一下解压时的新建目录，才会看到一堆文件
+	// 这里根据解压情况调整 GitPath
+	// 如果有.git，那么GitPath就在.git目录
+	// 如果没有.git，那么GitPath
+	var gitExistBool bool
+	_, err = os.Stat(filepath.Join(ZipDestFileDir, ".git"))
+	var GitPath string
+	if os.IsNotExist(err) {
+		fmt.Println("直接目录中没有.git目录，进行二层处理")
+		files, _ := ioutil.ReadDir(ZipDestFileDir)
+		if len(files) == 1 {
+			_, err := os.Stat(filepath.Join(ZipDestFileDir, files[0].Name(), ".git"))
+			if err != nil {
+				if os.IsNotExist(err) {
+					gitExistBool = false
+					fmt.Println("直接目录中没有.git目录，二层也没有.git目录")
+					GitPath = ZipDestFileDir
 				}
-
 			} else {
-				fmt.Println("直接目录中没有.git目录，且二层目录数量不为1，即非.git非压缩多一层目录导致")
-				GitPath = ZipDestFileDir
+				gitExistBool = true
+				fmt.Println("直接目录中没有.git目录，二层存在.git目录")
+				GitPath = filepath.Join(ZipDestFileDir, files[0].Name())
 			}
 
 		} else {
-			fmt.Println("直接目录存在.git目录")
+			gitExistBool = false
+			fmt.Println("非打包.git的压缩包，进行--no-git扫描。直接目录中没有.git目录，且二层目录数量不为1，即非.git非压缩多一层目录导致")
 			GitPath = ZipDestFileDir
-			//fmt.Println(".git目录位置: ", dstUnzipDir)
+		}
+	} else {
+		gitExistBool = true
+		fmt.Println("直接目录存在.git目录")
+		GitPath = ZipDestFileDir
+		//fmt.Println(".git目录位置: ", dstUnzipDir)
+	}
+	// 【GitPath】 判断完毕
+
+	fmt.Println("确认 -s 扫描路径 GitPath: ", GitPath)
+	fmt.Println("确认扫描目录:", GitPath)
+	fmt.Println("确认输出json文件: ", filepath.Join(ZipDestFileDir, DetectReportFile))
+	if gitExistBool == true {
+		fmt.Println("检测到 .git 目录")
+	} else {
+		fmt.Println("未检测到 .git 目录")
+	}
+
+	if gitExistBool == true {
+		// 【进行 no-git 扫描】
+		fmt.Println("【再进行 no-git 扫描】")
+		SDNogitJsonFilePath := filepath.Join(ZipDestFileDir, ".SDNogit.json")
+		cmdNoGit := exec.Command(SecretDetectionEXE, "detect", "--no-git", "-f", "json", "-r", SDNogitJsonFilePath, "-v", "-s", GitPath, "-c", TomlRule, "--exit-code", ExitCode)
+		var stdoutNoGit, stderrNoGit bytes.Buffer
+		cmdNoGit.Stdout = &stdoutNoGit
+		cmdNoGit.Stderr = &stderrNoGit
+		fmt.Println("启动命令行扫描")
+		err = cmdNoGit.Run()
+		outStrNoGit, errStrNoGit := string(stdoutNoGit.Bytes()), string(stderrNoGit.Bytes())
+		fmt.Println("错误输出：")
+		fmt.Println(errStrNoGit)
+		fmt.Println("错误输出结束")
+		fmt.Println("标准输出：")
+		fmt.Println(outStrNoGit)
+		fmt.Println("标准输出结束")
+
+		_, err = os.Stat(filepath.Join(ZipDestFileDir, ".SDNogit.json"))
+		if os.IsNotExist(err) {
+			fmt.Println("未获取no-git扫描结果文件 .SDNogit.json")
 		}
 
-		fmt.Println("-s 扫描路径 GitPath: ", GitPath)
+		// 【进行 git log 扫描】
+		fmt.Println("【先进行 git log 扫描】")
+		SDgitJsonFilePath := filepath.Join(ZipDestFileDir, ".SDgit.json")
+		cmdGit := exec.Command(SecretDetectionEXE, "detect", "-f", "json", "-r", SDgitJsonFilePath, "-v", "-s", GitPath, "-c", TomlRule, "--exit-code", ExitCode)
+		var stdoutGit, stderrGit bytes.Buffer
+		cmdGit.Stdout = &stdoutGit
+		cmdGit.Stderr = &stderrGit
+		fmt.Println("启动命令行扫描")
+		err = cmdGit.Run()
+		outStrGit, errStrGit := string(stdoutGit.Bytes()), string(stderrGit.Bytes())
+		fmt.Println("错误输出：")
+		fmt.Println(errStrGit)
+		fmt.Println("错误输出结束")
+		fmt.Println("标准输出：")
+		fmt.Println(outStrGit)
+		fmt.Println("标准输出结束")
 
-		fmt.Println("确认扫描目录:", GitPath)
-		fmt.Println("确认输出json文件: ", filepath.Join(ZipDestFileDir, DetectReportFile))
-		cmd := exec.Command(SecretDetectionEXE, "detect", "-f", "json", "-r", filepath.Join(ZipDestFileDir, DetectReportFile), "-v", "-s", GitPath, "-c", TomlRule, "--exit-code", ExitCode)
+		_, err = os.Stat(filepath.Join(ZipDestFileDir, ".SDgit.json"))
+		if os.IsNotExist(err) {
+			fmt.Println("未获取git扫描结果文件 .SDgit.json")
+		}
+
+		// ultimateJson就是经过处理后的最终结果
+		var resGitJson, resNoGitJson, ultimateJson resjson
+		resGitJsonFile, _ := ioutil.ReadFile(SDgitJsonFilePath)
+		json.Unmarshal(resGitJsonFile, &resGitJson)
+		resNoGitJsonFile, _ := ioutil.ReadFile(SDNogitJsonFilePath)
+		json.Unmarshal(resNoGitJsonFile, &resNoGitJson)
+
+		// 进行贝总遍历
+		ultimateJson.ScanSourceMode = "GitScan"
+		for _, singleNoGitFinding := range resNoGitJson.Res {
+			for _, singleGitFinding := range resGitJson.Res {
+				if singleNoGitFinding.File == singleGitFinding.File && singleNoGitFinding.Secret == singleGitFinding.Secret && singleNoGitFinding.StartLine == singleGitFinding.StartLine {
+					ultimateJson.Res = append(ultimateJson.Res, singleGitFinding)
+					break
+				}
+			}
+		}
+
+		fmt.Println("\n\n【最终json数据】", ultimateJson)
+		fmt.Println("\n\n【最终json数量】", len(ultimateJson.Res))
+		ultimateJsonFile, _ := os.OpenFile(filepath.Join(ZipDestFileDir, DetectReportFile), os.O_RDWR|os.O_CREATE, 0755)
+		defer ultimateJsonFile.Close()
+		ultimateJsonByte, _ := json.Marshal(ultimateJson)
+		_, err = ultimateJsonFile.Write(ultimateJsonByte)
+
+	} else if gitExistBool == false {
+		//	进行 无.git 的扫描检测
+		fmt.Println("【no-git 扫描】")
+		cmd := exec.Command(SecretDetectionEXE, "detect", "--no-git", "-f", "json", "-r", filepath.Join(ZipDestFileDir, DetectReportFile), "-v", "-s", GitPath, "-c", TomlRule, "--exit-code", ExitCode)
 		// ./SecretDetection detect -f json -r test_tmp.json -v -s -c --exit-code 0
 		var stdout, stderr bytes.Buffer
 		cmd.Stdout = &stdout
 		cmd.Stderr = &stderr
 		fmt.Println("启动命令行扫描")
 		err = cmd.Run()
-
 		outStr, errStr := string(stdout.Bytes()), string(stderr.Bytes())
 
 		fmt.Println("标准输出：")
@@ -257,42 +345,42 @@ func static_zip_scanAction(w http.ResponseWriter, r *http.Request) {
 		if err != nil {
 			log.Fatalf("cmd.Run() failed with %s\n", err)
 		}
+	}
 
-		_, err = os.Stat(filepath.Join(ZipDestFileDir, DetectReportFile))
+	_, err = os.Stat(filepath.Join(ZipDestFileDir, DetectReportFile))
 
-		if os.IsNotExist(err) {
-			fmt.Println("获取json结果失败，未生成结果文件")
+	if os.IsNotExist(err) {
+		fmt.Println("获取json结果失败，未生成结果文件")
+	}
+
+	type JsonErr struct {
+		ErrCode    int
+		JsonErrDes string
+	}
+
+	if ErrFlag {
+		fmt.Println("扫描结果json文件获取失败")
+		DetailErr := fmt.Sprintf("%v", "扫描结果json文件获取失败")
+		fmt.Println(DetailErr)
+		jsonErr := JsonErr{1, DetailErr}
+		js, err := json.Marshal(jsonErr)
+		if err != nil {
+			fmt.Print(err)
 		}
-
-		type JsonErr struct {
-			ErrCode    int
-			JsonErrDes string
+		go ResponseToSDM(js, back_url, ScanSourceMode)
+	} else {
+		fmt.Println("扫描结果json文件获取成功")
+		ResJsonData, err := ioutil.ReadFile(filepath.Join(ZipDestFileDir, DetectReportFile))
+		if err != nil {
+			fmt.Print(err)
 		}
+		go ResponseToSDM(ResJsonData, back_url, ScanSourceMode)
 
-		if ErrFlag {
-			fmt.Println("扫描结果json文件获取失败")
-			DetailErr := fmt.Sprintf("err:%v outStr:%v errStr:%v", err.Error(), outStr, errStr)
-			fmt.Println(DetailErr)
-			jsonErr := JsonErr{1, DetailErr}
-			js, err := json.Marshal(jsonErr)
-			if err != nil {
-				fmt.Print(err)
-			}
-			go ResponseToSDM(js, back_url, ScanSourceMode)
-		} else {
-			fmt.Println("扫描结果json文件获取成功")
-			ResJsonData, err := ioutil.ReadFile(filepath.Join(ZipDestFileDir, DetectReportFile))
-			if err != nil {
-				fmt.Print(err)
-			}
-			go ResponseToSDM(ResJsonData, back_url, ScanSourceMode)
+	}
 
-		}
-
-		// 最后删除上传者的目录
-		os.RemoveAll(ZipDestFileDir)
-		fmt.Println("压缩包删除完毕")
-	}()
+	// 最后删除上传者的目录
+	os.RemoveAll(ZipDestFileDir)
+	fmt.Println("压缩包删除完毕")
 
 }
 

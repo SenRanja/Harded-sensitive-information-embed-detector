@@ -23,8 +23,8 @@ func GitLog(source string, logOpts string) (<-chan *gitdiff.File, error) {
 		args = append(args, strings.Split(logOpts, " ")...)
 		cmd = exec.Command("git", args...)
 	} else {
-		cmd = exec.Command("git", "-C", sourceClean, "log", "-p", "-U0",
-			"--full-history", "--all")
+		cmd = exec.Command("git", "-C", sourceClean, "log", "-p", "-U0", "--full-history", "--all")
+		//cmd = exec.Command("git", "-C", sourceClean, "log", "-p", "-1", "-U0", "--full-history", "--all")
 	}
 
 	log.Debug().Msgf("executing: %s", cmd.String())
@@ -40,6 +40,20 @@ func GitLog(source string, logOpts string) (<-chan *gitdiff.File, error) {
 	if err := cmd.Start(); err != nil {
 		return nil, err
 	}
+	//stdout_data, _ := ioutil.ReadAll(stdout)
+	//stderr_data, _ := ioutil.ReadAll(stderr)
+	//stdout_filePath := "E:\\BiLing\\20220905-gitleaks-Docker\\SecretDetection\\stdout.txt"
+	//stderr_filePath := "E:\\BiLing\\20220905-gitleaks-Docker\\SecretDetection\\stderr.txt"
+	//stdout_file, err := os.OpenFile(stdout_filePath, os.O_WRONLY|os.O_CREATE, 0666)
+	//stderr_file, err := os.OpenFile(stderr_filePath, os.O_WRONLY|os.O_CREATE, 0666)
+	//defer stdout_file.Close()
+	//defer stderr_file.Close()
+	//
+	//fileWriter := bufio.NewWriter(stdout_file)
+	//fileWriter.Write(stdout_data)
+	//
+	//fileWriter = bufio.NewWriter(stderr_file)
+	//fileWriter.Write(stderr_data)
 
 	go listenForStdErr(stderr)
 	time.Sleep(50 * time.Millisecond)

@@ -1,6 +1,7 @@
 package detect
 
 import (
+	"SecretDetection/bindata"
 	"SecretDetection/report"
 	"crypto/sha1"
 	"encoding/json"
@@ -8,7 +9,6 @@ import (
 	regexp "github.com/dlclark/regexp2"
 	"github.com/gitleaks/go-gitdiff/gitdiff"
 	"github.com/rs/zerolog/log"
-	"io/ioutil"
 	"math"
 	"strings"
 )
@@ -169,7 +169,9 @@ func Split2WordList(s string) float32 {
 	if err != nil {
 		panic(fmt.Errorf("正则表达式编译出现错误"))
 	}
-	if len(regexp2FindAllString(reg_digitNum, s)) >= 3 {
+
+	//数字的数量 -> 认为识别率为0
+	if len(regexp2FindAllString(reg_digitNum, s)) >= 5 {
 		return 0
 	}
 
@@ -179,6 +181,9 @@ func Split2WordList(s string) float32 {
 	wordListTotal = append(wordListTotal, lowAlphaMatchList...)
 	allCaptainAlphaMatchList := regexp2FindAllString(allCaptainAlphaMatchRegexp, s)
 	wordListTotal = append(wordListTotal, allCaptainAlphaMatchList...)
+	if len(wordListTotal) >= 6 {
+		return 0
+	}
 
 	if len(wordListTotal) == 0 {
 		return 0
@@ -194,6 +199,12 @@ func Split2WordList(s string) float32 {
 					HumanbeingCanReadWordsNum++
 				}
 			}
+		}
+	}
+
+	if strings.Count(s, "_") >= 3 {
+		if HumanbeingCanReadWordsNum >= 2 {
+			return 1
 		}
 	}
 
@@ -216,8 +227,10 @@ func init() {
 		panic(fmt.Errorf("正则表达式编译出现错误"))
 	}
 
-	var wordFilePath = "E:/BiLing/20220905-gitleaks-Docker/SecretDetection/bindata/american-english"
-	wordListTextBytes, err := ioutil.ReadFile(wordFilePath)
+	//var wordFilePath = ""
+	//wordListTextBytes, err := ioutil.ReadFile(wordFilePath)
+	wordListTextBytes, err := bindata.Asset("american-english")
+
 	if err != nil {
 		fmt.Println("单词本文件读取失败")
 	}
