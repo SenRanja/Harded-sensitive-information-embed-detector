@@ -34,9 +34,14 @@ var rootCmd = &cobra.Command{
 func init() {
 	cobra.OnInitialize(initLog)
 	rootCmd.CompletionOptions.DisableDefaultCmd = true
+
+	// [config配置项]
+	// 为了打包，隐藏规则文件的信息，这里隐藏论config的配置项。
+	// 关于-c选项后面是否显示指明规则文件，具体代码详情参考 func initConfig()
 	rootCmd.PersistentFlags().StringP("config", "c", "", "指定自定义的规则配置文件")
-	rootCmd.PersistentFlags().MarkHidden("config")
 	// MarkHidden函数，隐藏config配置项
+	rootCmd.PersistentFlags().MarkHidden("config")
+
 	rootCmd.PersistentFlags().Int("exit-code", 1, "扫描到凭证数量非0时的退出码")
 	rootCmd.PersistentFlags().StringP("source", "s", ".", "待扫描代码的目录")
 	rootCmd.PersistentFlags().StringP("report-path", "r", "", "扫描结果文件命名")
@@ -81,8 +86,10 @@ func initConfig() {
 	if err != nil {
 		log.Fatal().Msg(err.Error())
 	}
-	// 下面的if else if else 是进行viper的配置文件的配置
-	// 结束了if else if else 后的err := viper.ReadInConfig()才是配置文件的读取
+
+	// [关于是否显示指明 -c ]
+	// 该情况需要详细说明，是由于分两种使用状态 1. 作为docker的服务情况 2. 兴华的打包需求
+	// [1] 如果-c显式跟上参数，则 cfgPath != ""。此处就读取-c参数配置，再依次覆盖我们的内置规则。
 	if cfgPath != "" {
 
 		bindata_default_toml, _ := bindata.Asset("default.toml")
@@ -150,6 +157,7 @@ func initConfig() {
 			viper.Set(k, v)
 		}
 	} else {
+		// [2] 如果-c没有参数，则 cfgPath == ""。此处就读取内置规则。
 
 		bindata_default_toml, _ := bindata.Asset("default.toml")
 		viper.SetConfigType("toml")

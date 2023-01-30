@@ -252,7 +252,7 @@ func (d *Detector) detectRule(fragment Fragment, rule config.Rule) []report.Find
 				//fmt.Println("UpDown", UpDownRate)
 				//fmt.Println("WordsRate", WordsRate)
 
-				if UpDownRate <= 0.4 || WordsRate >= 0.32 {
+				if UpDownRate <= 0.5 || WordsRate >= 0.32 {
 					continue
 				}
 			}

@@ -1,13 +1,0 @@
-规则ID,描述,Commit,文件位置,凭证,匹配内容,开始行,结束行,开始列,结束列,提交者,提交信息,提交时间,邮箱,Commit指纹
-aws-access-token,应用凭证--AWS,,config/allow_aws_re.toml,AKIALALEMEL33243OLIA,AKIALALEMEL33243OLIA,9,9,24,43,,,,,
-aws-access-token,应用凭证--AWS,,config/allow_global_aws_re.toml,AKIALALEMEL33243OLIA,AKIALALEMEL33243OLIA,8,8,20,39,,,,,
-aws-access-token,应用凭证--AWS,,expected/git/small-branch-foo.txt,AKIALALEMEL33243OLIA,AKIALALEMEL33243OLIA,15,15,17,36,,,,,
-aws-access-token,应用凭证--AWS,,expected/git/small.txt,AKIALALEMEL33243OLIA,AKIALALEMEL33243OLIA,15,15,17,36,,,,,
-aws-access-token,应用凭证--AWS,,expected/git/small.txt,AKIALALEMEL332569LIA,AKIALALEMEL332569LIA,44,44,19,38,,,,,
-aws-access-token,应用凭证--AWS,,repos/nogit/main.go,AKIALALEMEL33243OLIA,AKIALALEMEL33243OLIA,20,20,16,35,,,,,
-npm-access-token,编程语言凭证--npm access token,,repos/nogit/other_accessKey.py,npm_qwsadewqwsqwe890qw89213u01jwidas0dsa,"npm_qwsadewqwsqwe890qw89213u01jwidas0dsa""",7,7,9,49,,,,,
-hubspot-api-key,应用凭证--HubSpot API Token,,repos/nogit/other_accessKey.py,12345678-ABCD-ABCD-ABCD-1234567890AB,"hubspotKey = ""12345678-ABCD-ABCD-ABCD-1234567890AB""",1,1,1,51,,,,,
-generic-tencent-connect-key-id,应用凭证--Tencent Connect Secret,,repos/nogit/per.py,EYazUTAcLoRitUQorm16aP7IjaUvymHA,"EYazUTAcLoRitUQorm16aP7IjaUvymHA",18,18,34,66,,,,,
-generic-high-checkout,高检出模糊匹配--模糊匹配,,repos/nogit/3jge.java,qweasdzxcrtyfghvbn,"""qweasdzxcrtyfghvbn""",21,21,27,46,,,,,
-jwt,JWT--JSON Web Token,,repos/nogit/other_accessKey.py,"eyJhbGciOieeeiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwic3ViZSI6IjEyMzQ1Njc4OTAiLCJuYW1lZWEiOiJKb2huIERvZSIsInN1ZmV3YWZiIjoiMTIzNDU2Nzg5MCIsIm5hbWVmZWF3ZnciOiJKb2huIERvZSIsIm5hbWVhZmV3ZmEiOiJKb2huIERvZSIsInN1ZndhZndlYWIiOiIxMjM0NTY3ODkwIiwibmFtZWZ3YWYiOiJKb2huIERvZSIsInN1YmZ3YWYiOiIxMjM0NTY3ODkwIiwibmFtZndhZSI6IkpvaG4gRG9lIiwiaWZ3YWZhYXQiOjE1MTYyMzkwMjJ9.a_5icKBDo-8EjUlrfvz2k2k-FYaindQ0DEYNrlsnRG0""","eyJhbGciOieeeiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwic3ViZSI6IjEyMzQ1Njc4OTAiLCJuYW1lZWEiOiJKb2huIERvZSIsInN1ZmV3YWZiIjoiMTIzNDU2Nzg5MCIsIm5hbWVmZWF3ZnciOiJKb2huIERvZSIsIm5hbWVhZmV3ZmEiOiJKb2huIERvZSIsInN1ZndhZndlYWIiOiIxMjM0NTY3ODkwIiwibmFtZWZ3YWYiOiJKb2huIERvZSIsInN1YmZ3YWYiOiIxMjM0NTY3ODkwIiwibmFtZndhZSI6IkpvaG4gRG9lIiwiaWZ3YWZhYXQiOjE1MTYyMzkwMjJ9.a_5icKBDo-8EjUlrfvz2k2k-FYaindQ0DEYNrlsnRG0""",3,3,9,438,,,,,
-generic-high-checkout,高检出模糊匹配--模糊匹配,,repos/nogit/3jge.java,storepass_client_123456,"""storepass_client_123456""",27,27,30,54,,,,,

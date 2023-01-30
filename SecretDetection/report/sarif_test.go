@@ -7,8 +7,8 @@ import (
 	"strings"
 	"testing"
 
-	"github.com/spf13/viper"
 	"SecretDetection/config"
+	"github.com/spf13/viper"
 )
 
 const configPath = "../testdata/config/"
