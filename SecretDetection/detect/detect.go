@@ -253,6 +253,8 @@ func (d *Detector) detectRule(fragment Fragment, rule config.Rule) []report.Find
 					continue
 				}
 			}
+
+			// 此段先根据密码中是否有2项以上内容，来直接过滤一部分非密钥的密码
 			var CharacterTypeBoolList []bool
 			CharacterTypeTruenum := 0
 			CharacterTypeBoolList = append(CharacterTypeBoolList, containsDigit(finding.Secret))
@@ -265,13 +267,14 @@ func (d *Detector) detectRule(fragment Fragment, rule config.Rule) []report.Find
 					CharacterTypeTruenum++
 				}
 			}
+			// 此段先根据密码中是否有2项以上内容，来直接过滤一部分非密钥的密码
 			if CharacterTypeTruenum <= 2 {
 				continue
 			}
 
 			finding.ScoreStrength = PasswordStrengthCheck(finding.Secret)
 			// 如果没有遇到 3/4 则不计入统计
-			if finding.ScoreStrength < 10 {
+			if finding.ScoreStrength < 25 {
 				continue
 			}
 		} else {
@@ -294,9 +297,9 @@ func (d *Detector) detectRule(fragment Fragment, rule config.Rule) []report.Find
 					//	continue
 					//}
 					UpDownRate := UpAndDownRate(finding.Secret)
-					WordsRate := Split2WordList(finding.Secret)
+					isWords := IsWords(finding.Secret)
 
-					if UpDownRate <= 0.4 || WordsRate >= 0.67 {
+					if UpDownRate <= 0.4 || isWords {
 						//if UpDownRate <= 0.4 {
 						continue
 					}

@@ -81,7 +81,7 @@ func TrimDoubleQuote(s string) string {
 
 // 递归去除 前或后的 引号
 func TrimCustomCharacter(s string) string {
-	trimCharacters := []string{"\"", "'", ",", ":", ";", "(", ")", "?", "{", "}", "[", "]"}
+	trimCharacters := []string{"\"", "*", "@", "$", "'", "`", "_", ",", ":", ";", "(", ")", "?", "{", "}", "[", "]"}
 	for _, v := range trimCharacters {
 		if strings.HasPrefix(s, v) {
 			return TrimCustomCharacter(strings.TrimLeft(s, v))
@@ -110,13 +110,15 @@ func PasswordStrengthCheck(s string) int {
 	strengthScore := 0
 	// 【长度加权】
 	// pwd长度	8-10: 0  11-13: 2 14-15: 4
-	switch len(s) {
-	case 8, 9, 10:
-		strengthScore += 0
-	case 11, 12, 13:
-		strengthScore += 2
-	case 14, 15:
-		strengthScore += 4
+	length := len(s)
+	if 8 <= length && length <= 10 {
+		strengthScore += 10
+	} else if 11 <= length && length <= 13 {
+		strengthScore += 20
+	} else if 14 <= length && length <= 15 {
+		strengthScore += 30
+	} else {
+		strengthScore += 40
 	}
 
 	// 【复杂度组合加权】
@@ -126,45 +128,34 @@ func PasswordStrengthCheck(s string) int {
 	//小写字母字符数量	一个1分
 	//特殊字符_非code	一个4分
 	//特殊字符_code	一个1分
-	BoolMap := map[string]int{
-		"Digit":             0,
-		"Symbol":            0,
-		"CodeUsuallySymbol": 0,
-		"UpCharacter":       0,
-		"DownCharacter":     0,
-	}
-	for _, v := range s {
-		v_string := string(v)
-
-		// 这个特殊字符没有 `编程必须字符`
-		if containsDigit(v_string) {
-			BoolMap["Digit"]++
-		} else if containsSymbol(v_string) {
-			// 这个特殊字符是 `编程必须字符`
-			BoolMap["Symbol"]++
-		} else if containsCodeUsuallySymbol(v_string) {
-			BoolMap["CodeUsuallySymbol"]++
-		} else if containsUpCharacter(v_string) {
-			BoolMap["UpCharacter"]++
-		} else if containsDownCharacter(v_string) {
-			BoolMap["DownCharacter"]++
-		}
-
+	BoolMap := map[string]bool{
+		"Digit":  false,
+		"Symbol": false,
+		//"CodeUsuallySymbol": false,
+		"UpCharacter":   false,
+		"DownCharacter": false,
 	}
 
-	for k, v := range BoolMap {
-		switch k {
-		case "Digit":
-			strengthScore += 2 * v
-		case "Symbol":
-			strengthScore += 4 * v
-		case "CodeUsuallySymbol":
-			strengthScore += 1 * v
-		case "UpCharacter":
-			strengthScore += 2 * v
-		case "DownCharacter":
-			strengthScore += 1 * v
-		}
+	// 这个特殊字符没有 `编程必须字符`
+	if containsDigit(s) {
+		BoolMap["Digit"] = true
+		strengthScore += 5
+	}
+	if containsSymbol(s) {
+		// 这个特殊字符是 `编程必须字符`
+		BoolMap["Symbol"] = true
+		strengthScore += 10
+	}
+	//if containsCodeUsuallySymbol(s) {
+	//	BoolMap["CodeUsuallySymbol"] = true
+	//}
+	if containsUpCharacter(s) {
+		BoolMap["UpCharacter"] = true
+		strengthScore += 5
+	}
+	if containsDownCharacter(s) {
+		BoolMap["DownCharacter"] = true
+		strengthScore += 5
 	}
 
 	return strengthScore
@@ -346,42 +337,56 @@ func UpAndDownRate(s string) float32 {
 	return float32(InterruptNum) / float32(len(s))
 }
 
-func Split2WordList(s string) float32 {
-	if len(s) <= 2 {
-		panic(fmt.Errorf("单词识别率计算，字符过少"))
-	}
+func IsWords(s string) bool {
+	// 返回 false表示识别是个密钥，返回 true表示非密钥而变量名
+	// 返回越高，说明识别率越高
+	// 此处主要处理的是识别到单词类型字符串在 [2,5] 的问题
 
-	//将含有>=3的数字个数直接认为是密钥
+	// 如果 len==2 长度太短了，不识别，返回1
+	//if len(s) <= 2 {
+	//	return true
+	//}
+
+	//将含有>=5的数字个数直接认为是密钥
 	reg_digitNum, err := regexp.Compile(`\d`, 0)
 	if err != nil {
 		panic(fmt.Errorf("正则表达式编译出现错误"))
 	}
-
 	//数字的数量 -> 认为识别率为0
-	if len(regexp2FindAllString(reg_digitNum, s)) >= 5 {
-		return 0
+	if len(regexp2FindAllString(reg_digitNum, s)) >= 3 {
+		if len(regexp2FindAllString(reg_digitNum, s)) >= 5 {
+			return false
+		}
 	}
 
 	var wordListTotal []string
-
+	// wordListTotal 匹配的是没有特殊字符、数字的 单词类型字符串
 	lowAlphaMatchList := regexp2FindAllString(lowAlphaMatchRegexp, s)
 	wordListTotal = append(wordListTotal, lowAlphaMatchList...)
 	allCaptainAlphaMatchList := regexp2FindAllString(allCaptainAlphaMatchRegexp, s)
 	wordListTotal = append(wordListTotal, allCaptainAlphaMatchList...)
+	// 切割数量太高，则认为过于琐碎，应该是密钥，返回0
+	// 切割数量过短，则认为过于琐碎，应该是密钥，返回0
+	if len(wordListTotal) == 1 {
+		return false
+	}
 	if len(wordListTotal) >= 6 {
-		return 0
+		return false
+	}
+	// 满足密码复杂度
+	if len(wordListTotal) >= 2 && containsSymbol(s) {
+		return false
 	}
 
-	if len(wordListTotal) == 0 {
-		return 0
-	}
-
+	// HumanbeingCanReadWordsNum 是单词列表中 标记为 识别为单词的字符串
 	var HumanbeingCanReadWordsNum = 0
 	for _, single := range wordListTotal {
 		if strings.Contains(wordListText, strings.ToLower(single)) {
 			HumanbeingCanReadWordsNum++
+
 		} else {
 			if len(single) >= 8 {
+				// 这类长单词通常有着tion 等一类的后缀，通常我这里去除一下后缀让他看看能不能识别
 				if strings.Contains(wordListText, strings.ToLower(single[:len(single)-4])) {
 					HumanbeingCanReadWordsNum++
 				}
@@ -389,13 +394,43 @@ func Split2WordList(s string) float32 {
 		}
 	}
 
+	// 有3个以上的_ 且单词多于2个 则被认为是 编程变量命名的一种
 	if strings.Count(s, "_") >= 3 {
 		if HumanbeingCanReadWordsNum >= 2 {
-			return 1
+			return true
 		}
 	}
 
-	return float32(HumanbeingCanReadWordsNum) / float32(len(wordListTotal))
+	rate := float32(HumanbeingCanReadWordsNum) / float32(len(wordListTotal))
+	//fmt.Println(rate)
+	// 先现在要处理的问题是：
+	// 以下大于某个值则识别为words，即返回true，不识别为密钥
+	// 1 直接返回0 false
+	// 2单词里 2识别 1 1识别0.5    	>0.51
+	// 3单词里 3识别 1 2识别 0.333	>0.34 y n
+	//								>0.67 y
+	// 4单词3识别 0.75				>0.76
+	// 5单词 3识别 0.6 4识别 0.8 		>0.81
+	switch len(wordListTotal) {
+	case 2:
+		if rate > 0.51 {
+			return true
+		}
+	case 3:
+		if rate > 0.67 {
+			return true
+		}
+	case 4:
+		if rate > 0.76 {
+			return true
+		}
+	case 5:
+		if rate > 0.81 {
+			return true
+		}
+	}
+
+	return false
 }
 
 var lowAlphaMatchRegexp, allCaptainAlphaMatchRegexp *regexp.Regexp
@@ -404,11 +439,13 @@ var err error
 var wordListText string
 
 func init() {
+	// 正则表达式
+	// 大小写字母开头到小写单词结尾
 	lowAlphaMatchRegexp, err = regexp.Compile(`([A-Z][a-z]+|[a-z]+)(?=\b|\d|[A-Z\-_]|[\-_\.])`, 0)
 	if err != nil {
 		panic(fmt.Errorf("正则表达式编译出现错误"))
 	}
-
+	// 零星的全大写字母组成的单词
 	allCaptainAlphaMatchRegexp, err = regexp.Compile(`[A-Z]{2,}(?=\b|\d|[A-Z\-_][a-zA-Z\-_]|[\-_\.])`, 0)
 	if err != nil {
 		panic(fmt.Errorf("正则表达式编译出现错误"))
