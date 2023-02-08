@@ -148,10 +148,12 @@ func (d *Detector) DetectString(content string) []report.Finding {
 
 // detectRule scans the given fragment for the given rule and returns a list of findings
 // 根据规则进行计算和过滤，然后该函数返回findings列表
+// DetectGit() 和 DetectFiles() 都会调用Detect()，然后Detect()会调用此处的detectRule()
 func (d *Detector) detectRule(fragment Fragment, rule config.Rule) []report.Finding {
 	var findings []report.Finding
 
 	// check if filepath or commit is allowed for this rule
+	// commit 是否被设置为 `允许忽略`
 	if rule.Allowlist.CommitAllowed(fragment.CommitSHA) ||
 		rule.Allowlist.PathAllowed(fragment.FilePath) {
 		return findings
@@ -182,9 +184,12 @@ func (d *Detector) detectRule(fragment Fragment, rule config.Rule) []report.Find
 	if rule.Regex == nil {
 		return findings
 	}
-
+	// 这里对文件内容进行正则匹配，获取本规则在本文件中匹配的所有结果
 	matchIndices := rule.Regex.FindAllStringIndex(fragment.Raw, -1)
 	for _, matchIndex := range matchIndices {
+		// 这个遍历就是检测凭证算法
+
+		// 以下很长的我没有中文注释的内容均是对secret进行过滤，我们的过滤要写在该部分之后
 		// extract secret from match
 		secret := strings.Trim(fragment.Raw[matchIndex[0]:matchIndex[1]], "\n")
 
@@ -213,6 +218,7 @@ func (d *Detector) detectRule(fragment Fragment, rule config.Rule) []report.Find
 			continue
 		}
 
+		// toml配置文件中的 Group 不是随便设置的
 		// extract secret from secret group if set
 		if rule.SecretGroup != 0 {
 			groups := rule.Regex.FindStringSubmatch(secret)
@@ -230,33 +236,46 @@ func (d *Detector) detectRule(fragment Fragment, rule config.Rule) []report.Find
 			continue
 		}
 
-		// 计算香农熵
-		entropy := shannonEntropy(finding.Secret)
-		finding.Entropy = float32(entropy)
-		if rule.Entropy != 0.0 {
-			if entropy <= rule.Entropy {
-				//跳过非允许熵值的地方
-				// entropy is too low, skip this finding
+		// secret手动对模糊匹配的secret进行一下过滤
+		if finding.Secret != "" && strings.HasPrefix(rule.RuleID, "generic") {
+			finding.Secret = GenericRuleSecretExtract(finding.Secret)
+		}
+		// 如果认为不是凭证，就让他continue；如果检测是凭证，就让他进入
+		// `长密码`和`短密码` 分开对待
+		if rule.RuleID == "generic-high-checkout-short-secret" {
+			if !ShortPasswordCheck(finding.Secret) {
 				continue
 			}
-
-			if strings.HasPrefix(rule.RuleID, "generic") {
-
-				// 这里包含数字才会认为是匹配到的东西，我感觉不太科学，故注释
-				//if !containsDigit(secret) {
-				//	continue
-				//}
-				UpDownRate := UpAndDownRate(finding.Secret)
-				WordsRate := Split2WordList(finding.Secret)
-				//fmt.Println("[S]", finding.Secret)
-				//fmt.Println("UpDown", UpDownRate)
-				//fmt.Println("WordsRate", WordsRate)
-
-				if UpDownRate <= 0.5 || WordsRate >= 0.32 {
+		} else {
+			// 计算香农熵
+			entropy := shannonEntropy(finding.Secret)
+			finding.Entropy = float32(entropy)
+			if rule.Entropy != 0.0 {
+				if entropy <= rule.Entropy {
+					//跳过非允许熵值的地方
+					// entropy is too low, skip this finding
 					continue
 				}
-			}
 
+				if strings.HasPrefix(rule.RuleID, "generic") {
+
+					// 【高长度密钥计算，大于8位】
+
+					// 这里包含数字才会认为是匹配到的东西，我感觉不太科学，故注释
+					//if !containsDigit(secret) {
+					//	continue
+					//}
+					UpDownRate := UpAndDownRate(finding.Secret)
+					WordsRate := Split2WordList(finding.Secret)
+
+					if UpDownRate <= 0.4 || WordsRate >= 0.32 {
+						//if UpDownRate <= 0.4 {
+						continue
+					}
+
+				}
+
+			}
 		}
 		findings = append(findings, finding)
 	}
@@ -362,7 +381,6 @@ func (d *Detector) DetectFiles(source string) ([]report.Finding, error) {
 				//下面进行文件名正则匹配和文件大小的选择性不检测，避免卡死
 				// 比如，大于2MB的文件选择不扫描
 				if fInfo.Mode().IsRegular() && !TargetFileNameExp.MatchString(fInfo.Name()) && fInfo.Size() < 4*1024*1024 {
-
 					paths <- path
 				}
 				return nil
@@ -370,6 +388,7 @@ func (d *Detector) DetectFiles(source string) ([]report.Finding, error) {
 	})
 
 	for pa := range paths {
+		// 从这里开始传入文件，`paths`是多个文件，`pa`和`p`是 单个文件
 
 		p := pa
 		s.Go(func() error {
@@ -393,6 +412,7 @@ func (d *Detector) DetectFiles(source string) ([]report.Finding, error) {
 				Raw:      string(b),
 				FilePath: relativePath,
 			}
+			// 传入整个文件，然后d.Detect()函数处理后，返回多个值
 			for _, finding := range d.Detect(fragment) {
 				// need to add 1 since line counting starts at 1
 				finding.EndLine++
@@ -408,18 +428,24 @@ func (d *Detector) DetectFiles(source string) ([]report.Finding, error) {
 	if err := s.Wait(); err != nil {
 		return d.findings, err
 	}
-
+	// 直接返回给 cmd/detect.go 的最终结果就是 findings
 	return d.findings, nil
 }
 
 // Detect scans the given fragment and returns a list of findings
+// DetectGit() 和 DetectFiles() 都会调用这里
 func (d *Detector) Detect(fragment Fragment) []report.Finding {
+	// fragment是整个文件内容
+
 	var findings []report.Finding
 
 	// initiate fragment keywords
+	// 注意fragment.keywords是一个map
 	fragment.keywords = make(map[string]bool)
 
 	// check if filepath is allowed
+	// 此处的d.Comfig.Allowlist.PathAllowed()是检查`后缀名`是否可以`允许忽略`
+	// 如果发现被检测文件是`忽略后缀的文件`或`config.toml这种规则配置文件`就直接return，不进行检测
 	if fragment.FilePath != "" && (d.Config.Allowlist.PathAllowed(fragment.FilePath) ||
 		fragment.FilePath == d.Config.Path) {
 		return findings
@@ -429,28 +455,38 @@ func (d *Detector) Detect(fragment Fragment) []report.Finding {
 	fragment.newlineIndices = regexp.MustCompile("\n").FindAllStringIndex(fragment.Raw, -1)
 
 	// build keyword map for prefiltering rules
+	// 此处行为是将文件内容分行，然后检测每行是否有关键字
 	normalizedRaw := strings.ToLower(fragment.Raw)
+	//  先利用AC自动机(ahocorasick.AhoCorasick) 提炼出多个关键字，随后会和 [[rule]] 中的关键字比较，来看要不要进行匹配
+	// 不清楚这里是为了快速检出什么，我看下面循环里是 password 字符串
+	// 这里传入文件的源码，然后，matches 是特定算法返回的多个值，然后给了map
 	matches := d.prefilter.FindAll(normalizedRaw)
 	for _, m := range matches {
+		fmt.Println(normalizedRaw[m.Start():m.End()])
 		fragment.keywords[normalizedRaw[m.Start():m.End()]] = true
 	}
 
+	// 这里进行[[rule]]遍历，进行规则匹配，检测到关键字就把`行`加入findings
 	for _, rule := range d.Config.Rules {
 		if len(rule.Keywords) == 0 {
 			// if not keywords are associated with the rule always scan the
 			// fragment using the rule
+			// [[rule]]中如果没有关键字，就直接检测然后返回
 			findings = append(findings, d.detectRule(fragment, rule)...)
-			continue
-		}
-		fragmentContainsKeyword := false
-		// check if keywords are in the fragment
-		for _, k := range rule.Keywords {
-			if _, ok := fragment.keywords[strings.ToLower(k)]; ok {
-				fragmentContainsKeyword = true
+		} else {
+			fragmentContainsKeyword := false
+			// check if keywords are in the fragment
+
+			// 进行[[rule]]中的keywords遍历
+			// rule.keyword 要 被检测是否和 fragment.keyword 对应
+			for _, k := range rule.Keywords {
+				if _, ok := fragment.keywords[strings.ToLower(k)]; ok {
+					fragmentContainsKeyword = true
+				}
 			}
-		}
-		if fragmentContainsKeyword {
-			findings = append(findings, d.detectRule(fragment, rule)...)
+			if fragmentContainsKeyword {
+				findings = append(findings, d.detectRule(fragment, rule)...)
+			}
 		}
 	}
 	return filter(findings, d.Redact)

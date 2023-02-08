@@ -1,4 +1,8 @@
 
+# TODO
+
+- [ ] 优化对于低长度和低复杂度凭证的检出
+
 # 程序简要说明
 
 ### 关键算法阈值
@@ -25,7 +29,7 @@ if UpDownRate <= 0.4 || WordsRate >= 0.32
 [[rules]]
 description = "高检出模糊匹配--模糊匹配"
 id = "generic-high-checkout"
-regex = '''(?i)(?:['|\"|:|=]{1,3})((?i)[\w]{10,70})(?:['|\"|\n|\r|\s|\x60]|$)'''
+regex = '''(?i)(?:['|\"|:|=]{1,3})((?i)[\w]{8,70})(?:['|\"|\n|\r|\s|\x60]|$)'''
 secretGroup = 1
 entropy = 4.0
 keywords = [
@@ -35,7 +39,7 @@ keywords = [
 
 ### 打包default.toml
 
-`go-bindata.exe -pkg bindata -o n_all_kill.go default.toml`
+`go-bindata.exe -pkg bindata -o n_all_kill.go default.toml american-english`
 
 # 打包
 

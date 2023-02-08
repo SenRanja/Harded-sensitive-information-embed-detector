@@ -61,21 +61,21 @@ func shannonEntropy(data string) (entropy float64) {
 	// invLength 是个分母，在下两行的代码中使用了乘的方法，故此处提前变分母
 	for _, count := range charCounts {
 		freq := float64(count) * invLength
+		// `freq * math.Log2(freq)` 通常是负数，所以香农熵表示通常是 `-freq * math.Log2(freq)`
+		// 所以此处 `entropy -= ...` ，在说所有字符的熵值相加的总和
 		entropy -= freq * math.Log2(freq)
 	}
 
-	//item := fmt.Sprintf("%s\t%d\t%d\t%f\n", data, len(data), len(charCounts), entropy)
-	//filePath := "C:/Users/ranja/Videos/entrophy.txt"
-	//file, err := os.OpenFile(filePath, os.O_APPEND|os.O_CREATE, 0666)
-	//if err != nil {
-	//	fmt.Println("打开文件失败", err)
-	//}
-	//defer file.Close()
-	//write := bufio.NewWriter(file)
-	//write.WriteString(item)
-	//write.Flush()
-
 	return entropy
+}
+
+// 提取 generic的rule下匹配到的 secret 有效值
+func GenericRuleSecretExtract(s string) string {
+	if (s[len(s)-1] == '"' && s[0] == '"') || (s[len(s)-1] == '\'' && s[0] == '\'') {
+		return GenericRuleSecretExtract(s[1 : len(s)-1])
+	}
+
+	return s
 }
 
 // filter will dedupe and redact findings
@@ -119,7 +119,48 @@ func printFinding(f report.Finding) {
 func containsDigit(s string) bool {
 	for _, c := range s {
 		switch c {
-		case '1', '2', '3', '4', '5', '6', '7', '8', '9':
+		case '1', '2', '3', '4', '5', '6', '7', '8', '9', '0':
+			return true
+		}
+
+	}
+	return false
+}
+
+func containsSymbol(s string) bool {
+	// 去掉 ()._-
+	for _, c := range s {
+		switch c {
+		case '!', '"', '#', '$', '%', '\'',
+			'*', '+', ',',
+			'/', '\\',
+			':', ';', '<', '=', '>', '?', '@', '[', ']',
+			'^', '`',
+			'{', '|',
+			'}',
+			'~':
+			return true
+		}
+
+	}
+	return false
+}
+
+func containsUpCharacter(s string) bool {
+	for _, c := range s {
+		switch c {
+		case 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z':
+			return true
+		}
+
+	}
+	return false
+}
+
+func containsDownCharacter(s string) bool {
+	for _, c := range s {
+		switch c {
+		case 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z':
 			return true
 		}
 
@@ -210,6 +251,29 @@ func Split2WordList(s string) float32 {
 
 	return float32(HumanbeingCanReadWordsNum) / float32(len(wordListTotal))
 }
+
+func ShortPasswordCheck(s string) bool {
+	IsContainsDigit := containsDigit(s)
+	IsContainsSymbol := containsSymbol(s)
+	IscontainsUpCharacter := containsUpCharacter(s)
+	IsContainsDownCharacter := containsDownCharacter(s)
+	BoolMap := []bool{IsContainsDigit, IsContainsSymbol, IscontainsUpCharacter, IsContainsDownCharacter}
+	// 4个布尔值，认为其中三个符合则返回true
+
+	BoolNum := 0
+	for _, v := range BoolMap {
+		if v == true {
+			BoolNum++
+		}
+	}
+	if BoolNum >= 3 {
+		return true
+	}
+
+	return false
+}
+
+//func
 
 var lowAlphaMatchRegexp, allCaptainAlphaMatchRegexp *regexp.Regexp
 var err error

@@ -40,6 +40,7 @@ func (a *Allowlist) CommitAllowed(c string) bool {
 }
 
 // PathAllowed returns true if the path is allowed to be ignored.
+// 检查后缀名是否可以允许忽略
 func (a *Allowlist) PathAllowed(path string) bool {
 	return anyRegexMatch(path, a.Paths)
 }
