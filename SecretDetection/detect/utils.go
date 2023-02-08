@@ -70,12 +70,145 @@ func shannonEntropy(data string) (entropy float64) {
 }
 
 // 提取 generic的rule下匹配到的 secret 有效值
-func GenericRuleSecretExtract(s string) string {
+// 递归去除 同时的一对引号(前和后)
+func TrimDoubleQuote(s string) string {
 	if (s[len(s)-1] == '"' && s[0] == '"') || (s[len(s)-1] == '\'' && s[0] == '\'') {
-		return GenericRuleSecretExtract(s[1 : len(s)-1])
+		return TrimDoubleQuote(s[1 : len(s)-1])
 	}
 
 	return s
+}
+
+// 递归去除 前或后的 引号
+func TrimCustomCharacter(s string) string {
+	trimCharacters := []string{"\"", "'", ",", ":", ";", "(", ")", "?", "{", "}", "[", "]"}
+	for _, v := range trimCharacters {
+		if strings.HasPrefix(s, v) {
+			return TrimCustomCharacter(strings.TrimLeft(s, v))
+		}
+		if strings.HasSuffix(s, v) {
+			return TrimCustomCharacter(strings.TrimRight(s, v))
+		}
+	}
+	return s
+}
+
+// 密码复杂度等级测评  针对短密码
+// 此处分5个级别
+const (
+	EASY = iota
+	MIDIUM
+	STRONG
+	VERY_STRONG
+	EXTREMELY_STRONG
+)
+
+// 针对短密码的密码复杂度评级
+func PasswordStrengthCheck(s string) int {
+	// 返回值应为 0-4的5个整数，如果返回-1则遇到非ascii密码，应该直接舍弃
+
+	strengthScore := 0
+	// 【长度加权】
+	// pwd长度	8-10: 0  11-13: 2 14-15: 4
+	switch len(s) {
+	case 8, 9, 10:
+		strengthScore += 0
+	case 11, 12, 13:
+		strengthScore += 2
+	case 14, 15:
+		strengthScore += 4
+	}
+
+	// 【复杂度组合加权】
+	//pwd长度		8-10: 0  11-13: 2 14-15: 4
+	//数字字符数量	一个2分
+	//大写字母字符数量	一个2分
+	//小写字母字符数量	一个1分
+	//特殊字符_非code	一个4分
+	//特殊字符_code	一个1分
+	BoolMap := map[string]int{
+		"Digit":             0,
+		"Symbol":            0,
+		"CodeUsuallySymbol": 0,
+		"UpCharacter":       0,
+		"DownCharacter":     0,
+	}
+	for _, v := range s {
+		v_string := string(v)
+
+		// 这个特殊字符没有 `编程必须字符`
+		if containsDigit(v_string) {
+			BoolMap["Digit"]++
+		} else if containsSymbol(v_string) {
+			// 这个特殊字符是 `编程必须字符`
+			BoolMap["Symbol"]++
+		} else if containsCodeUsuallySymbol(v_string) {
+			BoolMap["CodeUsuallySymbol"]++
+		} else if containsUpCharacter(v_string) {
+			BoolMap["UpCharacter"]++
+		} else if containsDownCharacter(v_string) {
+			BoolMap["DownCharacter"]++
+		}
+
+	}
+
+	for k, v := range BoolMap {
+		switch k {
+		case "Digit":
+			strengthScore += 2 * v
+		case "Symbol":
+			strengthScore += 4 * v
+		case "CodeUsuallySymbol":
+			strengthScore += 1 * v
+		case "UpCharacter":
+			strengthScore += 2 * v
+		case "DownCharacter":
+			strengthScore += 1 * v
+		}
+	}
+
+	return strengthScore
+	// 结合 ShortPasswordCheck(finding.Secret) 算法，开始进行分级分数
+	// 分数区间: [8,64] 若低于8说明非ascii，应舍弃
+	// EASY 	[8,12)
+	// MIDIUM	[12,20)
+	// STRONG	[20,28)
+	// VERY_STRONG	[28, 59)
+	// EXTREMELY_STRONG	[59,64]
+	//if 8 <= strengthScore && strengthScore < 12 {
+	//	return EASY
+	//} else if 12 <= strengthScore && strengthScore < 20 {
+	//	return MIDIUM
+	//} else if 20 <= strengthScore && strengthScore < 28 {
+	//	return STRONG
+	//} else if 28 <= strengthScore && strengthScore < 59 {
+	//	return VERY_STRONG
+	//} else if 59 <= strengthScore && strengthScore <= 64 {
+	//	return EXTREMELY_STRONG
+	//}
+	//return -1
+}
+
+// 针对短密码，具备 {大写字母、小写字母、数字、特殊字符} 3/4的检查
+func ShortPasswordCheck(s string) bool {
+	IsContainsDigit := containsDigit(s)
+	IsContainsSymbol := containsSymbol(s)
+	IscontainsUpCharacter := containsUpCharacter(s)
+	IsContainsDownCharacter := containsDownCharacter(s)
+	BoolMap := []bool{IsContainsDigit, IsContainsSymbol, IscontainsUpCharacter, IsContainsDownCharacter}
+	// 4个布尔值，认为其中三个符合则返回true
+
+	BoolNum := 0
+	for _, v := range BoolMap {
+		if v == true {
+			BoolNum++
+		}
+	}
+	if BoolNum >= 3 {
+		return true
+	}
+
+	return false
 }
 
 // filter will dedupe and redact findings
@@ -127,11 +260,12 @@ func containsDigit(s string) bool {
 	return false
 }
 
+// 判断字符串是否包含 非 `.`,`_`,`-` 这种编程必须符号 的`特殊字符`
 func containsSymbol(s string) bool {
-	// 去掉 ()._-
+	// 专门缺失 常用的symbol字符 {'.', '_', '-'}
 	for _, c := range s {
 		switch c {
-		case '!', '"', '#', '$', '%', '\'',
+		case '!', '"', '#', '$', '%', '\'', '(', ')',
 			'*', '+', ',',
 			'/', '\\',
 			':', ';', '<', '=', '>', '?', '@', '[', ']',
@@ -139,6 +273,18 @@ func containsSymbol(s string) bool {
 			'{', '|',
 			'}',
 			'~':
+			return true
+		}
+
+	}
+	return false
+}
+
+// 判断字符串是否包含 containsSymbol() 不匹配的 {'.', '_', '-'} 三个字符
+func containsCodeUsuallySymbol(s string) bool {
+	for _, c := range s {
+		switch c {
+		case '.', '_', '-':
 			return true
 		}
 
@@ -251,29 +397,6 @@ func Split2WordList(s string) float32 {
 
 	return float32(HumanbeingCanReadWordsNum) / float32(len(wordListTotal))
 }
-
-func ShortPasswordCheck(s string) bool {
-	IsContainsDigit := containsDigit(s)
-	IsContainsSymbol := containsSymbol(s)
-	IscontainsUpCharacter := containsUpCharacter(s)
-	IsContainsDownCharacter := containsDownCharacter(s)
-	BoolMap := []bool{IsContainsDigit, IsContainsSymbol, IscontainsUpCharacter, IsContainsDownCharacter}
-	// 4个布尔值，认为其中三个符合则返回true
-
-	BoolNum := 0
-	for _, v := range BoolMap {
-		if v == true {
-			BoolNum++
-		}
-	}
-	if BoolNum >= 3 {
-		return true
-	}
-
-	return false
-}
-
-//func
 
 var lowAlphaMatchRegexp, allCaptainAlphaMatchRegexp *regexp.Regexp
 var err error

@@ -185,6 +185,7 @@ func (d *Detector) detectRule(fragment Fragment, rule config.Rule) []report.Find
 		return findings
 	}
 	// 这里对文件内容进行正则匹配，获取本规则在本文件中匹配的所有结果
+	// matchIndices是 某个单个[[rule]] 的正则匹配本文件内容，返回的全部的匹配值
 	matchIndices := rule.Regex.FindAllStringIndex(fragment.Raw, -1)
 	for _, matchIndex := range matchIndices {
 		// 这个遍历就是检测凭证算法
@@ -200,16 +201,17 @@ func (d *Detector) detectRule(fragment Fragment, rule config.Rule) []report.Find
 		loc := location(fragment, matchIndex)
 
 		finding := report.Finding{
-			Description: rule.Description,
-			File:        fragment.FilePath,
-			RuleID:      rule.RuleID,
-			StartLine:   loc.startLine,
-			EndLine:     loc.endLine,
-			StartColumn: loc.startColumn,
-			EndColumn:   loc.endColumn,
-			Secret:      secret,
-			Match:       secret,
-			Tags:        rule.Tags,
+			Description:   rule.Description,
+			File:          fragment.FilePath,
+			RuleID:        rule.RuleID,
+			StartLine:     loc.startLine,
+			EndLine:       loc.endLine,
+			StartColumn:   loc.startColumn,
+			EndColumn:     loc.endColumn,
+			Secret:        secret,
+			Match:         secret,
+			Tags:          rule.Tags,
+			ScoreStrength: 0,
 		}
 
 		// check if the secret is in the allowlist
@@ -238,12 +240,38 @@ func (d *Detector) detectRule(fragment Fragment, rule config.Rule) []report.Find
 
 		// secret手动对模糊匹配的secret进行一下过滤
 		if finding.Secret != "" && strings.HasPrefix(rule.RuleID, "generic") {
-			finding.Secret = GenericRuleSecretExtract(finding.Secret)
+			finding.Secret = TrimDoubleQuote(finding.Secret)
 		}
 		// 如果认为不是凭证，就让他continue；如果检测是凭证，就让他进入
 		// `长密码`和`短密码` 分开对待
 		if rule.RuleID == "generic-high-checkout-short-secret" {
-			if !ShortPasswordCheck(finding.Secret) {
+			finding.Secret = TrimCustomCharacter(finding.Secret)
+			entropy := shannonEntropy(finding.Secret)
+			finding.Entropy = float32(entropy)
+			if rule.Entropy != 0.0 {
+				if entropy <= rule.Entropy {
+					continue
+				}
+			}
+			var CharacterTypeBoolList []bool
+			CharacterTypeTruenum := 0
+			CharacterTypeBoolList = append(CharacterTypeBoolList, containsDigit(finding.Secret))
+			CharacterTypeBoolList = append(CharacterTypeBoolList, containsSymbol(finding.Secret))
+			CharacterTypeBoolList = append(CharacterTypeBoolList, containsCodeUsuallySymbol(finding.Secret))
+			CharacterTypeBoolList = append(CharacterTypeBoolList, containsUpCharacter(finding.Secret))
+			CharacterTypeBoolList = append(CharacterTypeBoolList, containsDownCharacter(finding.Secret))
+			for _, v := range CharacterTypeBoolList {
+				if v == true {
+					CharacterTypeTruenum++
+				}
+			}
+			if CharacterTypeTruenum <= 2 {
+				continue
+			}
+
+			finding.ScoreStrength = PasswordStrengthCheck(finding.Secret)
+			// 如果没有遇到 3/4 则不计入统计
+			if finding.ScoreStrength < 10 {
 				continue
 			}
 		} else {
@@ -257,10 +285,10 @@ func (d *Detector) detectRule(fragment Fragment, rule config.Rule) []report.Find
 					continue
 				}
 
-				if strings.HasPrefix(rule.RuleID, "generic") {
+				if rule.RuleID == "generic-high-checkout" {
+					finding.Secret = TrimCustomCharacter(finding.Secret)
 
 					// 【高长度密钥计算，大于8位】
-
 					// 这里包含数字才会认为是匹配到的东西，我感觉不太科学，故注释
 					//if !containsDigit(secret) {
 					//	continue
@@ -268,7 +296,7 @@ func (d *Detector) detectRule(fragment Fragment, rule config.Rule) []report.Find
 					UpDownRate := UpAndDownRate(finding.Secret)
 					WordsRate := Split2WordList(finding.Secret)
 
-					if UpDownRate <= 0.4 || WordsRate >= 0.32 {
+					if UpDownRate <= 0.4 || WordsRate >= 0.67 {
 						//if UpDownRate <= 0.4 {
 						continue
 					}
@@ -462,32 +490,33 @@ func (d *Detector) Detect(fragment Fragment) []report.Finding {
 	// 这里传入文件的源码，然后，matches 是特定算法返回的多个值，然后给了map
 	matches := d.prefilter.FindAll(normalizedRaw)
 	for _, m := range matches {
-		fmt.Println(normalizedRaw[m.Start():m.End()])
+		//fmt.Println(normalizedRaw[m.Start():m.End()])
 		fragment.keywords[normalizedRaw[m.Start():m.End()]] = true
 	}
 
 	// 这里进行[[rule]]遍历，进行规则匹配，检测到关键字就把`行`加入findings
 	for _, rule := range d.Config.Rules {
-		if len(rule.Keywords) == 0 {
-			// if not keywords are associated with the rule always scan the
-			// fragment using the rule
-			// [[rule]]中如果没有关键字，就直接检测然后返回
-			findings = append(findings, d.detectRule(fragment, rule)...)
-		} else {
-			fragmentContainsKeyword := false
-			// check if keywords are in the fragment
-
-			// 进行[[rule]]中的keywords遍历
-			// rule.keyword 要 被检测是否和 fragment.keyword 对应
-			for _, k := range rule.Keywords {
-				if _, ok := fragment.keywords[strings.ToLower(k)]; ok {
-					fragmentContainsKeyword = true
-				}
-			}
-			if fragmentContainsKeyword {
-				findings = append(findings, d.detectRule(fragment, rule)...)
-			}
-		}
+		findings = append(findings, d.detectRule(fragment, rule)...)
+		//if len(rule.Keywords) == 0 {
+		//	// if not keywords are associated with the rule always scan the
+		//	// fragment using the rule
+		//	// [[rule]]中如果没有关键字，就直接检测然后返回
+		//	findings = append(findings, d.detectRule(fragment, rule)...)
+		//} else {
+		//	fragmentContainsKeyword := false
+		//	// check if keywords are in the fragment
+		//
+		//	// 进行[[rule]]中的keywords遍历
+		//	// rule.keyword 要 被检测是否和 fragment.keyword 对应
+		//	for _, k := range rule.Keywords {
+		//		if _, ok := fragment.keywords[strings.ToLower(k)]; ok {
+		//			fragmentContainsKeyword = true
+		//		}
+		//	}
+		//	if fragmentContainsKeyword {
+		//		findings = append(findings, d.detectRule(fragment, rule)...)
+		//	}
+		//}
 	}
 	return filter(findings, d.Redact)
 }

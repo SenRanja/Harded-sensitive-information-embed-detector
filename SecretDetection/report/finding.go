@@ -38,6 +38,8 @@ type Finding struct {
 
 	// unique identifer
 	Fingerprint string
+
+	ScoreStrength int
 }
 
 // Redact removes sensitive information from a finding.
