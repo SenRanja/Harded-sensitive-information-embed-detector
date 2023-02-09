@@ -10,6 +10,7 @@ import (
 	"github.com/gitleaks/go-gitdiff/gitdiff"
 	"github.com/rs/zerolog/log"
 	"math"
+	"strconv"
 	"strings"
 )
 
@@ -105,21 +106,20 @@ const (
 
 // 针对短密码的密码复杂度评级
 func PasswordStrengthCheck(s string) int {
-	// 返回值应为 0-4的5个整数，如果返回-1则遇到非ascii密码，应该直接舍弃
 
-	strengthScore := 0
+	score := 0
 	// 【长度加权】
 	// pwd长度	8-10: 0  11-13: 2 14-15: 4
 	length := len(s)
-	if 8 <= length && length <= 10 {
-		strengthScore += 10
-	} else if 11 <= length && length <= 13 {
-		strengthScore += 20
-	} else if 14 <= length && length <= 15 {
-		strengthScore += 30
-	} else {
-		strengthScore += 40
-	}
+	//if 8 <= length && length <= 10 {
+	//	strengthScore += 10
+	//} else if 11 <= length && length <= 13 {
+	//	strengthScore += 20
+	//} else if 14 <= length && length <= 15 {
+	//	strengthScore += 30
+	//} else {
+	//	strengthScore += 40
+	//}
 
 	// 【复杂度组合加权】
 	//pwd长度		8-10: 0  11-13: 2 14-15: 4
@@ -128,56 +128,164 @@ func PasswordStrengthCheck(s string) int {
 	//小写字母字符数量	一个1分
 	//特殊字符_非code	一个4分
 	//特殊字符_code	一个1分
-	BoolMap := map[string]bool{
-		"Digit":  false,
-		"Symbol": false,
+	characterTypeMap := map[string]int{
+		"Digit":  0,
+		"Symbol": 0,
 		//"CodeUsuallySymbol": false,
-		"UpCharacter":   false,
-		"DownCharacter": false,
+		"UpCharacter":   0,
+		"DownCharacter": 0,
+	}
+	// Dictory
+	DICTIONARY := []string{"password", "abc123", "iloveyou", "adobe123", "123123", "sunshine", "1314520", "a1b2c3", "123qwe", "aaa111", "qweasd", "admin", "passwd", "P@ssw0rd"}
+
+	for _, v := range s {
+		if containsDigit(string(v)) {
+			characterTypeMap["Digit"]++
+		}
+		if containsSymbol(string(v)) {
+			characterTypeMap["Symbol"]++
+		}
+		if containsUpCharacter(string(v)) {
+			characterTypeMap["UpCharacter"]++
+		}
+		if containsDownCharacter(string(v)) {
+			characterTypeMap["DownCharacter"]++
+		}
 	}
 
-	// 这个特殊字符没有 `编程必须字符`
+	// 加分
 	if containsDigit(s) {
-		BoolMap["Digit"] = true
-		strengthScore += 5
-	}
-	if containsSymbol(s) {
-		// 这个特殊字符是 `编程必须字符`
-		BoolMap["Symbol"] = true
-		strengthScore += 10
-	}
-	//if containsCodeUsuallySymbol(s) {
-	//	BoolMap["CodeUsuallySymbol"] = true
-	//}
-	if containsUpCharacter(s) {
-		BoolMap["UpCharacter"] = true
-		strengthScore += 5
+		score++
 	}
 	if containsDownCharacter(s) {
-		BoolMap["DownCharacter"] = true
-		strengthScore += 5
+		score++
+	}
+	if containsUpCharacter(s) {
+		score++
+	}
+	if containsAllSymbol(s) {
+		score++
 	}
 
-	return strengthScore
-	// 结合 ShortPasswordCheck(finding.Secret) 算法，开始进行分级分数
-	// 分数区间: [8,64] 若低于8说明非ascii，应舍弃
-	// EASY 	[8,12)
-	// MIDIUM	[12,20)
-	// STRONG	[20,28)
-	// VERY_STRONG	[28, 59)
-	// EXTREMELY_STRONG	[59,64]
-	//if 8 <= strengthScore && strengthScore < 12 {
-	//	return EASY
-	//} else if 12 <= strengthScore && strengthScore < 20 {
-	//	return MIDIUM
-	//} else if 20 <= strengthScore && strengthScore < 28 {
-	//	return STRONG
-	//} else if 28 <= strengthScore && strengthScore < 59 {
-	//	return VERY_STRONG
-	//} else if 59 <= strengthScore && strengthScore <= 64 {
-	//	return EXTREMELY_STRONG
-	//}
-	//return -1
+	if length > 4 && characterTypeMap["Digit"] > 0 && characterTypeMap["DownCharacter"] > 0 || characterTypeMap["Digit"] > 0 && characterTypeMap["UpCharacter"] > 0 || characterTypeMap["Digit"] > 0 && characterTypeMap["Symbol"] > 0 || characterTypeMap["DownCharacter"] > 0 && characterTypeMap["UpCharacter"] > 0 || characterTypeMap["DownCharacter"] > 0 && characterTypeMap["Symbol"] > 0 || characterTypeMap["UpCharacter"] > 0 && characterTypeMap["Symbol"] > 0 {
+		score++
+	}
+
+	if length > 6 && characterTypeMap["Digit"] > 0 && characterTypeMap["DownCharacter"] > 0 && characterTypeMap["UpCharacter"] > 0 || characterTypeMap["Digit"] > 0 && characterTypeMap["DownCharacter"] > 0 && characterTypeMap["Symbol"] > 0 || characterTypeMap["Digit"] > 0 && characterTypeMap["UpCharacter"] > 0 && characterTypeMap["Symbol"] > 0 || characterTypeMap["DownCharacter"] > 0 && characterTypeMap["UpCharacter"] > 0 && characterTypeMap["Symbol"] > 0 {
+		score++
+	}
+
+	if length > 8 && characterTypeMap["Digit"] > 0 && characterTypeMap["DownCharacter"] > 0 && characterTypeMap["UpCharacter"] > 0 && characterTypeMap["Symbol"] > 0 {
+		score++
+	}
+
+	if length > 6 && characterTypeMap["Digit"] >= 3 && characterTypeMap["DownCharacter"] >= 3 || characterTypeMap["Digit"] >= 3 && characterTypeMap["UpCharacter"] >= 3 || characterTypeMap["Digit"] >= 3 && characterTypeMap["Symbol"] >= 2 || characterTypeMap["DownCharacter"] >= 3 && characterTypeMap["UpCharacter"] >= 3 || characterTypeMap["DownCharacter"] >= 3 && characterTypeMap["Symbol"] >= 2 || characterTypeMap["UpCharacter"] >= 3 && characterTypeMap["Symbol"] >= 2 {
+		score++
+	}
+
+	if length > 8 && characterTypeMap["Digit"] >= 2 && characterTypeMap["DownCharacter"] >= 2 && characterTypeMap["UpCharacter"] >= 2 || characterTypeMap["Digit"] >= 2 && characterTypeMap["DownCharacter"] >= 2 && characterTypeMap["Symbol"] >= 2 || characterTypeMap["Digit"] >= 2 && characterTypeMap["UpCharacter"] >= 2 && characterTypeMap["Symbol"] >= 2 || characterTypeMap["DownCharacter"] >= 2 && characterTypeMap["UpCharacter"] >= 2 && characterTypeMap["Symbol"] >= 2 {
+		score++
+	}
+
+	if length > 10 && characterTypeMap["Digit"] >= 2 && characterTypeMap["DownCharacter"] >= 2 && characterTypeMap["UpCharacter"] >= 2 && characterTypeMap["Symbol"] >= 2 {
+		score++
+	}
+
+	if characterTypeMap["Symbol"] >= 3 {
+		score++
+	}
+	if characterTypeMap["Symbol"] >= 6 {
+		score++
+	}
+
+	if length > 12 {
+		score++
+		if length >= 16 {
+			score++
+		}
+	}
+
+	//减分项
+	if strings.Contains("abcdefghijklmnopqrstuvwxyz", s) || strings.Contains("ABCDEFGHIJKLMNOPQRSTUVWXYZ", s) {
+		score--
+	}
+	if strings.Contains("qwertyuiop", s) || strings.Contains("asdfghjkl", s) || strings.Contains("zxcvbnm", s) {
+		score--
+	}
+	if IsNum(s) && (strings.Contains("01234567890", s) || strings.Contains("09876543210", s)) {
+		score--
+	}
+
+	if characterTypeMap["Digit"] == length || characterTypeMap["DownCharacter"] == length || characterTypeMap["UpCharacter"] == length {
+		score--
+	}
+
+	if length%2 == 0 { // aaabbb
+		part1 := s[0 : length/2]
+		part2 := s[length/2:]
+		if part1 == part2 {
+			score--
+		}
+		if len(part1) == 1 && len(part2) == 1 {
+			score--
+		}
+	}
+	if length%3 == 0 { // ababab
+		part1 := s[0 : length/3]
+		part2 := s[length/3 : (length/3)*2]
+		part3 := s[(length/3)*2:]
+		if part1 == part2 && part2 == part3 {
+			score--
+		}
+	}
+
+	if IsNum(s) && length >= 6 { // 19881010 or 881010
+		year := 0
+		var size int
+		if length == 8 || length == 6 {
+			year, _ = strconv.Atoi(s[0 : length-4])
+		}
+		if year != 0 {
+			size = len(string(year))
+		} else {
+			size = 0
+		}
+		month, _ := strconv.Atoi(s[size : size+2])
+		day, _ := strconv.Atoi(s[size+2:])
+
+		if year >= 1950 && year < 2050 && month >= 1 && month <= 12 && day >= 1 && day <= 31 {
+			score--
+		}
+	}
+
+	if len(DICTIONARY) > 0 { // dictionary
+		for _, v := range DICTIONARY {
+			if strings.Contains(v, s) {
+				score--
+				break
+			}
+		}
+	}
+
+	if length <= 6 {
+		score--
+		if length <= 4 {
+			if length <= 3 {
+				score = 0
+			}
+		}
+	}
+
+	if score < 0 {
+		score = 0
+	}
+
+	return score
+}
+
+func IsNum(s string) bool {
+	_, err := strconv.ParseFloat(s, 64)
+	return err == nil
 }
 
 // 针对短密码，具备 {大写字母、小写字母、数字、特殊字符} 3/4的检查
@@ -244,6 +352,25 @@ func containsDigit(s string) bool {
 	for _, c := range s {
 		switch c {
 		case '1', '2', '3', '4', '5', '6', '7', '8', '9', '0':
+			return true
+		}
+
+	}
+	return false
+}
+
+// 判断字符串 是否包含 `全特殊字符`
+func containsAllSymbol(s string) bool {
+	for _, c := range s {
+		switch c {
+		case '!', '"', '#', '$', '%', '\'', '(', ')', '.', '_', '-',
+			'*', '+', ',',
+			'/', '\\',
+			':', ';', '<', '=', '>', '?', '@', '[', ']',
+			'^', '`',
+			'{', '|',
+			'}',
+			'~':
 			return true
 		}
 
@@ -378,12 +505,11 @@ func IsWords(s string) bool {
 		return false
 	}
 
-	// HumanbeingCanReadWordsNum 是单词列表中 标记为 识别为单词的字符串
+	// `HumanbeingCanReadWordsNum` 是 `单词列表`中 标记为 `识别为单词的字符串` 的数量
 	var HumanbeingCanReadWordsNum = 0
 	for _, single := range wordListTotal {
 		if strings.Contains(wordListText, strings.ToLower(single)) {
 			HumanbeingCanReadWordsNum++
-
 		} else {
 			if len(single) >= 8 {
 				// 这类长单词通常有着tion 等一类的后缀，通常我这里去除一下后缀让他看看能不能识别
