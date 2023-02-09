@@ -274,7 +274,7 @@ func (d *Detector) detectRule(fragment Fragment, rule config.Rule) []report.Find
 
 			finding.ScoreStrength = PasswordStrengthCheck(finding.Secret)
 			// 如果没有遇到 3/4 则不计入统计
-			if finding.ScoreStrength < 0 {
+			if finding.ScoreStrength < 1 {
 				continue
 			}
 		} else {
