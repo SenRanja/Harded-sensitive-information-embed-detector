@@ -7,7 +7,7 @@ do
     echo "扫描地址: $file"
     if test -d $file
     then
-        echo `/home/syj/SecretDetection detect --no-git -s $file -f csv -r /home/syj/shenyanjian/$file-WithoutGit.csv`
+        /home/syj/SecretDetection detect --no-git -s $file -f csv -r /home/syj/shenyanjian/$file-WithoutGit.csv
     fi
     echo "结束时间" `date "+%H:%M:%S"`
 done
