@@ -274,7 +274,7 @@ func (d *Detector) detectRule(fragment Fragment, rule config.Rule) []report.Find
 
 			finding.ScoreStrength = PasswordStrengthCheck(finding.Secret)
 			// 如果没有遇到 3/4 则不计入统计
-			if finding.ScoreStrength < 25 {
+			if finding.ScoreStrength < 0 {
 				continue
 			}
 		} else {
@@ -290,7 +290,7 @@ func (d *Detector) detectRule(fragment Fragment, rule config.Rule) []report.Find
 
 				if rule.RuleID == "generic-high-checkout" {
 					finding.Secret = TrimCustomCharacter(finding.Secret)
-
+					finding.ScoreStrength = PasswordStrengthCheck(finding.Secret)
 					// 【高长度密钥计算，大于8位】
 					// 这里包含数字才会认为是匹配到的东西，我感觉不太科学，故注释
 					//if !containsDigit(secret) {
