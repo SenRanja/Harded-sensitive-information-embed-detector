@@ -242,9 +242,11 @@ func (d *Detector) detectRule(fragment Fragment, rule config.Rule) []report.Find
 		if finding.Secret != "" && strings.HasPrefix(rule.RuleID, "generic") {
 			finding.Secret = TrimDoubleQuote(finding.Secret)
 		}
+
 		// 如果认为不是凭证，就让他continue；如果检测是凭证，就让他进入
 		// `长密码`和`短密码` 分开对待
 		if rule.RuleID == "generic-high-checkout-short-secret" {
+			// 短密码规则
 			finding.Secret = TrimCustomCharacter(finding.Secret)
 			entropy := shannonEntropy(finding.Secret)
 			finding.Entropy = float32(entropy)
@@ -252,6 +254,18 @@ func (d *Detector) detectRule(fragment Fragment, rule config.Rule) []report.Find
 				if entropy <= rule.Entropy {
 					continue
 				}
+			}
+
+			if WeakPasswordTop100Detect(finding.Secret) {
+				// 弱密码top100检测
+				findings = append(findings, finding)
+				continue
+			}
+
+			if KeyboardWalkDetect(finding.Secret) {
+				// 检测到短密码，就计入统计
+				findings = append(findings, finding)
+				continue
 			}
 
 			// 此段先根据密码中是否有2项以上内容，来直接过滤一部分非密钥的密码
@@ -273,11 +287,13 @@ func (d *Detector) detectRule(fragment Fragment, rule config.Rule) []report.Find
 			}
 
 			finding.ScoreStrength = PasswordStrengthCheck(finding.Secret)
-			// 如果没有遇到 3/4 则不计入统计
+			// 如果密码复杂度不达 3/4 则不计入统计
 			if finding.ScoreStrength < 1 {
 				continue
 			}
 		} else {
+			// 非密码规则
+
 			// 计算香农熵
 			entropy := shannonEntropy(finding.Secret)
 			finding.Entropy = float32(entropy)
@@ -289,6 +305,14 @@ func (d *Detector) detectRule(fragment Fragment, rule config.Rule) []report.Find
 				}
 
 				if rule.RuleID == "generic-high-checkout" {
+					// 长密码规则
+
+					if KeyboardWalkDetect(finding.Secret) {
+						// 检测到短密码，就计入统计
+						findings = append(findings, finding)
+						continue
+					}
+
 					finding.Secret = TrimCustomCharacter(finding.Secret)
 					finding.ScoreStrength = PasswordStrengthCheck(finding.Secret)
 					// 【高长度密钥计算，大于8位】
@@ -303,7 +327,6 @@ func (d *Detector) detectRule(fragment Fragment, rule config.Rule) []report.Find
 						//if UpDownRate <= 0.4 {
 						continue
 					}
-
 				}
 
 			}
@@ -463,6 +486,14 @@ func (d *Detector) DetectFiles(source string) ([]report.Finding, error) {
 	return d.findings, nil
 }
 
+//var dstFile *os.File
+//func init() {
+//	// 我看看AC生成的有些啥
+//	dstFile, _ = os.OpenFile("C:\\Users\\ranja\\Downloads\\ac.txt", os.O_WRONLY|os.O_APPEND, 0666)
+//
+//	// Over
+//}
+
 // Detect scans the given fragment and returns a list of findings
 // DetectGit() 和 DetectFiles() 都会调用这里
 func (d *Detector) Detect(fragment Fragment) []report.Finding {
@@ -492,34 +523,33 @@ func (d *Detector) Detect(fragment Fragment) []report.Finding {
 	// 不清楚这里是为了快速检出什么，我看下面循环里是 password 字符串
 	// 这里传入文件的源码，然后，matches 是特定算法返回的多个值，然后给了map
 	matches := d.prefilter.FindAll(normalizedRaw)
+
 	for _, m := range matches {
-		//fmt.Println(normalizedRaw[m.Start():m.End()])
+		//dstFile.WriteString(normalizedRaw[m.Start():m.End()] + "\n")
 		fragment.keywords[normalizedRaw[m.Start():m.End()]] = true
 	}
 
 	// 这里进行[[rule]]遍历，进行规则匹配，检测到关键字就把`行`加入findings
 	for _, rule := range d.Config.Rules {
-		findings = append(findings, d.detectRule(fragment, rule)...)
-		//if len(rule.Keywords) == 0 {
-		//	// if not keywords are associated with the rule always scan the
-		//	// fragment using the rule
-		//	// [[rule]]中如果没有关键字，就直接检测然后返回
-		//	findings = append(findings, d.detectRule(fragment, rule)...)
-		//} else {
-		//	fragmentContainsKeyword := false
-		//	// check if keywords are in the fragment
-		//
-		//	// 进行[[rule]]中的keywords遍历
-		//	// rule.keyword 要 被检测是否和 fragment.keyword 对应
-		//	for _, k := range rule.Keywords {
-		//		if _, ok := fragment.keywords[strings.ToLower(k)]; ok {
-		//			fragmentContainsKeyword = true
-		//		}
-		//	}
-		//	if fragmentContainsKeyword {
-		//		findings = append(findings, d.detectRule(fragment, rule)...)
-		//	}
-		//}
+		if len(rule.Keywords) == 0 {
+			// if not keywords are associated with the rule always scan the
+			// fragment using the rule
+			// [[rule]]中如果没有关键字，就直接检测然后返回
+			findings = append(findings, d.detectRule(fragment, rule)...)
+		} else {
+			fragmentContainsKeyword := false
+			// check if keywords are in the fragment
+			for _, rk := range rule.Keywords {
+				if _, ok := fragment.keywords[strings.ToLower(rk)]; ok {
+					fragmentContainsKeyword = true
+					break
+				}
+			}
+
+			if fragmentContainsKeyword {
+				findings = append(findings, d.detectRule(fragment, rule)...)
+			}
+		}
 	}
 	return filter(findings, d.Redact)
 }

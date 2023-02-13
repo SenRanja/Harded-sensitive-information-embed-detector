@@ -2807,16 +2807,74 @@ keywords = [
 ]
 
 [[rules]]
-description = "高检出模糊匹配--模糊匹配"
-id = "generic-high-checkout"
-regex = '''(?i)(?:['|\"|:|=]{1,3})((?i)[\w]{8,70})(?:['|\"|\n|\r|\s|\x60]|$)'''
+description = "generic-high-checkout-64--hash"
+id = "64hash"
+regex = '''(?i)(?:['|"|:|=| ]{1,3})((?i)[\w-]{64,})(?:[;|\)| |,|'|"|\n|\r|\s|\x60])'''
+secretGroup = 1
+entropy = 3.6
+
+[[rules]]
+description = "generic-high-checkout-32-64hash"
+id = "64hash"
+regex = '''(?i)(?:['|"|:|=| ]{1,3})((?i)[\w-]{32,64})(?:[;|\)| |,|'|"|\n|\r|\s|\x60])'''
 secretGroup = 1
 entropy = 4.1
+
+
+
+[[rules]]
+description = "高长度凭证检出"
+id = "generic-high-checkout"
+regex = '''(?i)(?:['|"|:|=| ]{1,3})((?i)[\w!@#$%^&*~`]{16,70})(?:[;|\)| |,|'|"|\n|\r|\s|\x60])'''
+secretGroup = 1
+entropy = 3.3
 keywords = [
-    "password","access_key","access_token","admin_pass","admin_user","algolia_admin_key","algolia_api_key","alias_pass","alicloud_access_key","amazon_secret_access_key","amazonaws","ansible_vault_password","aos_key","api_key","api_key_secret","api_key_sid","api_secret","api.googlemaps AIza","apidocs","apikey","apiSecret","app_debug","app_id","app_key","app_log_level","app_secret","appkey","appkeysecret","application_key","appsecret","appspot","auth_token","authorizationToken","authsecret","aws_access","aws_access_key_id","aws_bucket","aws_key","aws_secret","aws_secret_key","aws_token","AWSSecretKey","b2_app_key","bashrc password","bintray_apikey","bintray_gpg_password","bintray_key","bintraykey","bluemix_api_key","bluemix_pass","browserstack_access_key","bucket_password","bucketeer_aws_access_key_id","bucketeer_aws_secret_access_key","built_branch_deploy_key","bx_password","cache_driver","cache_s3_secret_key","cattle_access_key","cattle_secret_key","certificate_password","ci_deploy_password","client_secret","client_zpk_secret_key","clojars_password","cloud_api_key","cloud_watch_aws_access_key","cloudant_password","cloudflare_api_key","cloudflare_auth_key","cloudinary_api_secret","cloudinary_name","codecov_token","config","conn.login","connectionstring","consumer_key","consumer_secret","credentials","cypress_record_key","database_password","database_schema_test","datadog_api_key","datadog_app_key","db_password","db_server","db_username","dbpasswd","dbpassword","dbuser","deploy_password","digitalocean_ssh_key_body","digitalocean_ssh_key_ids","docker_hub_password","docker_key","docker_pass","docker_passwd","docker_password","dockerhub_password","dockerhubpassword","dot-files","dotfiles","droplet_travis_password","dynamoaccesskeyid","dynamosecretaccesskey","elastica_host","elastica_port","elasticsearch_password","encryption_key","encryption_password","env.heroku_api_key","env.sonatype_password","eureka.awssecretkey",
+    "password","passwd","pwd","psd",
+    "secret","sec",
+    "access","acs",
+    "key","appkey",
+    "admin","adm",
+    "root",
+    "auth",
+    "test",
+    "user","usr",
+    "pub",
+    "api",
+    "token",
+    "config",
+    "login",
+    "db",
+    "conn",
+    "credential","cred",
+    "ssh","cloud",
 ]
 
-
+[[rules]]
+description = "低长度凭证检出"
+id = "generic-high-checkout-short-secret"
+regex = '''(?i)(?:['|"|:|=| ]{1,3})((?i)[\w!@#$%^&*~`]{8,15})(?:[;|\)| |,|'|"|\n|\r|\s|\x60])'''
+secretGroup = 1
+entropy = 2.6
+keywords = [
+    "password","passwd","pwd","psd",
+    "secret","sec",
+    "access","acs",
+    "key","appkey",
+    "admin","adm",
+    "root",
+    "auth",
+    "test",
+    "user","usr",
+    "pub",
+    "api",
+    "token",
+    "config",
+    "login",
+    "db",
+    "conn",
+    "credential","cred",
+    "ssh","cloud",
+]
 
 
 

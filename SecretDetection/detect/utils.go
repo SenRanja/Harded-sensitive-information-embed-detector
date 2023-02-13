@@ -464,6 +464,25 @@ func UpAndDownRate(s string) float32 {
 	return float32(InterruptNum) / float32(len(s))
 }
 
+func KeyboardWalkDetect(s string) bool {
+	for k, _ := range s {
+		if k > len(s)-4 {
+			return false
+		}
+		if strings.Contains(keyboardListText, strings.ToLower(s[k:k+4])) {
+			return true
+		}
+	}
+	return false
+}
+
+func WeakPasswordTop100Detect(s string) bool {
+	if strings.Contains(weakPasswordTop100BytesText, s) {
+		return true
+	}
+	return false
+}
+
 func IsWords(s string) bool {
 	// 返回 false表示识别是个密钥，返回 true表示非密钥而变量名
 	// 返回越高，说明识别率越高
@@ -494,14 +513,12 @@ func IsWords(s string) bool {
 	wordListTotal = append(wordListTotal, allCaptainAlphaMatchList...)
 	// 切割数量太高，则认为过于琐碎，应该是密钥，返回0
 	// 切割数量过短，则认为过于琐碎，应该是密钥，返回0
-	if len(wordListTotal) == 1 {
-		return false
-	}
+
 	if len(wordListTotal) >= 6 {
 		return false
 	}
 	// 满足密码复杂度
-	if len(wordListTotal) >= 2 && containsSymbol(s) {
+	if len(wordListTotal) >= 2 && containsSymbol(s) && containsDigit(s) {
 		return false
 	}
 
@@ -538,12 +555,16 @@ func IsWords(s string) bool {
 	// 4单词3识别 0.75				>0.76
 	// 5单词 3识别 0.6 4识别 0.8 		>0.81
 	switch len(wordListTotal) {
+	case 1:
+		if rate > 0.9 {
+			return true
+		}
 	case 2:
-		if rate > 0.51 {
+		if rate > 0.49 {
 			return true
 		}
 	case 3:
-		if rate > 0.67 {
+		if rate > 0.68 {
 			return true
 		}
 	case 4:
@@ -551,7 +572,7 @@ func IsWords(s string) bool {
 			return true
 		}
 	case 5:
-		if rate > 0.81 {
+		if rate > 0.7 {
 			return true
 		}
 	}
@@ -563,6 +584,8 @@ var lowAlphaMatchRegexp, allCaptainAlphaMatchRegexp *regexp.Regexp
 var err error
 
 var wordListText string
+var keyboardListText string
+var weakPasswordTop100BytesText string
 
 func init() {
 	// 正则表达式
@@ -577,14 +600,26 @@ func init() {
 		panic(fmt.Errorf("正则表达式编译出现错误"))
 	}
 
-	//var wordFilePath = ""
-	//wordListTextBytes, err := ioutil.ReadFile(wordFilePath)
+	// 读取单词本文件
 	wordListTextBytes, err := bindata.Asset("american-english")
-
 	if err != nil {
 		fmt.Println("单词本文件读取失败")
 	}
 	wordListText = strings.ToLower(string(wordListTextBytes))
+
+	// 读取键盘Walk文件
+	keyboardListTextBytes, err := bindata.Asset("KeyboardWalk.txt")
+	if err != nil {
+		fmt.Println("键盘Walk字典读取失败")
+	}
+	keyboardListText = strings.ToLower(string(keyboardListTextBytes))
+
+	// 弱密码本检测
+	weakPasswordTop100Bytes, err := bindata.Asset("passwordtop100.txt")
+	if err != nil {
+		fmt.Println("弱密码本字典读取失败")
+	}
+	weakPasswordTop100BytesText = strings.ToLower(string(weakPasswordTop100Bytes))
 
 }
 
