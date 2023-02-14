@@ -2818,7 +2818,7 @@ entropy = 2.5
 [[rules]]
 description = "邮箱"
 id = "email"
-regex = '''(?i)(?:['|"|:|=| ]{1,3})(\w+([-+.]\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*)(?:[;|\)| |,|'|"|\n|\r|\s|\x60])'''
+regex = '''(?i)(?:['|"|:|=| ]{1,3})(\w+([-+.]\w+)*@\w+[\w-]+\.(cn|com|xyz|top|net|tech|org|gov|ink|edu|int|mil|pub|red|biz|co|tv|mobi|travel|cc|pro|info|name|coop|aero|eu|kr|jp))(?:[;|\)| |,|'|"|\n|\r|\s|\x60])'''
 secretGroup = 1
 entropy = 3.6
 
@@ -2839,7 +2839,7 @@ entropy = 2.2
 [[rules]]
 description = "文件路径"
 id = "filepath"
-regex = '''(?i)(?:['|"|:|=| ]{1,3})([\w-/\\]+[/\\]+\w+\.?(\w+))(?:[;|\)| |,|'|"|\n|\r|\s|\x60])'''
+regex = '''(?i)(?:['|"|:|=| ]{1,3})([\w-\.:/\\]+[/\\]+\w+([/\\]+\w+)+\.?\w+)(?:[;|\)| |,|'|"|\n|\r|\s|\x60])'''
 secretGroup = 1
 entropy = 2.5
 
@@ -2857,10 +2857,11 @@ regex = '''(?i)(?:['|"|:|=| ]{1,3})((\w+):\/\/[^\s]*)(?:[;|\)| |,|'|"|\n|\r|\s|\
 secretGroup = 1
 entropy = 2.5
 
+
 [[rules]]
 description = "高长度凭证检出"
 id = "generic-high-checkout"
-regex = '''(?i)(?:['|"|:|=| ]{1,3})((?i)[\w!@#$%^&*~`]{16,28})(?:[;|\)| |,|'|"|\n|\r|\s|\x60])'''
+regex = '''(?i)(?:['|"|:|=| ]{1,3})((?i)[`*~%^$!&@#\w]{16,28})(?:[;|\)| |,|'|"|\n|\r|\s|\x60])'''
 secretGroup = 1
 entropy = 3.3
 keywords = [
@@ -2884,7 +2885,7 @@ keywords = [
 [[rules]]
 description = "低长度凭证检出"
 id = "generic-high-checkout-short-secret"
-regex = '''(?i)(?:['|"|:|=| ]{1,3})((?i)[\w~`!@#$%^&*-_*()]{8,15})(?:[;|\)| |,|'|"|\n|\r|\s|\x60])'''
+regex = '''(?i)(?:['|"|:|=| ]{1,3})((?i)[`*~%^$!&@#\w]{8,15})(?:[;|\)| |,|'|"|\n|\r|\s|\x60])'''
 secretGroup = 1
 entropy = 2.6
 keywords = [

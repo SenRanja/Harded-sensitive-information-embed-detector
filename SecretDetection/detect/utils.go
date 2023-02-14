@@ -82,7 +82,7 @@ func TrimDoubleQuote(s string) string {
 
 // 递归去除 前或后的 引号
 func TrimCustomCharacter(s string) string {
-	trimCharacters := []string{"\"", "*", "@", "$", "'", "`", "_", ",", ":", ";", "(", ")", "?", "{", "}", "[", "]"}
+	trimCharacters := []string{"\"", "*", "%", "@", "$", "'", "`", "_", ",", ":", ";", "(", ")", "?", "{", "}", "[", "]"}
 	for _, v := range trimCharacters {
 		if strings.HasPrefix(s, v) {
 			return TrimCustomCharacter(strings.TrimLeft(s, v))
@@ -340,6 +340,36 @@ func filter(findings []report.Finding, redact bool) []report.Finding {
 		}
 	}
 	return retFindings
+}
+
+// 过滤`静态资源`和`http协议的url`
+func IsStaticFilePath(s string) bool {
+	if strings.Contains(s, "http") {
+		return true
+	}
+	staticPaths := []string{
+		"\\r",
+		"\\n",
+		".js",
+		".css",
+		".html",
+		".wav",
+		".mp3",
+		".mp4",
+		".ts",
+		".tx",
+		".gif",
+		".png",
+		".jpg",
+		".tx",
+	}
+	for _, staticPath := range staticPaths {
+		if strings.Contains(s, staticPath) {
+			return true
+		}
+
+	}
+	return false
 }
 
 func printFinding(f report.Finding) {

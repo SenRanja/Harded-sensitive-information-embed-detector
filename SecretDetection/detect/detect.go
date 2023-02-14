@@ -256,6 +256,8 @@ func (d *Detector) detectRule(fragment Fragment, rule config.Rule) []report.Find
 				}
 			}
 
+			finding.ScoreStrength = PasswordStrengthCheck(finding.Secret)
+
 			if WeakPasswordTop100Detect(finding.Secret) {
 				// 弱密码top100检测
 				findings = append(findings, finding)
@@ -286,9 +288,22 @@ func (d *Detector) detectRule(fragment Fragment, rule config.Rule) []report.Find
 				continue
 			}
 
-			finding.ScoreStrength = PasswordStrengthCheck(finding.Secret)
 			// 如果密码复杂度不达 3/4 则不计入统计
-			if finding.ScoreStrength < 1 {
+			if finding.ScoreStrength < 5 {
+				continue
+			}
+		} else if rule.RuleID == "filepath" {
+			if IsStaticFilePath(finding.Secret) {
+				continue
+			} else {
+				findings = append(findings, finding)
+				continue
+			}
+		} else if rule.RuleID == "url" {
+			if IsStaticFilePath(finding.Secret) {
+				continue
+			} else {
+				findings = append(findings, finding)
 				continue
 			}
 		} else {
@@ -306,6 +321,8 @@ func (d *Detector) detectRule(fragment Fragment, rule config.Rule) []report.Find
 
 				if rule.RuleID == "generic-high-checkout" {
 					// 长密码规则
+					finding.Secret = TrimCustomCharacter(finding.Secret)
+					finding.ScoreStrength = PasswordStrengthCheck(finding.Secret)
 
 					if KeyboardWalkDetect(finding.Secret) {
 						// 检测到短密码，就计入统计
@@ -313,8 +330,6 @@ func (d *Detector) detectRule(fragment Fragment, rule config.Rule) []report.Find
 						continue
 					}
 
-					finding.Secret = TrimCustomCharacter(finding.Secret)
-					finding.ScoreStrength = PasswordStrengthCheck(finding.Secret)
 					// 【高长度密钥计算，大于8位】
 					// 这里包含数字才会认为是匹配到的东西，我感觉不太科学，故注释
 					//if !containsDigit(secret) {
@@ -325,6 +340,9 @@ func (d *Detector) detectRule(fragment Fragment, rule config.Rule) []report.Find
 
 					if UpDownRate <= 0.4 || isWords {
 						//if UpDownRate <= 0.4 {
+						continue
+					}
+					if finding.ScoreStrength < 5 {
 						continue
 					}
 				}
@@ -485,14 +503,6 @@ func (d *Detector) DetectFiles(source string) ([]report.Finding, error) {
 	// 直接返回给 cmd/detect.go 的最终结果就是 findings
 	return d.findings, nil
 }
-
-//var dstFile *os.File
-//func init() {
-//	// 我看看AC生成的有些啥
-//	dstFile, _ = os.OpenFile("C:\\Users\\ranja\\Downloads\\ac.txt", os.O_WRONLY|os.O_APPEND, 0666)
-//
-//	// Over
-//}
 
 // Detect scans the given fragment and returns a list of findings
 // DetectGit() 和 DetectFiles() 都会调用这里
