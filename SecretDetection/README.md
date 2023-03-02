@@ -39,7 +39,7 @@ keywords = [
 
 ### 打包default.toml
 
-`go-bindata.exe -pkg bindata -o n_all_kill.go default.toml american-english`
+`go-bindata.exe -pkg bindata -o n_all_kill.go passwordtop100.txt KeyboardWalk.txt default.toml american-english`
 
 # 打包
 

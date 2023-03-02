@@ -2807,56 +2807,9 @@ keywords = [
 ]
 
 
-[[rules]]
-description = "常见哈希值"
-id = "hash"
-regex = '''(?i)(?:['|"|:|=| ]{1,3})([0-9a-fA-F]{16}|[0-9a-fA-F]{32}|[0-9a-fA-F]{40}|[0-9a-fA-F]{64}|[0-9a-fA-F]{128})(?:[;|\)| |,|'|"|\n|\r|\s|\x60])'''
-secretGroup = 1
-entropy = 2.5
 
 
-[[rules]]
-description = "邮箱"
-id = "email"
-regex = '''(?i)(?:['|"|:|=| ]{1,3})(\w+([-+.]\w+)*@\w+[\w-]+\.(cn|com|xyz|top|net|tech|org|gov|ink|edu|int|mil|pub|red|biz|co|tv|mobi|travel|cc|pro|info|name|coop|aero|eu|kr|jp))(?:[;|\)| |,|'|"|\n|\r|\s|\x60])'''
-secretGroup = 1
-entropy = 3.6
-
-[[rules]]
-description = "身份证号"
-id = "idcard"
-regex = '''(?i)(?:['|"|:|=| ]{1,3})(\d{18}|\d{17}x|\d{17}X)(?:[;|\)| |,|'|"|\n|\r|\s|\x60])'''
-secretGroup = 1
-entropy = 2.3
-
-[[rules]]
-description = "腾讯QQ"
-id = "tencent QQ"
-regex = '''(?i)(?:['|"|:|=| ]{1,3})([1-9][0-9]{8,11})(?:[;|\)| |,|'|"|\n|\r|\s|\x60])'''
-secretGroup = 1
-entropy = 2.2
-
-[[rules]]
-description = "文件路径"
-id = "filepath"
-regex = '''(?i)(?:['|"|:|=| ]{1,3})([\w-\.:/\\]+[/\\]+\w+([/\\]+\w+)+\.?\w+)(?:[;|\)| |,|'|"|\n|\r|\s|\x60])'''
-secretGroup = 1
-entropy = 2.5
-
-[[rules]]
-description = "域名"
-id = "Domain Name"
-regex = '''(?i)(?:['|"|:|=| ]{1,3})([a-zA-Z0-9][-a-zA-Z0-9]{0,62}\.[a-zA-Z0-9][-a-zA-Z0-9]{0,62}\.(cn|com|xyz|top|net|tech|org|gov|ink|edu|int|mil|pub|red|biz|co|tv|mobi|travel|cc|pro|info|name|coop|aero|eu|kr|jp))(?:[;|\)| |,|'|"|\n|\r|\s|\x60])'''
-secretGroup = 1
-entropy = 2.5
-
-[[rules]]
-description = "url"
-id = "url"
-regex = '''(?i)(?:['|"|:|=| ]{1,3})((\w+):\/\/[^\s]*)(?:[;|\)| |,|'|"|\n|\r|\s|\x60])'''
-secretGroup = 1
-entropy = 2.5
-
+#---------------【密码类】----------
 
 [[rules]]
 description = "高长度凭证检出"
@@ -2877,9 +2830,6 @@ keywords = [
     "token",
     "config",
     "login",
-    "db",
-    "credential","cred",
-    "ssh","cloud",
 ]
 
 [[rules]]
@@ -2893,16 +2843,77 @@ keywords = [
     "secret",
     "access",
     "key","appkey",
-    "admin",
-    "root",
-    "auth",
+
     "user","usr",
-    "api",
-    "token",
-    "config",
     "login",
-    "db",
-    "credential","cred",
-    "ssh","cloud",
 ]
+
+
+
+# -------【个人信息部分】--------------
+
+#[[rules]]
+#description = "邮箱"
+#id = "email"
+#regex = '''(?i)(?:['|"|:|=| ]{1,3})(\w+([-]\w+)*@\w+[\w-]+\.(cn|com|xyz|top|net|tech|org|gov|ink|edu|int|mil|pub|red|biz|co|tv|mobi|travel|cc|pro|info|name|coop|aero|eu|kr|jp))(?:[;|\)| |,|'|"|\n|\r|\s|\x60])'''
+#secretGroup = 1
+#entropy = 3.6
+
+
+[[rules]]
+description = "身份证号"
+id = "idcard"
+regex = '''(?i)(?:['|"|:|=| ]{1,3})((1[1-5]|2[1-3]|3[1-7]|4[1-6]|5[0-4]|6[1-5]|[7-9]1)\d{4}(18|19|20)\d{2}((0[1-9])|(1[0-2]))(([0-2][1-9])|10|20|30|31)\d{3}[0-9Xx])(?:[;|\)| |,|'|"|\n|\r|\s|\x60])'''
+secretGroup = 1
+entropy = 2.3
+
+[[rules]]
+description = "借记卡号,银联"
+id = "debit_card_account_number"
+regex = '''(?i)(?:['|"|:|=| ]{1,3})(62\d{11,17})(?:[;|\)| |,|'|"|\n|\r|\s|\x60])'''
+secretGroup = 1
+entropy = 2.3
+
+
+[[rules]]
+description = "腾讯QQ"
+id = "tencent QQ"
+regex = '''(?i)(?:['|"|:|=| ]{1,3})([1-9][0-9]{8,11})(?:[;|\)| |,|'|"|\n|\r|\s|\x60])'''
+secretGroup = 1
+entropy = 2.2
+
+# -------【硬编码匹配】--------------
+
+#[[rules]]
+#description = "常见哈希值"
+#id = "hash"
+#regex = '''(?i)(?:['|"|:|=| ]{1,3})([0-9a-fA-F]{16}|[0-9a-fA-F]{32}|[0-9a-fA-F]{40}|[0-9a-fA-F]{64}|[0-9a-fA-F]{128})(?:[;|\)| |,|'|"|\n|\r|\s|\x60])'''
+#secretGroup = 1
+#entropy = 2.5
+
+
+#[[rules]]
+#description = "文件路径"
+#id = "filepath"
+#regex = '''(?i)(?:['|"|:|=| ]{1,3})([\w-\.:/\\]+[/\\]+\w+([/\\]+\w+)+\.?\w+)(?:[;|\)| |,|'|"|\n|\r|\s|\x60])'''
+#secretGroup = 1
+#entropy = 2.5
+
+
+# -------【相对不重要的硬编码匹配】--------------
+
+#[[rules]]
+#description = "域名"
+#id = "Domain Name"
+#regex = '''(?i)(?:['|"|:|=| ]{1,3})([a-zA-Z0-9][-a-zA-Z0-9]{0,62}\.[a-zA-Z0-9][-a-zA-Z0-9]{0,62}\.(cn|com|xyz|top|net|tech|org|gov|ink|edu|int|mil|pub|red|biz|co|tv|mobi|travel|cc|pro|info|name|coop|aero|eu|kr|jp))(?:[;|\)| |,|'|"|\n|\r|\s|\x60])'''
+#secretGroup = 1
+#entropy = 2.5
+
+#[[rules]]
+#description = "url"
+#id = "url"
+#regex = '''(?i)(?:['|"|:|=| ]{1,3})((\w+):\/\/[^\s]*)(?:[;|\)| |,|'|"|\n|\r|\s|\x60])'''
+#secretGroup = 1
+#entropy = 2.5
+
 
