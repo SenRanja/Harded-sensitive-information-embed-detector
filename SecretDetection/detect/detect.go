@@ -535,7 +535,7 @@ func (d *Detector) Detect(fragment Fragment) []report.Finding {
 	matches := d.prefilter.FindAll(normalizedRaw)
 
 	for _, m := range matches {
-		//dstFile.WriteString(normalizedRaw[m.Start():m.End()] + "\n")
+		//fmt.Println(normalizedRaw[m.Start():m.End()])
 		fragment.keywords[normalizedRaw[m.Start():m.End()]] = true
 	}
 
@@ -552,7 +552,6 @@ func (d *Detector) Detect(fragment Fragment) []report.Finding {
 			for _, rk := range rule.Keywords {
 				if _, ok := fragment.keywords[strings.ToLower(rk)]; ok {
 					fragmentContainsKeyword = true
-					break
 				}
 			}
 
