@@ -1,11 +1,9 @@
 stages:
   - test
-  - deploy
 build:
   stage: test
   script:
     - go build
   only:
     - master
-install:
-  stage: deploy
+    - dev
