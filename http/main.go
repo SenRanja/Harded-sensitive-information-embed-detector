@@ -26,11 +26,11 @@ func main() {
 	http.ListenAndServe(":"+port, mux)
 }
 
-//新建HTTP的 mux 结构体，用于进行 http.ListenAndServe() 作为第二个参数传入
+// 新建HTTP的 mux 结构体，用于进行 http.ListenAndServe() 作为第二个参数传入
 type SecretDetectionHttpStruct struct {
 }
 
-//用于实现 mux 的ServeHTTP 成员方法
+// 用于实现 mux 的ServeHTTP 成员方法
 func (mux *SecretDetectionHttpStruct) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 
 	fmt.Println("接收到HTTP连接，来自 " + r.RemoteAddr)
@@ -108,7 +108,7 @@ func static_zip_scanAction(w http.ResponseWriter, r *http.Request) {
 			}
 		}
 	}
-	fmt.Println("接收到参数: " + scan_mode + back_url)
+	fmt.Println("接收到参数: 扫描模式-" + scan_mode + " 回调地址-" + back_url)
 
 	formFile, header, err := r.FormFile("file")
 	if err != nil {

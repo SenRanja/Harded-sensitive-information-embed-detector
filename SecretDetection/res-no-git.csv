@@ -1,10 +1,0 @@
-规则ID,描述,Commit,文件位置,凭证,密码强度,香农熵,匹配内容,开始行,结束行,开始列,结束列,提交者,提交信息,提交时间,邮箱,Commit指纹
-tencent QQ,腾讯QQ,,note.txt,2409879947,0,2.45,"=2409879947",15,15,4,15,,,,,
-tencent QQ,腾讯QQ,,note.txt,479861969,0,2.42,"= ""479861969""",16,16,5,17,,,,,
-generic-high-checkout,高长度凭证检出,,note.txt,dolphininsch@edual123,8,3.92,"= ""dolphininsch@edual123""",3,3,11,35,,,,,
-idcard,身份证号,,note.txt,141181199904230017,0,2.67,"=141181199904230017",12,12,8,27,,,,,
-idcard,身份证号,,note.txt,14118119990423001x,0,2.67,"=14118119990423001x",13,13,8,27,,,,,
-idcard,身份证号,,note.txt,14118119990423001X,0,2.67,"=14118119990423001X",14,14,8,27,,,,,
-debit_card_account_number,"借记卡号,银联",,note.txt,6222025642650612579,0,2.66,"=""6222025642650612579""",25,25,8,29,,,,,
-generic-high-checkout-short-secret,低长度凭证检出,,note.txt,1qaz@WSX,7,3.00,"=1qaz@WSX",5,5,7,16,,,,,
-generic-high-checkout-short-secret,低长度凭证检出,,note.txt,RFV5tgb,6,2.81,"=$RFV5tgb",6,6,10,19,,,,,
