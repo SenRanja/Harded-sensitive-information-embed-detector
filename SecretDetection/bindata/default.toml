@@ -105,7 +105,7 @@ id = "atlassian-api-token"
 regex = '''(?i)(?:atlassian|confluence|jira)(?:[0-9a-z\-_\t .]{0,20})(?:[\s|']|[\s|"]){0,3}(?:=|>|:=|\|\|:|<=|=>|:)(?:'|\"|\s|=|\x60){0,5}([a-z0-9]{24})(?:['|\"|\n|\r|\s|\x60|;]|$)'''
 secretGroup = 1
 keywords = [
-    "atlassian","confluence","jira",
+    "atlassian","confluence","jira","jira_",
 ]
 
 [[rules]]
@@ -444,6 +444,733 @@ secretGroup = 1
 keywords = [
     "aiza",
 ]
+
+[[rules]]
+description = "VCS凭证--GitHub App Token"
+id = "github-app-token"
+regex = '''(ghu|ghs)_[0-9a-zA-Z]{36}'''
+keywords = [
+    "ghu_","ghs_",
+]
+
+[[rules]]
+description = "VCS凭证--GitHub OAuth Access Token"
+id = "github-oauth"
+regex = '''gho_[0-9a-zA-Z]{36}'''
+keywords = [
+    "gho_",
+]
+
+[[rules]]
+description = "VCS凭证--GitHub Personal Access Token"
+id = "github-pat"
+regex = '''ghp_[0-9a-zA-Z]{36}'''
+keywords = [
+    "ghp_",
+]
+
+[[rules]]
+description = "VCS凭证--GitHub Refresh Token"
+id = "github-refresh-token"
+regex = '''ghr_[0-9a-zA-Z]{36}'''
+keywords = [
+    "ghr_",
+]
+
+[[rules]]
+description = "VCS凭证--GitLab Personal Access Token"
+id = "gitlab-pat"
+regex = '''glpat-[0-9a-zA-Z\-\_]{20}'''
+keywords = [
+    "glpat-",
+]
+
+[[rules]]
+description = "VCS凭证--Gitter Access Token"
+id = "gitter-access-token"
+regex = '''(?i)(?:gitter)(?:[0-9a-z\-_\t .]{0,20})(?:[\s|']|[\s|"]){0,3}(?:=|>|:=|\|\|:|<=|=>|:)(?:'|\"|\s|=|\x60){0,5}([a-z0-9_-]{40})(?:['|\"|\n|\r|\s|\x60|;]|$)'''
+secretGroup = 1
+keywords = [
+    "gitter",
+]
+
+[[rules]]
+description = "应用凭证--GoCardless API token"
+id = "gocardless-api-token"
+regex = '''(?i)(?:gocardless)(?:[0-9a-z\-_\t .]{0,20})(?:[\s|']|[\s|"]){0,3}(?:=|>|:=|\|\|:|<=|=>|:)(?:'|\"|\s|=|\x60){0,5}(live_(?i)[a-z0-9\-_=]{40})(?:['|\"|\n|\r|\s|\x60|;]|$)'''
+secretGroup = 1
+keywords = [
+    "live_","gocardless",
+]
+
+[[rules]]
+description = "应用凭证--HashiCorp Terraform user/org API token"
+id = "hashicorp-tf-api-token"
+regex = '''(?i)[a-z0-9]{14}\.atlasv1\.[a-z0-9\-_=]{60,70}'''
+keywords = [
+    "atlasv1",
+]
+
+[[rules]]
+description = "应用凭证--Heroku API Key"
+id = "heroku-api-key"
+regex = '''(?i)(?:heroku)(?:[0-9a-z\-_\t .]{0,20})(?:[\s|']|[\s|"]){0,3}(?:=|>|:=|\|\|:|<=|=>|:)(?:'|\"|\s|=|\x60){0,5}([0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12})(?:['|\"|\n|\r|\s|\x60|;]|$)'''
+secretGroup = 1
+keywords = [
+    "heroku",
+]
+
+[[rules]]
+description = "应用凭证--HubSpot API Token"
+id = "hubspot-api-key"
+regex = '''(?i)(?:hubspot)(?:[0-9a-z\-_\t .]{0,20})(?:[\s|']|[\s|"]){0,3}(?:=|>|:=|\|\|:|<=|=>|:)(?:'|\"|\s|=|\x60){0,5}([0-9A-F]{8}-[0-9A-F]{4}-[0-9A-F]{4}-[0-9A-F]{4}-[0-9A-F]{12})(?:['|\"|\n|\r|\s|\x60|;]|$)'''
+secretGroup = 1
+keywords = [
+    "hubspot",
+]
+
+[[rules]]
+description = "应用凭证--Intercom API Token"
+id = "intercom-api-key"
+regex = '''(?i)(?:intercom)(?:[0-9a-z\-_\t .]{0,20})(?:[\s|']|[\s|"]){0,3}(?:=|>|:=|\|\|:|<=|=>|:)(?:'|\"|\s|=|\x60){0,5}([a-z0-9=_\-]{60})(?:['|\"|\n|\r|\s|\x60|;]|$)'''
+secretGroup = 1
+keywords = [
+    "intercom",
+]
+
+[[rules]]
+description = "JWT--JSON Web Token"
+id = "jwt"
+regex = '''(?i)\b(ey[0-9a-z]{30,34}\.ey[0-9a-z-\/_]{30,500}\.[0-9a-zA-Z-\/_]{10,200})(?:['|\"|\n|\r|\s|\x60|;]|$)'''
+keywords = [
+    "ey",
+]
+
+[[rules]]
+description = "应用凭证--Kraken Access Token"
+id = "kraken-access-token"
+regex = '''(?i)(?:kraken)(?:[0-9a-z\-_\t .]{0,20})(?:[\s|']|[\s|"]){0,3}(?:=|>|:=|\|\|:|<=|=>|:)(?:'|\"|\s|=|\x60){0,5}([a-z0-9\/=_\+\-]{80,90})(?:['|\"|\n|\r|\s|\x60|;]|$)'''
+secretGroup = 1
+keywords = [
+    "kraken",
+]
+
+[[rules]]
+description = "应用凭证--Kucoin Access Token"
+id = "kucoin-access-token"
+regex = '''(?i)(?:kucoin)(?:[0-9a-z\-_\t .]{0,20})(?:[\s|']|[\s|"]){0,3}(?:=|>|:=|\|\|:|<=|=>|:)(?:'|\"|\s|=|\x60){0,5}([a-f0-9]{24})(?:['|\"|\n|\r|\s|\x60|;]|$)'''
+secretGroup = 1
+keywords = [
+    "kucoin",
+]
+
+[[rules]]
+description = "应用凭证--Kucoin Secret Key"
+id = "kucoin-secret-key"
+regex = '''(?i)(?:kucoin)(?:[0-9a-z\-_\t .]{0,20})(?:[\s|']|[\s|"]){0,3}(?:=|>|:=|\|\|:|<=|=>|:)(?:'|\"|\s|=|\x60){0,5}([0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12})(?:['|\"|\n|\r|\s|\x60|;]|$)'''
+secretGroup = 1
+keywords = [
+    "kucoin",
+]
+
+[[rules]]
+description = "应用凭证--Launchdarkly Access Token"
+id = "launchdarkly-access-token"
+regex = '''(?i)(?:launchdarkly)(?:[0-9a-z\-_\t .]{0,20})(?:[\s|']|[\s|"]){0,3}(?:=|>|:=|\|\|:|<=|=>|:)(?:'|\"|\s|=|\x60){0,5}([a-z0-9=_\-]{40})(?:['|\"|\n|\r|\s|\x60|;]|$)'''
+secretGroup = 1
+keywords = [
+    "launchdarkly",
+]
+
+[[rules]]
+description = "应用凭证--Linear API Token"
+id = "linear-api-key"
+regex = '''lin_api_(?i)[a-z0-9]{40}'''
+keywords = [
+    "lin_api_",
+]
+
+[[rules]]
+description = "应用凭证--Linear Client Secret"
+id = "linear-client-secret"
+regex = '''(?i)(?:linear)(?:[0-9a-z\-_\t .]{0,20})(?:[\s|']|[\s|"]){0,3}(?:=|>|:=|\|\|:|<=|=>|:)(?:'|\"|\s|=|\x60){0,5}([a-f0-9]{32})(?:['|\"|\n|\r|\s|\x60|;]|$)'''
+secretGroup = 1
+keywords = [
+    "linear",
+]
+
+[[rules]]
+description = "应用凭证--LinkedIn Client ID"
+id = "linkedin-client-id"
+regex = '''(?i)(?:linkedin|linked-in)(?:[0-9a-z\-_\t .]{0,20})(?:[\s|']|[\s|"]){0,3}(?:=|>|:=|\|\|:|<=|=>|:)(?:'|\"|\s|=|\x60){0,5}([a-z0-9]{14})(?:['|\"|\n|\r|\s|\x60|;]|$)'''
+secretGroup = 1
+keywords = [
+    "linkedin","linked-in",
+]
+
+[[rules]]
+description = "应用凭证--LinkedIn Client secret"
+id = "linkedin-client-secret"
+regex = '''(?i)(?:linkedin|linked-in)(?:[0-9a-z\-_\t .]{0,20})(?:[\s|']|[\s|"]){0,3}(?:=|>|:=|\|\|:|<=|=>|:)(?:'|\"|\s|=|\x60){0,5}([a-z0-9]{16})(?:['|\"|\n|\r|\s|\x60|;]|$)'''
+secretGroup = 1
+keywords = [
+    "linkedin","linked-in",
+]
+
+[[rules]]
+description = "应用凭证--Lob API Key"
+id = "lob-api-key"
+regex = '''(?i)(?:lob)(?:[0-9a-z\-_\t .]{0,20})(?:[\s|']|[\s|"]){0,3}(?:=|>|:=|\|\|:|<=|=>|:)(?:'|\"|\s|=|\x60){0,5}((live|test)_[a-f0-9]{35})(?:['|\"|\n|\r|\s|\x60|;]|$)'''
+secretGroup = 1
+keywords = [
+    "test_","live_",
+]
+
+[[rules]]
+description = "应用凭证--Lob Publishable API Key"
+id = "lob-pub-api-key"
+regex = '''(?i)(?:lob)(?:[0-9a-z\-_\t .]{0,20})(?:[\s|']|[\s|"]){0,3}(?:=|>|:=|\|\|:|<=|=>|:)(?:'|\"|\s|=|\x60){0,5}((test|live)_pub_[a-f0-9]{31})(?:['|\"|\n|\r|\s|\x60|;]|$)'''
+secretGroup = 1
+keywords = [
+    "test_pub","live_pub","_pub",
+]
+
+[[rules]]
+description = "应用凭证--Mailchimp API key"
+id = "mailchimp-api-key"
+regex = '''(?i)(?:mailchimp)(?:[0-9a-z\-_\t .]{0,20})(?:[\s|']|[\s|"]){0,3}(?:=|>|:=|\|\|:|<=|=>|:)(?:'|\"|\s|=|\x60){0,5}([a-f0-9]{32}-us20)(?:['|\"|\n|\r|\s|\x60|;]|$)'''
+secretGroup = 1
+keywords = [
+    "mailchimp",
+]
+
+[[rules]]
+description = "应用凭证--Mailgun private API token"
+id = "mailgun-private-api-token"
+regex = '''(?i)(?:mailgun)(?:[0-9a-z\-_\t .]{0,20})(?:[\s|']|[\s|"]){0,3}(?:=|>|:=|\|\|:|<=|=>|:)(?:'|\"|\s|=|\x60){0,5}(key-[a-f0-9]{32})(?:['|\"|\n|\r|\s|\x60|;]|$)'''
+secretGroup = 1
+keywords = [
+    "mailgun",
+]
+
+[[rules]]
+description = "应用凭证--Mailgun public validation key"
+id = "mailgun-pub-key"
+regex = '''(?i)(?:mailgun)(?:[0-9a-z\-_\t .]{0,20})(?:[\s|']|[\s|"]){0,3}(?:=|>|:=|\|\|:|<=|=>|:)(?:'|\"|\s|=|\x60){0,5}(pubkey-[a-f0-9]{32})(?:['|\"|\n|\r|\s|\x60|;]|$)'''
+secretGroup = 1
+keywords = [
+    "mailgun",
+]
+
+[[rules]]
+description = "webhook--Mailgun webhook signing key"
+id = "mailgun-signing-key"
+regex = '''(?i)(?:mailgun)(?:[0-9a-z\-_\t .]{0,20})(?:[\s|']|[\s|"]){0,3}(?:=|>|:=|\|\|:|<=|=>|:)(?:'|\"|\s|=|\x60){0,5}([a-h0-9]{32}-[a-h0-9]{8}-[a-h0-9]{8})(?:['|\"|\n|\r|\s|\x60|;]|$)'''
+secretGroup = 1
+keywords = [
+    "mailgun",
+]
+
+[[rules]]
+description = "应用凭证--MapBox API token"
+id = "mapbox-api-token"
+regex = '''(?i)(?:mapbox)(?:[0-9a-z\-_\t .]{0,20})(?:[\s|']|[\s|"]){0,3}(?:=|>|:=|\|\|:|<=|=>|:)(?:'|\"|\s|=|\x60){0,5}(pk\.[a-z0-9]{60}\.[a-z0-9]{22})(?:['|\"|\n|\r|\s|\x60|;]|$)'''
+secretGroup = 1
+keywords = [
+    "mapbox",
+]
+
+[[rules]]
+description = "应用凭证--Mattermost Access Token"
+id = "mattermost-access-token"
+regex = '''(?i)(?:mattermost)(?:[0-9a-z\-_\t .]{0,20})(?:[\s|']|[\s|"]){0,3}(?:=|>|:=|\|\|:|<=|=>|:)(?:'|\"|\s|=|\x60){0,5}([a-z0-9]{26})(?:['|\"|\n|\r|\s|\x60|;]|$)'''
+secretGroup = 1
+keywords = [
+    "mattermost",
+]
+
+[[rules]]
+description = "应用凭证--MessageBird API token"
+id = "messagebird-api-token"
+regex = '''(?i)(?:messagebird|message-bird|message_bird)(?:[0-9a-z\-_\t .]{0,20})(?:[\s|']|[\s|"]){0,3}(?:=|>|:=|\|\|:|<=|=>|:)(?:'|\"|\s|=|\x60){0,5}([a-z0-9]{25})(?:['|\"|\n|\r|\s|\x60|;]|$)'''
+secretGroup = 1
+keywords = [
+    "messagebird","message-bird","message_bird",
+]
+
+[[rules]]
+description = "应用凭证--MessageBird client ID"
+id = "messagebird-client-id"
+regex = '''(?i)(?:messagebird|message-bird|message_bird)(?:[0-9a-z\-_\t .]{0,20})(?:[\s|']|[\s|"]){0,3}(?:=|>|:=|\|\|:|<=|=>|:)(?:'|\"|\s|=|\x60){0,5}([0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12})(?:['|\"|\n|\r|\s|\x60|;]|$)'''
+secretGroup = 1
+keywords = [
+    "messagebird","message-bird","message_bird",
+]
+
+[[rules]]
+description = "应用凭证--Netlify Access Token"
+id = "netlify-access-token"
+regex = '''(?i)(?:netlify)(?:[0-9a-z\-_\t .]{0,20})(?:[\s|']|[\s|"]){0,3}(?:=|>|:=|\|\|:|<=|=>|:)(?:'|\"|\s|=|\x60){0,5}([a-z0-9=_\-]{40,46})(?:['|\"|\n|\r|\s|\x60|;]|$)'''
+secretGroup = 1
+keywords = [
+    "netlify",
+]
+
+[[rules]]
+description = "应用凭证--New Relic ingest browser API token"
+id = "new-relic-browser-api-token"
+regex = '''(?i)(?:new-relic|newrelic|new_relic)(?:[0-9a-z\-_\t .]{0,20})(?:[\s|']|[\s|"]){0,3}(?:=|>|:=|\|\|:|<=|=>|:)(?:'|\"|\s|=|\x60){0,5}(NRJS-[a-f0-9]{19})(?:['|\"|\n|\r|\s|\x60|;]|$)'''
+secretGroup = 1
+keywords = [
+    "nrjs-",
+]
+
+[[rules]]
+description = "应用凭证--New Relic user API ID"
+id = "new-relic-user-api-id"
+regex = '''(?i)(?:new-relic|newrelic|new_relic)(?:[0-9a-z\-_\t .]{0,20})(?:[\s|']|[\s|"]){0,3}(?:=|>|:=|\|\|:|<=|=>|:)(?:'|\"|\s|=|\x60){0,5}([a-z0-9]{64})(?:['|\"|\n|\r|\s|\x60|;]|$)'''
+secretGroup = 1
+keywords = [
+    "new-relic","newrelic","new_relic",
+]
+
+[[rules]]
+description = "应用凭证--New Relic user API Key"
+id = "new-relic-user-api-key"
+regex = '''(?i)(?:new-relic|newrelic|new_relic)(?:[0-9a-z\-_\t .]{0,20})(?:[\s|']|[\s|"]){0,3}(?:=|>|:=|\|\|:|<=|=>|:)(?:'|\"|\s|=|\x60){0,5}(NRAK-[a-z0-9]{27})(?:['|\"|\n|\r|\s|\x60|;]|$)'''
+secretGroup = 1
+keywords = [
+    "nrak",
+]
+
+[[rules]]
+description = "编程语言凭证--npm access token"
+id = "npm-access-token"
+regex = '''(?i)\b(npm_[a-z0-9]{36})(?:['|\"|\n|\r|\s|\x60|;]|$)'''
+secretGroup = 1
+keywords = [
+    "npm_",
+]
+
+[[rules]]
+description = "应用凭证--Nytimes Access Token"
+id = "nytimes-access-token"
+regex = '''(?i)(?:nytimes|new-york-times,|newyorktimes)(?:[0-9a-z\-_\t .]{0,20})(?:[\s|']|[\s|"]){0,3}(?:=|>|:=|\|\|:|<=|=>|:)(?:'|\"|\s|=|\x60){0,5}([a-z0-9=_\-]{32})(?:['|\"|\n|\r|\s|\x60|;]|$)'''
+secretGroup = 1
+keywords = [
+    "nytimes","new-york-times","newyorktimes",
+]
+
+[[rules]]
+description = "应用凭证--Okta Access Token"
+id = "okta-access-token"
+regex = '''(?i)(?:okta)(?:[0-9a-z\-_\t .]{0,20})(?:[\s|']|[\s|"]){0,3}(?:=|>|:=|\|\|:|<=|=>|:)(?:'|\"|\s|=|\x60){0,5}([a-z0-9=_\-]{42})(?:['|\"|\n|\r|\s|\x60|;]|$)'''
+secretGroup = 1
+keywords = [
+    "okta",
+]
+
+[[rules]]
+description = "应用凭证--Plaid API Token"
+id = "plaid-api-token"
+regex = '''(?i)(?:plaid)(?:[0-9a-z\-_\t .]{0,20})(?:[\s|']|[\s|"]){0,3}(?:=|>|:=|\|\|:|<=|=>|:)(?:'|\"|\s|=|\x60){0,5}(access-(?:sandbox|development|production)-[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12})(?:['|\"|\n|\r|\s|\x60|;]|$)'''
+secretGroup = 1
+keywords = [
+    "plaid",
+]
+
+[[rules]]
+description = "应用凭证--Plaid Client ID"
+id = "plaid-client-id"
+regex = '''(?i)(?:plaid)(?:[0-9a-z\-_\t .]{0,20})(?:[\s|']|[\s|"]){0,3}(?:=|>|:=|\|\|:|<=|=>|:)(?:'|\"|\s|=|\x60){0,5}([a-z0-9]{24})(?:['|\"|\n|\r|\s|\x60|;]|$)'''
+secretGroup = 1
+keywords = [
+    "plaid",
+]
+
+[[rules]]
+description = "应用凭证--Plaid Secret key"
+id = "plaid-secret-key"
+regex = '''(?i)(?:plaid)(?:[0-9a-z\-_\t .]{0,20})(?:[\s|']|[\s|"]){0,3}(?:=|>|:=|\|\|:|<=|=>|:)(?:'|\"|\s|=|\x60){0,5}([a-z0-9]{30})(?:['|\"|\n|\r|\s|\x60|;]|$)'''
+secretGroup = 1
+keywords = [
+    "plaid",
+]
+
+[[rules]]
+description = "应用凭证--PlanetScale API token"
+id = "planetscale-api-token"
+regex = '''(?i)\b(pscale_tkn_(?i)[a-z0-9=\-_\.]{32,64})(?:['|\"|\n|\r|\s|\x60|;]|$)'''
+secretGroup = 1
+keywords = [
+    "pscale_tkn_",
+]
+
+[[rules]]
+description = "应用凭证--PlanetScale OAuth token"
+id = "planetscale-oauth-token"
+regex = '''(?i)\b(pscale_oauth_(?i)[a-z0-9=\-_\.]{32,64})(?:['|\"|\n|\r|\s|\x60|;]|$)'''
+secretGroup = 1
+keywords = [
+    "pscale_oauth_",
+]
+
+[[rules]]
+description = "应用凭证--PlanetScale password"
+id = "planetscale-password"
+regex = '''(?i)\b(pscale_pw_(?i)[a-z0-9=\-_\.]{32,64})(?:['|\"|\n|\r|\s|\x60|;]|$)'''
+secretGroup = 1
+keywords = [
+    "pscale_pw_",
+]
+
+[[rules]]
+description = "测试阶段API--Postman API token"
+id = "postman-api-token"
+regex = '''(?i)\b(PMAK-(?i)[a-f0-9]{24}\-[a-f0-9]{34})(?:['|\"|\n|\r|\s|\x60|;]|$)'''
+secretGroup = 1
+keywords = [
+    "pmak-",
+]
+
+[[rules]]
+description = "证书--Private Key"
+id = "private-key"
+regex = '''(?i)-----BEGIN[ A-Z0-9_-]{0,100}PRIVATE KEY-----[\s\S-]*KEY----'''
+keywords = [
+    "-----begin",
+]
+
+[[rules]]
+description = "编程语言凭证--Pulumi API token"
+id = "pulumi-api-token"
+regex = '''(?i)\b(pul-[a-f0-9]{40})(?:['|\"|\n|\r|\s|\x60|;]|$)'''
+secretGroup = 1
+keywords = [
+    "pul-",
+]
+
+[[rules]]
+description = "编程语言凭证--PyPI upload token"
+id = "pypi-upload-token"
+regex = '''pypi-AgEIcHlwaS5vcmc[A-Za-z0-9\-_]{50,1000}'''
+keywords = [
+    "pypi-ageichlwas5vcmc",
+]
+
+[[rules]]
+description = "编程语言凭证--RapidAPI Access Token"
+id = "rapidapi-access-token"
+regex = '''(?i)(?:rapidapi)(?:[0-9a-z\-_\t .]{0,20})(?:[\s|']|[\s|"]){0,3}(?:=|>|:=|\|\|:|<=|=>|:)(?:'|\"|\s|=|\x60){0,5}([a-z0-9_-]{50})(?:['|\"|\n|\r|\s|\x60|;]|$)'''
+secretGroup = 1
+keywords = [
+    "rapidapi",
+]
+
+[[rules]]
+description = "编程语言凭证--Rubygem API token"
+id = "rubygems-api-token"
+regex = '''(?i)\b(rubygems_[a-f0-9]{48})(?:['|\"|\n|\r|\s|\x60|;]|$)'''
+secretGroup = 1
+keywords = [
+    "rubygems_",
+]
+
+[[rules]]
+description = "应用凭证--Sendbird Access ID"
+id = "sendbird-access-id"
+regex = '''(?i)(?:sendbird)(?:[0-9a-z\-_\t .]{0,20})(?:[\s|']|[\s|"]){0,3}(?:=|>|:=|\|\|:|<=|=>|:)(?:'|\"|\s|=|\x60){0,5}([0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12})(?:['|\"|\n|\r|\s|\x60|;]|$)'''
+secretGroup = 1
+keywords = [
+    "sendbird",
+]
+
+[[rules]]
+description = "应用凭证--Sendbird Access Token"
+id = "sendbird-access-token"
+regex = '''(?i)(?:sendbird)(?:[0-9a-z\-_\t .]{0,20})(?:[\s|']|[\s|"]){0,3}(?:=|>|:=|\|\|:|<=|=>|:)(?:'|\"|\s|=|\x60){0,5}([a-f0-9]{40})(?:['|\"|\n|\r|\s|\x60|;]|$)'''
+secretGroup = 1
+keywords = [
+    "sendbird",
+]
+
+[[rules]]
+description = "应用凭证--SendGrid API token"
+id = "sendgrid-api-token"
+regex = '''(?i)\b(SG\.(?i)[a-z0-9=_\-\.]{66})(?:['|\"|\n|\r|\s|\x60|;]|$)'''
+secretGroup = 1
+keywords = [
+    "sg.",
+]
+
+[[rules]]
+description = "应用凭证--Sendinblue API token"
+id = "sendinblue-api-token"
+regex = '''(?i)\b(xkeysib-[a-f0-9]{64}\-(?i)[a-z0-9]{16})(?:['|\"|\n|\r|\s|\x60|;]|$)'''
+secretGroup = 1
+keywords = [
+    "xkeysib-",
+]
+
+[[rules]]
+description = "应用凭证--Sentry Access Token"
+id = "sentry-access-token"
+regex = '''(?i)(?:sentry)(?:[0-9a-z\-_\t .]{0,20})(?:[\s|']|[\s|"]){0,3}(?:=|>|:=|\|\|:|<=|=>|:)(?:'|\"|\s|=|\x60){0,5}([a-f0-9]{64})(?:['|\"|\n|\r|\s|\x60|;]|$)'''
+secretGroup = 1
+keywords = [
+    "sentry",
+]
+
+[[rules]]
+description = "应用凭证--Shippo API token"
+id = "shippo-api-token"
+regex = '''(?i)\b(shippo_(live|test)_[a-f0-9]{40})(?:['|\"|\n|\r|\s|\x60|;]|$)'''
+secretGroup = 1
+keywords = [
+    "shippo_",
+]
+
+[[rules]]
+description = "应用凭证--Shopify access token"
+id = "shopify-access-token"
+regex = '''shpat_[a-fA-F0-9]{32}'''
+keywords = [
+    "shpat_",
+]
+
+[[rules]]
+description = "应用凭证--Shopify custom access token"
+id = "shopify-custom-access-token"
+regex = '''shpca_[a-fA-F0-9]{32}'''
+keywords = [
+    "shpca_",
+]
+
+[[rules]]
+description = "应用凭证--Shopify private app access token"
+id = "shopify-private-app-access-token"
+regex = '''shppa_[a-fA-F0-9]{32}'''
+keywords = [
+    "shppa_",
+]
+
+[[rules]]
+description = "应用凭证--Shopify shared secret"
+id = "shopify-shared-secret"
+regex = '''shpss_[a-fA-F0-9]{32}'''
+keywords = [
+    "shpss_",
+]
+
+[[rules]]
+description = "应用凭证--Sidekiq Secret"
+id = "sidekiq-secret"
+regex = '''(?i)(?:BUNDLE_ENTERPRISE__CONTRIBSYS__COM|BUNDLE_GEMS__CONTRIBSYS__COM)(?:[0-9a-z\-_\t .]{0,20})(?:[\s|']|[\s|"]){0,3}(?:=|>|:=|\|\|:|<=|=>|:)(?:'|\"|\s|=|\x60){0,5}([a-f0-9]{8}:[a-f0-9]{8})(?:['|\"|\n|\r|\s|\x60|;]|$)'''
+secretGroup = 1
+keywords = [
+    "bundle_enterprise__contribsys__com","bundle_gems__contribsys__com",
+]
+
+[[rules]]
+description = "应用凭证--Sidekiq Sensitive URL"
+id = "sidekiq-sensitive-url"
+regex = '''(?i)\b(http(?:s??):\/\/)([a-f0-9]{8}:[a-f0-9]{8})@(?:gems.contribsys.com|enterprise.contribsys.com)(?:[\/|\#|\?|:]|$)'''
+secretGroup = 2
+keywords = [
+    "gems.contribsys.com","enterprise.contribsys.com",
+]
+
+[[rules]]
+description = "应用凭证--Slack token"
+id = "slack-access-token"
+regex = '''xox[baprs]-([0-9a-zA-Z]{10,48})'''
+keywords = [
+    "xoxb","xoxa","xoxp","xoxr","xoxs",
+]
+
+[[rules]]
+description = "Webhook--Slack Webhook"
+id = "slack-web-hook"
+regex = '''https:\/\/hooks.slack.com\/services\/[A-Za-z0-9+\/]{44,46}'''
+keywords = [
+    "hooks.slack.com",
+]
+
+[[rules]]
+description = "应用凭证--Square Access Token"
+id = "square-access-token"
+regex = '''(?i)\b(sq0atp-[0-9A-Za-z\-_]{22})(?:['|\"|\n|\r|\s|\x60|;]|$)'''
+keywords = [
+    "sq0atp-",
+]
+
+[[rules]]
+description = "应用凭证--Squarespace Access Token"
+id = "squarespace-access-token"
+regex = '''(?i)(?:squarespace)(?:[0-9a-z\-_\t .]{0,20})(?:[\s|']|[\s|"]){0,3}(?:=|>|:=|\|\|:|<=|=>|:)(?:'|\"|\s|=|\x60){0,5}([0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12})(?:['|\"|\n|\r|\s|\x60|;]|$)'''
+secretGroup = 1
+keywords = [
+    "squarespace",
+]
+
+[[rules]]
+description = "应用凭证--Stripe"
+id = "stripe-access-token"
+regex = '''(?i)(sk|pk)_(test|live)_[0-9a-z]{10,32}'''
+keywords = [
+    "sk_test","pk_test","sk_live","pk_live",
+]
+
+[[rules]]
+description = "应用凭证--SumoLogic Access ID"
+id = "sumologic-access-id"
+regex = '''(?i)(?:sumo)(?:[0-9a-z\-_\t .]{0,20})(?:[\s|']|[\s|"]){0,3}(?:=|>|:=|\|\|:|<=|=>|:)(?:'|\"|\s|=|\x60){0,5}([a-z0-9]{14})(?:['|\"|\n|\r|\s|\x60|;]|$)'''
+secretGroup = 1
+keywords = [
+    "sumo",
+]
+
+[[rules]]
+description = "应用凭证--SumoLogic Access Token"
+id = "sumologic-access-token"
+regex = '''(?i)(?:sumo)(?:[0-9a-z\-_\t .]{0,20})(?:[\s|']|[\s|"]){0,3}(?:=|>|:=|\|\|:|<=|=>|:)(?:'|\"|\s|=|\x60){0,5}([a-z0-9]{64})(?:['|\"|\n|\r|\s|\x60|;]|$)'''
+secretGroup = 1
+keywords = [
+    "sumo",
+]
+
+[[rules]]
+description = "应用凭证--Travis CI Access Token"
+id = "travisci-access-token"
+regex = '''(?i)(?:travis)(?:[0-9a-z\-_\t .]{0,20})(?:[\s|']|[\s|"]){0,3}(?:=|>|:=|\|\|:|<=|=>|:)(?:'|\"|\s|=|\x60){0,5}([a-z0-9]{22})(?:['|\"|\n|\r|\s|\x60|;]|$)'''
+secretGroup = 1
+keywords = [
+    "travis",
+]
+
+[[rules]]
+description = "应用凭证--Twilio API Key"
+id = "twilio-api-key"
+regex = '''SK[0-9a-fA-F]{32}'''
+keywords = [
+    "twilio",
+]
+
+[[rules]]
+description = "应用凭证--Twitch API token"
+id = "twitch-api-token"
+regex = '''(?i)(?:twitch)(?:[0-9a-z\-_\t .]{0,20})(?:[\s|']|[\s|"]){0,3}(?:=|>|:=|\|\|:|<=|=>|:)(?:'|\"|\s|=|\x60){0,5}([a-z0-9]{30})(?:['|\"|\n|\r|\s|\x60|;]|$)'''
+secretGroup = 1
+keywords = [
+    "twitch",
+]
+
+[[rules]]
+description = "应用凭证--Twitter Access Secret"
+id = "twitter-access-secret"
+regex = '''(?i)(?:twitter)(?:[0-9a-z\-_\t .]{0,20})(?:[\s|']|[\s|"]){0,3}(?:=|>|:=|\|\|:|<=|=>|:)(?:'|\"|\s|=|\x60){0,5}([a-z0-9]{45})(?:['|\"|\n|\r|\s|\x60|;]|$)'''
+secretGroup = 1
+keywords = [
+    "twitter",
+]
+
+[[rules]]
+description = "应用凭证--Twitter Access Token"
+id = "twitter-access-token"
+regex = '''(?i)(?:twitter)(?:[0-9a-z\-_\t .]{0,20})(?:[\s|']|[\s|"]){0,3}(?:=|>|:=|\|\|:|<=|=>|:)(?:'|\"|\s|=|\x60){0,5}([0-9]{15,25}-[a-zA-Z0-9]{20,40})(?:['|\"|\n|\r|\s|\x60|;]|$)'''
+secretGroup = 1
+keywords = [
+    "twitter",
+]
+
+[[rules]]
+description = "应用凭证--Twitter API Key"
+id = "twitter-api-key"
+regex = '''(?i)(?:twitter)(?:[0-9a-z\-_\t .]{0,20})(?:[\s|']|[\s|"]){0,3}(?:=|>|:=|\|\|:|<=|=>|:)(?:'|\"|\s|=|\x60){0,5}([a-z0-9]{25})(?:['|\"|\n|\r|\s|\x60|;]|$)'''
+secretGroup = 1
+keywords = [
+    "twitter",
+]
+
+[[rules]]
+description = "应用凭证--Twitter API Secret"
+id = "twitter-api-secret"
+regex = '''(?i)(?:twitter)(?:[0-9a-z\-_\t .]{0,20})(?:[\s|']|[\s|"]){0,3}(?:=|>|:=|\|\|:|<=|=>|:)(?:'|\"|\s|=|\x60){0,5}([a-z0-9]{50})(?:['|\"|\n|\r|\s|\x60|;]|$)'''
+secretGroup = 1
+keywords = [
+    "twitter",
+]
+
+[[rules]]
+description = "应用凭证--Twitter Bearer Token"
+id = "twitter-bearer-token"
+regex = '''(?i)(?:twitter)(?:[0-9a-z\-_\t .]{0,20})(?:[\s|']|[\s|"]){0,3}(?:=|>|:=|\|\|:|<=|=>|:)(?:'|\"|\s|=|\x60){0,5}(A{22}[a-zA-Z0-9%]{80,100})(?:['|\"|\n|\r|\s|\x60|;]|$)'''
+secretGroup = 1
+keywords = [
+    "twitter",
+]
+
+[[rules]]
+description = "应用凭证--Typeform API token"
+id = "typeform-api-token"
+regex = '''(?i)(?:typeform)(?:[0-9a-z\-_\t .]{0,20})(?:[\s|']|[\s|"]){0,3}(?:=|>|:=|\|\|:|<=|=>|:)(?:'|\"|\s|=|\x60){0,5}(tfp_[a-z0-9\-_\.=]{59})(?:['|\"|\n|\r|\s|\x60|;]|$)'''
+secretGroup = 1
+keywords = [
+    "tfp_",
+]
+
+[[rules]]
+description = "应用凭证--Vault Batch Token"
+id = "vault-batch-token"
+regex = '''(?i)\b(hvb\.[a-z0-9_-]{138,212})(?:['|\"|\n|\r|\s|\x60|;]|$)'''
+keywords = [
+    "hvb",
+]
+
+[[rules]]
+description = "应用凭证--Vault Service Token"
+id = "vault-service-token"
+regex = '''(?i)\b(hvs\.[a-z0-9_-]{90,100})(?:['|\"|\n|\r|\s|\x60|;]|$)'''
+keywords = [
+    "hvs",
+]
+
+[[rules]]
+description = "应用凭证--Yandex Access Token"
+id = "yandex-access-token"
+regex = '''(?i)(?:yandex)(?:[0-9a-z\-_\t .]{0,20})(?:[\s|']|[\s|"]){0,3}(?:=|>|:=|\|\|:|<=|=>|:)(?:'|\"|\s|=|\x60){0,5}(t1\.[A-Z0-9a-z_-]+[=]{0,2}\.[A-Z0-9a-z_-]{86}[=]{0,2})(?:['|\"|\n|\r|\s|\x60|;]|$)'''
+secretGroup = 1
+keywords = [
+    "yandex",
+]
+
+[[rules]]
+description = "应用凭证--Yandex API Key"
+id = "yandex-api-key"
+regex = '''(?i)(?:yandex)(?:[0-9a-z\-_\t .]{0,20})(?:[\s|']|[\s|"]){0,3}(?:=|>|:=|\|\|:|<=|=>|:)(?:'|\"|\s|=|\x60){0,5}(AQVN[A-Za-z0-9_\-]{35,38})(?:['|\"|\n|\r|\s|\x60|;]|$)'''
+secretGroup = 1
+keywords = [
+    "yandex",
+]
+
+[[rules]]
+description = "应用凭证--Yandex AWS Access Token"
+id = "yandex-aws-access-token"
+regex = '''(?i)(?:yandex)(?:[0-9a-z\-_\t .]{0,20})(?:[\s|']|[\s|"]){0,3}(?:=|>|:=|\|\|:|<=|=>|:)(?:'|\"|\s|=|\x60){0,5}(YC[a-zA-Z0-9_\-]{38})(?:['|\"|\n|\r|\s|\x60|;]|$)'''
+secretGroup = 1
+keywords = [
+    "yandex",
+]
+
+[[rules]]
+description = "应用凭证--Zendesk Secret Key"
+id = "zendesk-secret-key"
+regex = '''(?i)(?:zendesk)(?:[0-9a-z\-_\t .]{0,20})(?:[\s|']|[\s|"]){0,3}(?:=|>|:=|\|\|:|<=|=>|:)(?:'|\"|\s|=|\x60){0,5}([a-z0-9]{40})(?:['|\"|\n|\r|\s|\x60|;]|$)'''
+secretGroup = 1
+keywords = [
+    "zendesk",
+]
+
 
 [[rules]]
 description = "通用API--Generic API Key"
@@ -1931,731 +2658,6 @@ stopwords= [
     "combination",
     "combo",
 ]
-[[rules]]
-description = "VCS凭证--GitHub App Token"
-id = "github-app-token"
-regex = '''(ghu|ghs)_[0-9a-zA-Z]{36}'''
-keywords = [
-    "ghu_","ghs_",
-]
-
-[[rules]]
-description = "VCS凭证--GitHub OAuth Access Token"
-id = "github-oauth"
-regex = '''gho_[0-9a-zA-Z]{36}'''
-keywords = [
-    "gho_",
-]
-
-[[rules]]
-description = "VCS凭证--GitHub Personal Access Token"
-id = "github-pat"
-regex = '''ghp_[0-9a-zA-Z]{36}'''
-keywords = [
-    "ghp_",
-]
-
-[[rules]]
-description = "VCS凭证--GitHub Refresh Token"
-id = "github-refresh-token"
-regex = '''ghr_[0-9a-zA-Z]{36}'''
-keywords = [
-    "ghr_",
-]
-
-[[rules]]
-description = "VCS凭证--GitLab Personal Access Token"
-id = "gitlab-pat"
-regex = '''glpat-[0-9a-zA-Z\-\_]{20}'''
-keywords = [
-    "glpat-",
-]
-
-[[rules]]
-description = "VCS凭证--Gitter Access Token"
-id = "gitter-access-token"
-regex = '''(?i)(?:gitter)(?:[0-9a-z\-_\t .]{0,20})(?:[\s|']|[\s|"]){0,3}(?:=|>|:=|\|\|:|<=|=>|:)(?:'|\"|\s|=|\x60){0,5}([a-z0-9_-]{40})(?:['|\"|\n|\r|\s|\x60|;]|$)'''
-secretGroup = 1
-keywords = [
-    "gitter",
-]
-
-[[rules]]
-description = "应用凭证--GoCardless API token"
-id = "gocardless-api-token"
-regex = '''(?i)(?:gocardless)(?:[0-9a-z\-_\t .]{0,20})(?:[\s|']|[\s|"]){0,3}(?:=|>|:=|\|\|:|<=|=>|:)(?:'|\"|\s|=|\x60){0,5}(live_(?i)[a-z0-9\-_=]{40})(?:['|\"|\n|\r|\s|\x60|;]|$)'''
-secretGroup = 1
-keywords = [
-    "live_","gocardless",
-]
-
-[[rules]]
-description = "应用凭证--HashiCorp Terraform user/org API token"
-id = "hashicorp-tf-api-token"
-regex = '''(?i)[a-z0-9]{14}\.atlasv1\.[a-z0-9\-_=]{60,70}'''
-keywords = [
-    "atlasv1",
-]
-
-[[rules]]
-description = "应用凭证--Heroku API Key"
-id = "heroku-api-key"
-regex = '''(?i)(?:heroku)(?:[0-9a-z\-_\t .]{0,20})(?:[\s|']|[\s|"]){0,3}(?:=|>|:=|\|\|:|<=|=>|:)(?:'|\"|\s|=|\x60){0,5}([0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12})(?:['|\"|\n|\r|\s|\x60|;]|$)'''
-secretGroup = 1
-keywords = [
-    "heroku",
-]
-
-[[rules]]
-description = "应用凭证--HubSpot API Token"
-id = "hubspot-api-key"
-regex = '''(?i)(?:hubspot)(?:[0-9a-z\-_\t .]{0,20})(?:[\s|']|[\s|"]){0,3}(?:=|>|:=|\|\|:|<=|=>|:)(?:'|\"|\s|=|\x60){0,5}([0-9A-F]{8}-[0-9A-F]{4}-[0-9A-F]{4}-[0-9A-F]{4}-[0-9A-F]{12})(?:['|\"|\n|\r|\s|\x60|;]|$)'''
-secretGroup = 1
-keywords = [
-    "hubspot",
-]
-
-[[rules]]
-description = "应用凭证--Intercom API Token"
-id = "intercom-api-key"
-regex = '''(?i)(?:intercom)(?:[0-9a-z\-_\t .]{0,20})(?:[\s|']|[\s|"]){0,3}(?:=|>|:=|\|\|:|<=|=>|:)(?:'|\"|\s|=|\x60){0,5}([a-z0-9=_\-]{60})(?:['|\"|\n|\r|\s|\x60|;]|$)'''
-secretGroup = 1
-keywords = [
-    "intercom",
-]
-
-[[rules]]
-description = "JWT--JSON Web Token"
-id = "jwt"
-regex = '''(?i)\b(ey[0-9a-z]{30,34}\.ey[0-9a-z-\/_]{30,500}\.[0-9a-zA-Z-\/_]{10,200})(?:['|\"|\n|\r|\s|\x60|;]|$)'''
-keywords = [
-    "ey",
-]
-
-[[rules]]
-description = "应用凭证--Kraken Access Token"
-id = "kraken-access-token"
-regex = '''(?i)(?:kraken)(?:[0-9a-z\-_\t .]{0,20})(?:[\s|']|[\s|"]){0,3}(?:=|>|:=|\|\|:|<=|=>|:)(?:'|\"|\s|=|\x60){0,5}([a-z0-9\/=_\+\-]{80,90})(?:['|\"|\n|\r|\s|\x60|;]|$)'''
-secretGroup = 1
-keywords = [
-    "kraken",
-]
-
-[[rules]]
-description = "应用凭证--Kucoin Access Token"
-id = "kucoin-access-token"
-regex = '''(?i)(?:kucoin)(?:[0-9a-z\-_\t .]{0,20})(?:[\s|']|[\s|"]){0,3}(?:=|>|:=|\|\|:|<=|=>|:)(?:'|\"|\s|=|\x60){0,5}([a-f0-9]{24})(?:['|\"|\n|\r|\s|\x60|;]|$)'''
-secretGroup = 1
-keywords = [
-    "kucoin",
-]
-
-[[rules]]
-description = "应用凭证--Kucoin Secret Key"
-id = "kucoin-secret-key"
-regex = '''(?i)(?:kucoin)(?:[0-9a-z\-_\t .]{0,20})(?:[\s|']|[\s|"]){0,3}(?:=|>|:=|\|\|:|<=|=>|:)(?:'|\"|\s|=|\x60){0,5}([0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12})(?:['|\"|\n|\r|\s|\x60|;]|$)'''
-secretGroup = 1
-keywords = [
-    "kucoin",
-]
-
-[[rules]]
-description = "应用凭证--Launchdarkly Access Token"
-id = "launchdarkly-access-token"
-regex = '''(?i)(?:launchdarkly)(?:[0-9a-z\-_\t .]{0,20})(?:[\s|']|[\s|"]){0,3}(?:=|>|:=|\|\|:|<=|=>|:)(?:'|\"|\s|=|\x60){0,5}([a-z0-9=_\-]{40})(?:['|\"|\n|\r|\s|\x60|;]|$)'''
-secretGroup = 1
-keywords = [
-    "launchdarkly",
-]
-
-[[rules]]
-description = "应用凭证--Linear API Token"
-id = "linear-api-key"
-regex = '''lin_api_(?i)[a-z0-9]{40}'''
-keywords = [
-    "lin_api_",
-]
-
-[[rules]]
-description = "应用凭证--Linear Client Secret"
-id = "linear-client-secret"
-regex = '''(?i)(?:linear)(?:[0-9a-z\-_\t .]{0,20})(?:[\s|']|[\s|"]){0,3}(?:=|>|:=|\|\|:|<=|=>|:)(?:'|\"|\s|=|\x60){0,5}([a-f0-9]{32})(?:['|\"|\n|\r|\s|\x60|;]|$)'''
-secretGroup = 1
-keywords = [
-    "linear",
-]
-
-[[rules]]
-description = "应用凭证--LinkedIn Client ID"
-id = "linkedin-client-id"
-regex = '''(?i)(?:linkedin|linked-in)(?:[0-9a-z\-_\t .]{0,20})(?:[\s|']|[\s|"]){0,3}(?:=|>|:=|\|\|:|<=|=>|:)(?:'|\"|\s|=|\x60){0,5}([a-z0-9]{14})(?:['|\"|\n|\r|\s|\x60|;]|$)'''
-secretGroup = 1
-keywords = [
-    "linkedin","linked-in",
-]
-
-[[rules]]
-description = "应用凭证--LinkedIn Client secret"
-id = "linkedin-client-secret"
-regex = '''(?i)(?:linkedin|linked-in)(?:[0-9a-z\-_\t .]{0,20})(?:[\s|']|[\s|"]){0,3}(?:=|>|:=|\|\|:|<=|=>|:)(?:'|\"|\s|=|\x60){0,5}([a-z0-9]{16})(?:['|\"|\n|\r|\s|\x60|;]|$)'''
-secretGroup = 1
-keywords = [
-    "linkedin","linked-in",
-]
-
-[[rules]]
-description = "应用凭证--Lob API Key"
-id = "lob-api-key"
-regex = '''(?i)(?:lob)(?:[0-9a-z\-_\t .]{0,20})(?:[\s|']|[\s|"]){0,3}(?:=|>|:=|\|\|:|<=|=>|:)(?:'|\"|\s|=|\x60){0,5}((live|test)_[a-f0-9]{35})(?:['|\"|\n|\r|\s|\x60|;]|$)'''
-secretGroup = 1
-keywords = [
-    "test_","live_",
-]
-
-[[rules]]
-description = "应用凭证--Lob Publishable API Key"
-id = "lob-pub-api-key"
-regex = '''(?i)(?:lob)(?:[0-9a-z\-_\t .]{0,20})(?:[\s|']|[\s|"]){0,3}(?:=|>|:=|\|\|:|<=|=>|:)(?:'|\"|\s|=|\x60){0,5}((test|live)_pub_[a-f0-9]{31})(?:['|\"|\n|\r|\s|\x60|;]|$)'''
-secretGroup = 1
-keywords = [
-    "test_pub","live_pub","_pub",
-]
-
-[[rules]]
-description = "应用凭证--Mailchimp API key"
-id = "mailchimp-api-key"
-regex = '''(?i)(?:mailchimp)(?:[0-9a-z\-_\t .]{0,20})(?:[\s|']|[\s|"]){0,3}(?:=|>|:=|\|\|:|<=|=>|:)(?:'|\"|\s|=|\x60){0,5}([a-f0-9]{32}-us20)(?:['|\"|\n|\r|\s|\x60|;]|$)'''
-secretGroup = 1
-keywords = [
-    "mailchimp",
-]
-
-[[rules]]
-description = "应用凭证--Mailgun private API token"
-id = "mailgun-private-api-token"
-regex = '''(?i)(?:mailgun)(?:[0-9a-z\-_\t .]{0,20})(?:[\s|']|[\s|"]){0,3}(?:=|>|:=|\|\|:|<=|=>|:)(?:'|\"|\s|=|\x60){0,5}(key-[a-f0-9]{32})(?:['|\"|\n|\r|\s|\x60|;]|$)'''
-secretGroup = 1
-keywords = [
-    "mailgun",
-]
-
-[[rules]]
-description = "应用凭证--Mailgun public validation key"
-id = "mailgun-pub-key"
-regex = '''(?i)(?:mailgun)(?:[0-9a-z\-_\t .]{0,20})(?:[\s|']|[\s|"]){0,3}(?:=|>|:=|\|\|:|<=|=>|:)(?:'|\"|\s|=|\x60){0,5}(pubkey-[a-f0-9]{32})(?:['|\"|\n|\r|\s|\x60|;]|$)'''
-secretGroup = 1
-keywords = [
-    "mailgun",
-]
-
-[[rules]]
-description = "webhook--Mailgun webhook signing key"
-id = "mailgun-signing-key"
-regex = '''(?i)(?:mailgun)(?:[0-9a-z\-_\t .]{0,20})(?:[\s|']|[\s|"]){0,3}(?:=|>|:=|\|\|:|<=|=>|:)(?:'|\"|\s|=|\x60){0,5}([a-h0-9]{32}-[a-h0-9]{8}-[a-h0-9]{8})(?:['|\"|\n|\r|\s|\x60|;]|$)'''
-secretGroup = 1
-keywords = [
-    "mailgun",
-]
-
-[[rules]]
-description = "应用凭证--MapBox API token"
-id = "mapbox-api-token"
-regex = '''(?i)(?:mapbox)(?:[0-9a-z\-_\t .]{0,20})(?:[\s|']|[\s|"]){0,3}(?:=|>|:=|\|\|:|<=|=>|:)(?:'|\"|\s|=|\x60){0,5}(pk\.[a-z0-9]{60}\.[a-z0-9]{22})(?:['|\"|\n|\r|\s|\x60|;]|$)'''
-secretGroup = 1
-keywords = [
-    "mapbox",
-]
-
-[[rules]]
-description = "应用凭证--Mattermost Access Token"
-id = "mattermost-access-token"
-regex = '''(?i)(?:mattermost)(?:[0-9a-z\-_\t .]{0,20})(?:[\s|']|[\s|"]){0,3}(?:=|>|:=|\|\|:|<=|=>|:)(?:'|\"|\s|=|\x60){0,5}([a-z0-9]{26})(?:['|\"|\n|\r|\s|\x60|;]|$)'''
-secretGroup = 1
-keywords = [
-    "mattermost",
-]
-
-[[rules]]
-description = "应用凭证--MessageBird API token"
-id = "messagebird-api-token"
-regex = '''(?i)(?:messagebird|message-bird|message_bird)(?:[0-9a-z\-_\t .]{0,20})(?:[\s|']|[\s|"]){0,3}(?:=|>|:=|\|\|:|<=|=>|:)(?:'|\"|\s|=|\x60){0,5}([a-z0-9]{25})(?:['|\"|\n|\r|\s|\x60|;]|$)'''
-secretGroup = 1
-keywords = [
-    "messagebird","message-bird","message_bird",
-]
-
-[[rules]]
-description = "应用凭证--MessageBird client ID"
-id = "messagebird-client-id"
-regex = '''(?i)(?:messagebird|message-bird|message_bird)(?:[0-9a-z\-_\t .]{0,20})(?:[\s|']|[\s|"]){0,3}(?:=|>|:=|\|\|:|<=|=>|:)(?:'|\"|\s|=|\x60){0,5}([0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12})(?:['|\"|\n|\r|\s|\x60|;]|$)'''
-secretGroup = 1
-keywords = [
-    "messagebird","message-bird","message_bird",
-]
-
-[[rules]]
-description = "应用凭证--Netlify Access Token"
-id = "netlify-access-token"
-regex = '''(?i)(?:netlify)(?:[0-9a-z\-_\t .]{0,20})(?:[\s|']|[\s|"]){0,3}(?:=|>|:=|\|\|:|<=|=>|:)(?:'|\"|\s|=|\x60){0,5}([a-z0-9=_\-]{40,46})(?:['|\"|\n|\r|\s|\x60|;]|$)'''
-secretGroup = 1
-keywords = [
-    "netlify",
-]
-
-[[rules]]
-description = "应用凭证--New Relic ingest browser API token"
-id = "new-relic-browser-api-token"
-regex = '''(?i)(?:new-relic|newrelic|new_relic)(?:[0-9a-z\-_\t .]{0,20})(?:[\s|']|[\s|"]){0,3}(?:=|>|:=|\|\|:|<=|=>|:)(?:'|\"|\s|=|\x60){0,5}(NRJS-[a-f0-9]{19})(?:['|\"|\n|\r|\s|\x60|;]|$)'''
-secretGroup = 1
-keywords = [
-    "nrjs-",
-]
-
-[[rules]]
-description = "应用凭证--New Relic user API ID"
-id = "new-relic-user-api-id"
-regex = '''(?i)(?:new-relic|newrelic|new_relic)(?:[0-9a-z\-_\t .]{0,20})(?:[\s|']|[\s|"]){0,3}(?:=|>|:=|\|\|:|<=|=>|:)(?:'|\"|\s|=|\x60){0,5}([a-z0-9]{64})(?:['|\"|\n|\r|\s|\x60|;]|$)'''
-secretGroup = 1
-keywords = [
-    "new-relic","newrelic","new_relic",
-]
-
-[[rules]]
-description = "应用凭证--New Relic user API Key"
-id = "new-relic-user-api-key"
-regex = '''(?i)(?:new-relic|newrelic|new_relic)(?:[0-9a-z\-_\t .]{0,20})(?:[\s|']|[\s|"]){0,3}(?:=|>|:=|\|\|:|<=|=>|:)(?:'|\"|\s|=|\x60){0,5}(NRAK-[a-z0-9]{27})(?:['|\"|\n|\r|\s|\x60|;]|$)'''
-secretGroup = 1
-keywords = [
-    "nrak",
-]
-
-[[rules]]
-description = "编程语言凭证--npm access token"
-id = "npm-access-token"
-regex = '''(?i)\b(npm_[a-z0-9]{36})(?:['|\"|\n|\r|\s|\x60|;]|$)'''
-secretGroup = 1
-keywords = [
-    "npm_",
-]
-
-[[rules]]
-description = "应用凭证--Nytimes Access Token"
-id = "nytimes-access-token"
-regex = '''(?i)(?:nytimes|new-york-times,|newyorktimes)(?:[0-9a-z\-_\t .]{0,20})(?:[\s|']|[\s|"]){0,3}(?:=|>|:=|\|\|:|<=|=>|:)(?:'|\"|\s|=|\x60){0,5}([a-z0-9=_\-]{32})(?:['|\"|\n|\r|\s|\x60|;]|$)'''
-secretGroup = 1
-keywords = [
-    "nytimes","new-york-times","newyorktimes",
-]
-
-[[rules]]
-description = "应用凭证--Okta Access Token"
-id = "okta-access-token"
-regex = '''(?i)(?:okta)(?:[0-9a-z\-_\t .]{0,20})(?:[\s|']|[\s|"]){0,3}(?:=|>|:=|\|\|:|<=|=>|:)(?:'|\"|\s|=|\x60){0,5}([a-z0-9=_\-]{42})(?:['|\"|\n|\r|\s|\x60|;]|$)'''
-secretGroup = 1
-keywords = [
-    "okta",
-]
-
-[[rules]]
-description = "应用凭证--Plaid API Token"
-id = "plaid-api-token"
-regex = '''(?i)(?:plaid)(?:[0-9a-z\-_\t .]{0,20})(?:[\s|']|[\s|"]){0,3}(?:=|>|:=|\|\|:|<=|=>|:)(?:'|\"|\s|=|\x60){0,5}(access-(?:sandbox|development|production)-[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12})(?:['|\"|\n|\r|\s|\x60|;]|$)'''
-secretGroup = 1
-keywords = [
-    "plaid",
-]
-
-[[rules]]
-description = "应用凭证--Plaid Client ID"
-id = "plaid-client-id"
-regex = '''(?i)(?:plaid)(?:[0-9a-z\-_\t .]{0,20})(?:[\s|']|[\s|"]){0,3}(?:=|>|:=|\|\|:|<=|=>|:)(?:'|\"|\s|=|\x60){0,5}([a-z0-9]{24})(?:['|\"|\n|\r|\s|\x60|;]|$)'''
-secretGroup = 1
-keywords = [
-    "plaid",
-]
-
-[[rules]]
-description = "应用凭证--Plaid Secret key"
-id = "plaid-secret-key"
-regex = '''(?i)(?:plaid)(?:[0-9a-z\-_\t .]{0,20})(?:[\s|']|[\s|"]){0,3}(?:=|>|:=|\|\|:|<=|=>|:)(?:'|\"|\s|=|\x60){0,5}([a-z0-9]{30})(?:['|\"|\n|\r|\s|\x60|;]|$)'''
-secretGroup = 1
-keywords = [
-    "plaid",
-]
-
-[[rules]]
-description = "应用凭证--PlanetScale API token"
-id = "planetscale-api-token"
-regex = '''(?i)\b(pscale_tkn_(?i)[a-z0-9=\-_\.]{32,64})(?:['|\"|\n|\r|\s|\x60|;]|$)'''
-secretGroup = 1
-keywords = [
-    "pscale_tkn_",
-]
-
-[[rules]]
-description = "应用凭证--PlanetScale OAuth token"
-id = "planetscale-oauth-token"
-regex = '''(?i)\b(pscale_oauth_(?i)[a-z0-9=\-_\.]{32,64})(?:['|\"|\n|\r|\s|\x60|;]|$)'''
-secretGroup = 1
-keywords = [
-    "pscale_oauth_",
-]
-
-[[rules]]
-description = "应用凭证--PlanetScale password"
-id = "planetscale-password"
-regex = '''(?i)\b(pscale_pw_(?i)[a-z0-9=\-_\.]{32,64})(?:['|\"|\n|\r|\s|\x60|;]|$)'''
-secretGroup = 1
-keywords = [
-    "pscale_pw_",
-]
-
-[[rules]]
-description = "测试阶段API--Postman API token"
-id = "postman-api-token"
-regex = '''(?i)\b(PMAK-(?i)[a-f0-9]{24}\-[a-f0-9]{34})(?:['|\"|\n|\r|\s|\x60|;]|$)'''
-secretGroup = 1
-keywords = [
-    "pmak-",
-]
-
-[[rules]]
-description = "证书--Private Key"
-id = "private-key"
-regex = '''(?i)-----BEGIN[ A-Z0-9_-]{0,100}PRIVATE KEY-----[\s\S-]*KEY----'''
-keywords = [
-    "-----begin",
-]
-
-[[rules]]
-description = "编程语言凭证--Pulumi API token"
-id = "pulumi-api-token"
-regex = '''(?i)\b(pul-[a-f0-9]{40})(?:['|\"|\n|\r|\s|\x60|;]|$)'''
-secretGroup = 1
-keywords = [
-    "pul-",
-]
-
-[[rules]]
-description = "编程语言凭证--PyPI upload token"
-id = "pypi-upload-token"
-regex = '''pypi-AgEIcHlwaS5vcmc[A-Za-z0-9\-_]{50,1000}'''
-keywords = [
-    "pypi-ageichlwas5vcmc",
-]
-
-[[rules]]
-description = "编程语言凭证--RapidAPI Access Token"
-id = "rapidapi-access-token"
-regex = '''(?i)(?:rapidapi)(?:[0-9a-z\-_\t .]{0,20})(?:[\s|']|[\s|"]){0,3}(?:=|>|:=|\|\|:|<=|=>|:)(?:'|\"|\s|=|\x60){0,5}([a-z0-9_-]{50})(?:['|\"|\n|\r|\s|\x60|;]|$)'''
-secretGroup = 1
-keywords = [
-    "rapidapi",
-]
-
-[[rules]]
-description = "编程语言凭证--Rubygem API token"
-id = "rubygems-api-token"
-regex = '''(?i)\b(rubygems_[a-f0-9]{48})(?:['|\"|\n|\r|\s|\x60|;]|$)'''
-secretGroup = 1
-keywords = [
-    "rubygems_",
-]
-
-[[rules]]
-description = "应用凭证--Sendbird Access ID"
-id = "sendbird-access-id"
-regex = '''(?i)(?:sendbird)(?:[0-9a-z\-_\t .]{0,20})(?:[\s|']|[\s|"]){0,3}(?:=|>|:=|\|\|:|<=|=>|:)(?:'|\"|\s|=|\x60){0,5}([0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12})(?:['|\"|\n|\r|\s|\x60|;]|$)'''
-secretGroup = 1
-keywords = [
-    "sendbird",
-]
-
-[[rules]]
-description = "应用凭证--Sendbird Access Token"
-id = "sendbird-access-token"
-regex = '''(?i)(?:sendbird)(?:[0-9a-z\-_\t .]{0,20})(?:[\s|']|[\s|"]){0,3}(?:=|>|:=|\|\|:|<=|=>|:)(?:'|\"|\s|=|\x60){0,5}([a-f0-9]{40})(?:['|\"|\n|\r|\s|\x60|;]|$)'''
-secretGroup = 1
-keywords = [
-    "sendbird",
-]
-
-[[rules]]
-description = "应用凭证--SendGrid API token"
-id = "sendgrid-api-token"
-regex = '''(?i)\b(SG\.(?i)[a-z0-9=_\-\.]{66})(?:['|\"|\n|\r|\s|\x60|;]|$)'''
-secretGroup = 1
-keywords = [
-    "sg.",
-]
-
-[[rules]]
-description = "应用凭证--Sendinblue API token"
-id = "sendinblue-api-token"
-regex = '''(?i)\b(xkeysib-[a-f0-9]{64}\-(?i)[a-z0-9]{16})(?:['|\"|\n|\r|\s|\x60|;]|$)'''
-secretGroup = 1
-keywords = [
-    "xkeysib-",
-]
-
-[[rules]]
-description = "应用凭证--Sentry Access Token"
-id = "sentry-access-token"
-regex = '''(?i)(?:sentry)(?:[0-9a-z\-_\t .]{0,20})(?:[\s|']|[\s|"]){0,3}(?:=|>|:=|\|\|:|<=|=>|:)(?:'|\"|\s|=|\x60){0,5}([a-f0-9]{64})(?:['|\"|\n|\r|\s|\x60|;]|$)'''
-secretGroup = 1
-keywords = [
-    "sentry",
-]
-
-[[rules]]
-description = "应用凭证--Shippo API token"
-id = "shippo-api-token"
-regex = '''(?i)\b(shippo_(live|test)_[a-f0-9]{40})(?:['|\"|\n|\r|\s|\x60|;]|$)'''
-secretGroup = 1
-keywords = [
-    "shippo_",
-]
-
-[[rules]]
-description = "应用凭证--Shopify access token"
-id = "shopify-access-token"
-regex = '''shpat_[a-fA-F0-9]{32}'''
-keywords = [
-    "shpat_",
-]
-
-[[rules]]
-description = "应用凭证--Shopify custom access token"
-id = "shopify-custom-access-token"
-regex = '''shpca_[a-fA-F0-9]{32}'''
-keywords = [
-    "shpca_",
-]
-
-[[rules]]
-description = "应用凭证--Shopify private app access token"
-id = "shopify-private-app-access-token"
-regex = '''shppa_[a-fA-F0-9]{32}'''
-keywords = [
-    "shppa_",
-]
-
-[[rules]]
-description = "应用凭证--Shopify shared secret"
-id = "shopify-shared-secret"
-regex = '''shpss_[a-fA-F0-9]{32}'''
-keywords = [
-    "shpss_",
-]
-
-[[rules]]
-description = "应用凭证--Sidekiq Secret"
-id = "sidekiq-secret"
-regex = '''(?i)(?:BUNDLE_ENTERPRISE__CONTRIBSYS__COM|BUNDLE_GEMS__CONTRIBSYS__COM)(?:[0-9a-z\-_\t .]{0,20})(?:[\s|']|[\s|"]){0,3}(?:=|>|:=|\|\|:|<=|=>|:)(?:'|\"|\s|=|\x60){0,5}([a-f0-9]{8}:[a-f0-9]{8})(?:['|\"|\n|\r|\s|\x60|;]|$)'''
-secretGroup = 1
-keywords = [
-    "bundle_enterprise__contribsys__com","bundle_gems__contribsys__com",
-]
-
-[[rules]]
-description = "应用凭证--Sidekiq Sensitive URL"
-id = "sidekiq-sensitive-url"
-regex = '''(?i)\b(http(?:s??):\/\/)([a-f0-9]{8}:[a-f0-9]{8})@(?:gems.contribsys.com|enterprise.contribsys.com)(?:[\/|\#|\?|:]|$)'''
-secretGroup = 2
-keywords = [
-    "gems.contribsys.com","enterprise.contribsys.com",
-]
-
-[[rules]]
-description = "应用凭证--Slack token"
-id = "slack-access-token"
-regex = '''xox[baprs]-([0-9a-zA-Z]{10,48})'''
-keywords = [
-    "xoxb","xoxa","xoxp","xoxr","xoxs",
-]
-
-[[rules]]
-description = "Webhook--Slack Webhook"
-id = "slack-web-hook"
-regex = '''https:\/\/hooks.slack.com\/services\/[A-Za-z0-9+\/]{44,46}'''
-keywords = [
-    "hooks.slack.com",
-]
-
-[[rules]]
-description = "应用凭证--Square Access Token"
-id = "square-access-token"
-regex = '''(?i)\b(sq0atp-[0-9A-Za-z\-_]{22})(?:['|\"|\n|\r|\s|\x60|;]|$)'''
-keywords = [
-    "sq0atp-",
-]
-
-[[rules]]
-description = "应用凭证--Squarespace Access Token"
-id = "squarespace-access-token"
-regex = '''(?i)(?:squarespace)(?:[0-9a-z\-_\t .]{0,20})(?:[\s|']|[\s|"]){0,3}(?:=|>|:=|\|\|:|<=|=>|:)(?:'|\"|\s|=|\x60){0,5}([0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12})(?:['|\"|\n|\r|\s|\x60|;]|$)'''
-secretGroup = 1
-keywords = [
-    "squarespace",
-]
-
-[[rules]]
-description = "应用凭证--Stripe"
-id = "stripe-access-token"
-regex = '''(?i)(sk|pk)_(test|live)_[0-9a-z]{10,32}'''
-keywords = [
-    "sk_test","pk_test","sk_live","pk_live",
-]
-
-[[rules]]
-description = "应用凭证--SumoLogic Access ID"
-id = "sumologic-access-id"
-regex = '''(?i)(?:sumo)(?:[0-9a-z\-_\t .]{0,20})(?:[\s|']|[\s|"]){0,3}(?:=|>|:=|\|\|:|<=|=>|:)(?:'|\"|\s|=|\x60){0,5}([a-z0-9]{14})(?:['|\"|\n|\r|\s|\x60|;]|$)'''
-secretGroup = 1
-keywords = [
-    "sumo",
-]
-
-[[rules]]
-description = "应用凭证--SumoLogic Access Token"
-id = "sumologic-access-token"
-regex = '''(?i)(?:sumo)(?:[0-9a-z\-_\t .]{0,20})(?:[\s|']|[\s|"]){0,3}(?:=|>|:=|\|\|:|<=|=>|:)(?:'|\"|\s|=|\x60){0,5}([a-z0-9]{64})(?:['|\"|\n|\r|\s|\x60|;]|$)'''
-secretGroup = 1
-keywords = [
-    "sumo",
-]
-
-[[rules]]
-description = "应用凭证--Travis CI Access Token"
-id = "travisci-access-token"
-regex = '''(?i)(?:travis)(?:[0-9a-z\-_\t .]{0,20})(?:[\s|']|[\s|"]){0,3}(?:=|>|:=|\|\|:|<=|=>|:)(?:'|\"|\s|=|\x60){0,5}([a-z0-9]{22})(?:['|\"|\n|\r|\s|\x60|;]|$)'''
-secretGroup = 1
-keywords = [
-    "travis",
-]
-
-[[rules]]
-description = "应用凭证--Twilio API Key"
-id = "twilio-api-key"
-regex = '''SK[0-9a-fA-F]{32}'''
-keywords = [
-    "twilio",
-]
-
-[[rules]]
-description = "应用凭证--Twitch API token"
-id = "twitch-api-token"
-regex = '''(?i)(?:twitch)(?:[0-9a-z\-_\t .]{0,20})(?:[\s|']|[\s|"]){0,3}(?:=|>|:=|\|\|:|<=|=>|:)(?:'|\"|\s|=|\x60){0,5}([a-z0-9]{30})(?:['|\"|\n|\r|\s|\x60|;]|$)'''
-secretGroup = 1
-keywords = [
-    "twitch",
-]
-
-[[rules]]
-description = "应用凭证--Twitter Access Secret"
-id = "twitter-access-secret"
-regex = '''(?i)(?:twitter)(?:[0-9a-z\-_\t .]{0,20})(?:[\s|']|[\s|"]){0,3}(?:=|>|:=|\|\|:|<=|=>|:)(?:'|\"|\s|=|\x60){0,5}([a-z0-9]{45})(?:['|\"|\n|\r|\s|\x60|;]|$)'''
-secretGroup = 1
-keywords = [
-    "twitter",
-]
-
-[[rules]]
-description = "应用凭证--Twitter Access Token"
-id = "twitter-access-token"
-regex = '''(?i)(?:twitter)(?:[0-9a-z\-_\t .]{0,20})(?:[\s|']|[\s|"]){0,3}(?:=|>|:=|\|\|:|<=|=>|:)(?:'|\"|\s|=|\x60){0,5}([0-9]{15,25}-[a-zA-Z0-9]{20,40})(?:['|\"|\n|\r|\s|\x60|;]|$)'''
-secretGroup = 1
-keywords = [
-    "twitter",
-]
-
-[[rules]]
-description = "应用凭证--Twitter API Key"
-id = "twitter-api-key"
-regex = '''(?i)(?:twitter)(?:[0-9a-z\-_\t .]{0,20})(?:[\s|']|[\s|"]){0,3}(?:=|>|:=|\|\|:|<=|=>|:)(?:'|\"|\s|=|\x60){0,5}([a-z0-9]{25})(?:['|\"|\n|\r|\s|\x60|;]|$)'''
-secretGroup = 1
-keywords = [
-    "twitter",
-]
-
-[[rules]]
-description = "应用凭证--Twitter API Secret"
-id = "twitter-api-secret"
-regex = '''(?i)(?:twitter)(?:[0-9a-z\-_\t .]{0,20})(?:[\s|']|[\s|"]){0,3}(?:=|>|:=|\|\|:|<=|=>|:)(?:'|\"|\s|=|\x60){0,5}([a-z0-9]{50})(?:['|\"|\n|\r|\s|\x60|;]|$)'''
-secretGroup = 1
-keywords = [
-    "twitter",
-]
-
-[[rules]]
-description = "应用凭证--Twitter Bearer Token"
-id = "twitter-bearer-token"
-regex = '''(?i)(?:twitter)(?:[0-9a-z\-_\t .]{0,20})(?:[\s|']|[\s|"]){0,3}(?:=|>|:=|\|\|:|<=|=>|:)(?:'|\"|\s|=|\x60){0,5}(A{22}[a-zA-Z0-9%]{80,100})(?:['|\"|\n|\r|\s|\x60|;]|$)'''
-secretGroup = 1
-keywords = [
-    "twitter",
-]
-
-[[rules]]
-description = "应用凭证--Typeform API token"
-id = "typeform-api-token"
-regex = '''(?i)(?:typeform)(?:[0-9a-z\-_\t .]{0,20})(?:[\s|']|[\s|"]){0,3}(?:=|>|:=|\|\|:|<=|=>|:)(?:'|\"|\s|=|\x60){0,5}(tfp_[a-z0-9\-_\.=]{59})(?:['|\"|\n|\r|\s|\x60|;]|$)'''
-secretGroup = 1
-keywords = [
-    "tfp_",
-]
-
-[[rules]]
-description = "应用凭证--Vault Batch Token"
-id = "vault-batch-token"
-regex = '''(?i)\b(hvb\.[a-z0-9_-]{138,212})(?:['|\"|\n|\r|\s|\x60|;]|$)'''
-keywords = [
-    "hvb",
-]
-
-[[rules]]
-description = "应用凭证--Vault Service Token"
-id = "vault-service-token"
-regex = '''(?i)\b(hvs\.[a-z0-9_-]{90,100})(?:['|\"|\n|\r|\s|\x60|;]|$)'''
-keywords = [
-    "hvs",
-]
-
-[[rules]]
-description = "应用凭证--Yandex Access Token"
-id = "yandex-access-token"
-regex = '''(?i)(?:yandex)(?:[0-9a-z\-_\t .]{0,20})(?:[\s|']|[\s|"]){0,3}(?:=|>|:=|\|\|:|<=|=>|:)(?:'|\"|\s|=|\x60){0,5}(t1\.[A-Z0-9a-z_-]+[=]{0,2}\.[A-Z0-9a-z_-]{86}[=]{0,2})(?:['|\"|\n|\r|\s|\x60|;]|$)'''
-secretGroup = 1
-keywords = [
-    "yandex",
-]
-
-[[rules]]
-description = "应用凭证--Yandex API Key"
-id = "yandex-api-key"
-regex = '''(?i)(?:yandex)(?:[0-9a-z\-_\t .]{0,20})(?:[\s|']|[\s|"]){0,3}(?:=|>|:=|\|\|:|<=|=>|:)(?:'|\"|\s|=|\x60){0,5}(AQVN[A-Za-z0-9_\-]{35,38})(?:['|\"|\n|\r|\s|\x60|;]|$)'''
-secretGroup = 1
-keywords = [
-    "yandex",
-]
-
-[[rules]]
-description = "应用凭证--Yandex AWS Access Token"
-id = "yandex-aws-access-token"
-regex = '''(?i)(?:yandex)(?:[0-9a-z\-_\t .]{0,20})(?:[\s|']|[\s|"]){0,3}(?:=|>|:=|\|\|:|<=|=>|:)(?:'|\"|\s|=|\x60){0,5}(YC[a-zA-Z0-9_\-]{38})(?:['|\"|\n|\r|\s|\x60|;]|$)'''
-secretGroup = 1
-keywords = [
-    "yandex",
-]
-
-[[rules]]
-description = "应用凭证--Zendesk Secret Key"
-id = "zendesk-secret-key"
-regex = '''(?i)(?:zendesk)(?:[0-9a-z\-_\t .]{0,20})(?:[\s|']|[\s|"]){0,3}(?:=|>|:=|\|\|:|<=|=>|:)(?:'|\"|\s|=|\x60){0,5}([a-z0-9]{40})(?:['|\"|\n|\r|\s|\x60|;]|$)'''
-secretGroup = 1
-keywords = [
-    "zendesk",
-]
 
 # [blingsec 自定义规则]
 
@@ -2837,15 +2839,16 @@ description = "低长度凭证检出"
 id = "generic-high-checkout-short-secret"
 regex = '''(?i)(?:['|"|:|=| ]{1,3})((?i)[`*~%^$!&@#\w]{8,15})(?:[;|\)| |,|'|"|\n|\r|\s|\x60])'''
 secretGroup = 1
-entropy = 2.6
+entropy = 2.4
 keywords = [
     "password","passwd","pwd","psd",
     "secret",
     "access",
     "key","appkey",
-
     "user","usr",
     "login",
+    "api",
+    "apikey"
 ]
 
 
@@ -2884,12 +2887,12 @@ entropy = 2.2
 
 # -------【硬编码匹配】--------------
 
-#[[rules]]
-#description = "常见哈希值"
-#id = "hash"
-#regex = '''(?i)(?:['|"|:|=| ]{1,3})([0-9a-fA-F]{16}|[0-9a-fA-F]{32}|[0-9a-fA-F]{40}|[0-9a-fA-F]{64}|[0-9a-fA-F]{128})(?:[;|\)| |,|'|"|\n|\r|\s|\x60])'''
-#secretGroup = 1
-#entropy = 2.5
+[[rules]]
+description = "常见哈希值"
+id = "hash"
+regex = '''(?i)(?:['|"|:|=| ]{1,3})([0-9a-fA-F]{16}|[0-9a-fA-F]{32}|[0-9a-fA-F]{40}|[0-9a-fA-F]{64}|[0-9a-fA-F]{128})(?:[;|\)| |,|'|"|\n|\r|\s|\x60])'''
+secretGroup = 1
+entropy = 2.5
 
 
 #[[rules]]
