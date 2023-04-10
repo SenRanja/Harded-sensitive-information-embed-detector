@@ -315,21 +315,21 @@ func filter(findings []report.Finding, redact bool) []report.Finding {
 	var retFindings []report.Finding
 	for _, f := range findings {
 		include := true
-		if strings.Contains(strings.ToLower(f.RuleID), "generic") {
-			for _, fPrime := range findings {
-				if f.StartLine == fPrime.StartLine &&
-					f.Commit == fPrime.Commit &&
-					f.RuleID != fPrime.RuleID &&
-					strings.Contains(fPrime.Secret, f.Secret) &&
-					!strings.Contains(strings.ToLower(fPrime.RuleID), "generic") {
+		//if strings.Contains(strings.ToLower(f.RuleID), "generic") {
+		for _, fPrime := range findings {
+			if f.StartLine == fPrime.StartLine &&
+				f.Commit == fPrime.Commit &&
+				f.RuleID != fPrime.RuleID &&
+				strings.Contains(fPrime.Secret, f.Secret) &&
+				!strings.Contains(strings.ToLower(fPrime.RuleID), "generic") {
 
-					genericMatch := strings.Replace(f.Match, f.Secret, "REDACTED", -1)
-					betterMatch := strings.Replace(fPrime.Match, fPrime.Secret, "REDACTED", -1)
-					log.Trace().Msgf("skipping %s finding (%s), %s rule takes precendence (%s)", f.RuleID, genericMatch, fPrime.RuleID, betterMatch)
-					include = false
-					break
-				}
+				genericMatch := strings.Replace(f.Match, f.Secret, "REDACTED", -1)
+				betterMatch := strings.Replace(fPrime.Match, fPrime.Secret, "REDACTED", -1)
+				log.Trace().Msgf("skipping %s finding (%s), %s rule takes precendence (%s)", f.RuleID, genericMatch, fPrime.RuleID, betterMatch)
+				include = false
+				break
 			}
+			//}
 		}
 
 		if redact {

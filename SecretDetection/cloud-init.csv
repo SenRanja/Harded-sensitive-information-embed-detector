@@ -1,0 +1,246 @@
+规则ID,描述,Commit,文件位置,凭证,密码强度,香农熵,匹配内容,开始行,结束行,开始列,结束列,提交者,提交信息,提交时间,邮箱,Commit指纹
+generic-high-checkout-short-secret,低长度凭证检出,,TODO,password,0,2.75," password,",3,3,20,29,,,,,
+generic-high-checkout-short-secret,低长度凭证检出,,ChangeLog,password,0,2.75," password ",103,103,21,30,,,,,
+generic-high-checkout-short-secret,低长度凭证检出,,ChangeLog,DataSourceEc2,7,3.39,"   DataSourceEc2 ",205,205,2,18,,,,,
+generic-high-checkout-short-secret,低长度凭证检出,,ChangeLog,time_rfc2822,5,3.19," 'time_rfc2822'",386,386,51,65,,,,,
+generic-high-checkout-short-secret,低长度凭证检出,,ChangeLog,DataSourceEc2,7,3.39," DataSourceEc2 ",547,547,9,23,,,,,
+generic-high-checkout,高长度凭证检出,,cloudinit/config/cc_growpart.py,ResizeFailedException,6,3.78," ResizeFailedException ",249,249,16,38,,,,,
+generic-high-checkout-short-secret,低长度凭证检出,,LICENSE,password,0,2.75," password ",340,340,48,57,,,,,
+generic-high-checkout-short-secret,低长度凭证检出,,cloudinit/config/cc_disk_setup.py,Backup500G,7,3.12,"=""Backup500G""",215,215,21,33,,,,,
+generic-high-checkout-short-secret,低长度凭证检出,,cloudinit/config/cc_set_passwords.py,password,0,2.75,"   password ",41,41,7,18,,,,,
+generic-high-checkout-short-secret,低长度凭证检出,,cloudinit/config/cc_set_passwords.py,password,0,2.75,"   password ",45,45,7,18,,,,,
+generic-high-checkout-short-secret,低长度凭证检出,,cloudinit/config/cc_set_passwords.py,password,0,2.75," ""password""",45,45,49,59,,,,,
+generic-high-checkout-short-secret,低长度凭证检出,,cloudinit/config/cc_set_passwords.py,password,0,2.75," password)",61,61,38,47,,,,,
+generic-high-checkout-short-secret,低长度凭证检出,,cloudinit/config/cc_set_passwords.py,password,0,2.75," password ",63,63,60,69,,,,,
+generic-high-checkout-short-secret,低长度凭证检出,,cloudinit/distros/freebsd.py,password,0,2.75," password ",202,202,15,24,,,,,
+generic-high-checkout-short-secret,低长度凭证检出,,cloudinit/distros/freebsd.py,password,0,2.75," password ",202,202,38,47,,,,,
+generic-high-checkout-short-secret,低长度凭证检出,,cloudinit/distros/aix.py,run_autoconf6,5,3.24,"   run_autoconf6 ",67,67,7,23,,,,,
+generic-high-checkout-short-secret,低长度凭证检出,,cloudinit/distros/aix.py,ipv6_interface,5,3.52,"   ipv6_interface ",68,68,7,24,,,,,
+generic-high-checkout-short-secret,低长度凭证检出,,cloudinit/distros/aix.py,run_autoconf6,5,3.24,"   run_autoconf6 ",96,96,23,39,,,,,
+generic-high-checkout-short-secret,低长度凭证检出,,cloudinit/distros/aix.py,ipv6_interface,5,3.52," ipv6_interface ",98,98,28,43,,,,,
+generic-high-checkout-short-secret,低长度凭证检出,,cloudinit/distros/aix.py,ipv6_interface,5,3.52,"   ipv6_interface ",99,99,27,44,,,,,
+generic-high-checkout-short-secret,低长度凭证检出,,cloudinit/distros/aix.py,ipv6_interface,5,3.52,"   ipv6_interface ",101,101,27,44,,,,,
+generic-high-checkout-short-secret,低长度凭证检出,,cloudinit/distros/aix.py,password,0,2.75," password ",330,330,15,24,,,,,
+generic-high-checkout-short-secret,低长度凭证检出,,cloudinit/distros/aix.py,password,0,2.75," password ",330,330,38,47,,,,,
+generic-high-checkout-short-secret,低长度凭证检出,,cloudinit/distros/aix.py,password,0,2.75," password ",351,351,18,27,,,,,
+generic-high-checkout-short-secret,低长度凭证检出,,cloudinit/distros/aix.py,password,0,2.75," password ",351,351,52,61,,,,,
+generic-high-checkout-short-secret,低长度凭证检出,,cloudinit/distros/aix.py,password,0,2.75," password ",359,359,49,58,,,,,
+generic-high-checkout-short-secret,低长度凭证检出,,cloudinit/sources/DataSourceAzure.py,password,0,2.75,"   password ",512,512,3,14,,,,,
+generic-high-checkout-short-secret,低长度凭证检出,,cloudinit/sources/DataSourceAzure.py,password,0,2.75,"   password ",540,540,11,22,,,,,
+generic-high-checkout-short-secret,低长度凭证检出,,cloudinit/sources/DataSourceCloudSigma.py,base64_fields,5,3.39,"   base64_fields ",65,65,7,23,,,,,
+generic-high-checkout-short-secret,低长度凭证检出,,cloudinit/sources/DataSourceCloudSigma.py,base64_fields,5,3.39,'base64_fields',65,65,42,56,,,,,
+generic-high-checkout-short-secret,低长度凭证检出,,cloudinit/sources/DataSourceOVF.py,password,0,2.75,'password',139,139,19,28,,,,,
+generic-high-checkout-short-secret,低长度凭证检出,,cloudinit/sources/DataSourceNoCloud.py,pp2d_callback,5,3.09," _pp2d_callback,",107,107,57,72,,,,,
+generic-high-checkout-short-secret,低长度凭证检出,,cloudinit/ssh_util.py,kilobits,0,2.75," kilobits ",78,78,44,53,,,,,
+private-key,证书--Private Key,,doc/examples/cloud-config-chef-oneiric.txt,"-----BEGIN RSA PRIVATE KEY-----
+     YOUR-ORGS-VALIDATION-KEY-HERE
+     -----END RSA PRIVATE KEY----",0,3.83,"-----BEGIN RSA PRIVATE KEY-----
+     YOUR-ORGS-VALIDATION-KEY-HERE
+     -----END RSA PRIVATE KEY----",71,73,7,34,,,,,
+private-key,证书--Private Key,,doc/examples/cloud-config-chef.txt,"-----BEGIN RSA PRIVATE KEY-----
+     YOUR-ORGS-VALIDATION-KEY-HERE
+     -----END RSA PRIVATE KEY----",0,3.83,"-----BEGIN RSA PRIVATE KEY-----
+     YOUR-ORGS-VALIDATION-KEY-HERE
+     -----END RSA PRIVATE KEY----",71,73,7,34,,,,,
+generic-high-checkout-short-secret,低长度凭证检出,,doc/examples/cloud-config-datasources.txt,Xh234sdkljf,6,3.46,": Xh234sdkljf",24,24,18,31,,,,,
+generic-high-checkout-short-secret,低长度凭证检出,,cloudinit/distros/__init__.py,password,0,2.75," password ",402,402,15,24,,,,,
+generic-high-checkout-short-secret,低长度凭证检出,,cloudinit/distros/__init__.py,password,0,2.75," password ",402,402,38,47,,,,,
+generic-high-checkout-short-secret,低长度凭证检出,,cloudinit/distros/__init__.py,password,0,2.75," password ",424,424,18,27,,,,,
+generic-high-checkout-short-secret,低长度凭证检出,,cloudinit/distros/__init__.py,password,0,2.75," password ",424,424,52,61,,,,,
+generic-high-checkout-short-secret,低长度凭证检出,,cloudinit/distros/__init__.py,password,0,2.75," password ",432,432,49,58,,,,,
+generic-high-checkout-short-secret,低长度凭证检出,,cloudinit/distros/__init__.py,password,0,2.75," password ",448,448,45,54,,,,,
+generic-qiye-weixin-developer-app-secret,应用凭证--Qiye WeiXin Developer App Secret,,doc/examples/cloud-config-mcollective.txt,ol1OAhevspjAwCwYDVR0PBAQDAgEGMA0GCSqG,0,4.55,"ol1OAhevspjAwCwYDVR0PBAQDAgEGMA0GCSqG",30,30,34,71,,,,,
+generic-qiye-weixin-developer-app-secret,应用凭证--Qiye WeiXin Developer App Secret,,doc/examples/cloud-config-mcollective.txt,ol1OAhevspjAwCwYDVR0PBAQDAgEGMA0GCSqG,0,4.55,"ol1OAhevspjAwCwYDVR0PBAQDAgEGMA0GCSqG",44,44,34,71,,,,,
+generic-qiye-weixin-developer-app-secret,应用凭证--Qiye WeiXin Developer App Secret,,doc/examples/cloud-config-puppet.txt,ol1OAhevspjAwCwYDVR0PBAQDAgEGMA0GCSqG,0,4.55,"ol1OAhevspjAwCwYDVR0PBAQDAgEGMA0GCSqG",47,47,34,71,,,,,
+private-key,证书--Private Key,,doc/examples/cloud-config-salt-minion.txt,"-----BEGIN RSA PRIVATE KEY-----
+    Proc-Type: 4,ENCRYPTED
+    DEK-Info: AES-128-CBC,ECE30DBBA56E2DF06B7BC415F8870994
+
+    YQOE5HIsghqjRsxPQqiWMH/VHmyFH6xIpBcmzxzispEHwBojlvLXviwvR66YhgNw
+    7smwE10Ik4/cwwiHTZqCk++jPATPygBiqQkUijCWzcT9kfaxmqdP4PL+hu9g7kGC
+    KrD2Bm8/oO08s957aThuHC1sABRcJ1V3FRzJT6Za4fwweyvHVYRnmgaDA6zH0qV8
+    NqBSB2hnNXKEdh6UFz9QGcrQxnRjfdIaW64zoEX7jT7gYYL7FkGXBa3XdMOA4fnl
+    adRwLFMs0jfilisZv8oUbPdZ6J6x3o8p8LVecCF8tdZt1zkcLSIXKnoDFpHSISGs
+    BD9aqD+E4ejynM/tPaVFq4IHzT8viN6h6WcH8fbpClFZ66Iyy9XL3/CjAY7Jzhh9
+    fnbc4Iq28cdbmO/vkR7JyVOgEMWe1BcSqtro70XoUNRY8uDJUPqohrhm/9AigFRA
+    Pwyf3LqojxRnwXjHsZtGltUtEAPZzgh3fKJnx9MyRR7DPXBRig7TAHU7n2BFRhHA
+    TYThy29bK6NkIc/cKc2kEQVo98Cr04PO8jVxZM332FlhiVlP0kpAp+tFj7aMzPTG
+    sJumb9kPbMsgpEuTCONm3yyoufGEBFMrIJ+Po48M2RlYOh50VkO09pI+Eu7FPtVB
+    H4gKzoJIpZZ/7vYXQ3djM8s9hc5gD5CVExTZV4drbsXt6ITiwHuxZ6CNHRBPL5AY
+    wmF8QZz4oivv1afdSe6E6OGC3uVmX3Psn5CVq2pE8VlRDKFy1WqfU2enRAijSS2B
+    rtJs263fOJ8ZntDzMVMPgiAlzzfA285KUletpAeUmz+peR1gNzkE0eKSG6THOCi0
+    rfmR8SeEzyNvin0wQ3qgYiiHjHbbFhJIMAQxoX+0hDSooM7Wo5wkLREULpGuesTg
+    A6Fe3CiOivMDraNGA7H6Yg==
+    -----END RSA PRIVATE KEY----",0,5.98,"-----BEGIN RSA PRIVATE KEY-----
+    Proc-Type: 4,ENCRYPTED
+    DEK-Info: AES-128-CBC,ECE30DBBA56E2DF06B7BC415F8870994
+
+    YQOE5HIsghqjRsxPQqiWMH/VHmyFH6xIpBcmzxzispEHwBojlvLXviwvR66YhgNw
+    7smwE10Ik4/cwwiHTZqCk++jPATPygBiqQkUijCWzcT9kfaxmqdP4PL+hu9g7kGC
+    KrD2Bm8/oO08s957aThuHC1sABRcJ1V3FRzJT6Za4fwweyvHVYRnmgaDA6zH0qV8
+    NqBSB2hnNXKEdh6UFz9QGcrQxnRjfdIaW64zoEX7jT7gYYL7FkGXBa3XdMOA4fnl
+    adRwLFMs0jfilisZv8oUbPdZ6J6x3o8p8LVecCF8tdZt1zkcLSIXKnoDFpHSISGs
+    BD9aqD+E4ejynM/tPaVFq4IHzT8viN6h6WcH8fbpClFZ66Iyy9XL3/CjAY7Jzhh9
+    fnbc4Iq28cdbmO/vkR7JyVOgEMWe1BcSqtro70XoUNRY8uDJUPqohrhm/9AigFRA
+    Pwyf3LqojxRnwXjHsZtGltUtEAPZzgh3fKJnx9MyRR7DPXBRig7TAHU7n2BFRhHA
+    TYThy29bK6NkIc/cKc2kEQVo98Cr04PO8jVxZM332FlhiVlP0kpAp+tFj7aMzPTG
+    sJumb9kPbMsgpEuTCONm3yyoufGEBFMrIJ+Po48M2RlYOh50VkO09pI+Eu7FPtVB
+    H4gKzoJIpZZ/7vYXQ3djM8s9hc5gD5CVExTZV4drbsXt6ITiwHuxZ6CNHRBPL5AY
+    wmF8QZz4oivv1afdSe6E6OGC3uVmX3Psn5CVq2pE8VlRDKFy1WqfU2enRAijSS2B
+    rtJs263fOJ8ZntDzMVMPgiAlzzfA285KUletpAeUmz+peR1gNzkE0eKSG6THOCi0
+    rfmR8SeEzyNvin0wQ3qgYiiHjHbbFhJIMAQxoX+0hDSooM7Wo5wkLREULpGuesTg
+    A6Fe3CiOivMDraNGA7H6Yg==
+    -----END RSA PRIVATE KEY----",33,52,6,33,,,,,
+generic-high-checkout,高长度凭证检出,,doc/examples/cloud-config-ssh-keys.txt,99iziAH0KBMVbxy03Trz,9,3.92,"   99iziAH0KBMVbxy03Trz",41,41,3,26,,,,,
+generic-tencent-connect-key-id,应用凭证--Tencent Connect Secret,,doc/examples/cloud-config-ssh-keys.txt,0HGPwaxlEG2Z9inNtj3pgFrYcRztfECb,0,4.81,"0HGPwaxlEG2Z9inNtj3pgFrYcRztfECb",17,17,38,70,,,,,
+private-key,证书--Private Key,,doc/examples/cloud-config-ssh-keys.txt,"-----BEGIN RSA PRIVATE KEY-----
+    MIIBxwIBAAJhAKD0YSHy73nUgysO13XsJmd4fHiFyQ+00R7VVu2iV9Qcon2LZS/x
+    1cydPZ4pQpfjEha6WxZ6o8ci/Ea/w0n+0HGPwaxlEG2Z9inNtj3pgFrYcRztfECb
+    1j6HCibZbAzYtwIBIwJgO8h72WjcmvcpZ8OvHSvTwAguO2TkR6mPgHsgSaKy6GJo
+    PUJnaZRWuba/HX0KGyhz19nPzLpzG5f0fYahlMJAyc13FV7K6kMBPXTRR6FxgHEg
+    L0MPC7cdqAwOVNcPY6A7AjEA1bNaIjOzFN2sfZX0j7OMhQuc4zP7r80zaGc5oy6W
+    p58hRAncFKEvnEq2CeL3vtuZAjEAwNBHpbNsBYTRPCHM7rZuG/iBtwp8Rxhc9I5w
+    ixvzMgi+HpGLWzUIBS+P/XhekIjPAjA285rVmEP+DR255Ls65QbgYhJmTzIXQ2T9
+    luLvcmFBC6l35Uc4gTgg4ALsmXLn71MCMGMpSWspEvuGInayTCL+vEjmNBT+FAdO
+    W7D4zCpI43jRS9U06JVOeSc9CDk2lwiA3wIwCTB/6uc8Cq85D9YqpM10FuHjKpnP
+    REPPOyrAspdeOAV+6VKRavstea7+2DZmSUgE
+    -----END RSA PRIVATE KEY-----
+
+  rsa_public: ssh-rsa AAAAB3NzaC1yc2EAAAABIwAAAGEAoPRhIfLvedSDKw7XdewmZ3h8eIXJD7TRHtVW7aJX1ByifYtlL/HVzJ09nilCl+MSFrpbFnqjxyL8Rr/DSf7QcY/BrGUQbZn2Kc22PemAWthxHO18QJvWPocKJtlsDNi3 smoser@localhost
+
+  dsa_private: |
+    -----BEGIN DSA PRIVATE KEY-----
+    MIIBuwIBAAKBgQDP2HLu7pTExL89USyM0264RCyWX/CMLmukxX0Jdbm29ax8FBJT
+    pLrO8TIXVY5rPAJm1dTHnpuyJhOvU9G7M8tPUABtzSJh4GVSHlwaCfycwcpLv9TX
+    DgWIpSj+6EiHCyaRlB1/CBp9RiaB+10QcFbm+lapuET+/Au6vSDp9IRtlQIVAIMR
+    8KucvUYbOEI+yv+5LW9u3z/BAoGBAI0q6JP+JvJmwZFaeCMMVxXUbqiSko/P1lsa
+    LNNBHZ5/8MOUIm8rB2FC6ziidfueJpqTMqeQmSAlEBCwnwreUnGfRrKoJpyPNENY
+    d15MG6N5J+z81sEcHFeprryZ+D3Ge9VjPq3Tf3NhKKwCDQ0240aPezbnjPeFm4mH
+    bYxxcZ9GAoGAXmLIFSQgiAPu459rCKxT46tHJtM0QfnNiEnQLbFluefZ/yiI4DI3
+    8UzTCOXLhUA7ybmZha+D/csj15Y9/BNFuO7unzVhikCQV9DTeXX46pG4s1o23JKC
+    /QaYWNMZ7kTRv+wWow9MhGiVdML4ZN4XnifuO5krqAybngIy66PMEoQCFEIsKKWv
+    99iziAH0KBMVbxy03Trz
+    -----END DSA PRIVATE KEY----",0,5.98,"-----BEGIN RSA PRIVATE KEY-----
+    MIIBxwIBAAJhAKD0YSHy73nUgysO13XsJmd4fHiFyQ+00R7VVu2iV9Qcon2LZS/x
+    1cydPZ4pQpfjEha6WxZ6o8ci/Ea/w0n+0HGPwaxlEG2Z9inNtj3pgFrYcRztfECb
+    1j6HCibZbAzYtwIBIwJgO8h72WjcmvcpZ8OvHSvTwAguO2TkR6mPgHsgSaKy6GJo
+    PUJnaZRWuba/HX0KGyhz19nPzLpzG5f0fYahlMJAyc13FV7K6kMBPXTRR6FxgHEg
+    L0MPC7cdqAwOVNcPY6A7AjEA1bNaIjOzFN2sfZX0j7OMhQuc4zP7r80zaGc5oy6W
+    p58hRAncFKEvnEq2CeL3vtuZAjEAwNBHpbNsBYTRPCHM7rZuG/iBtwp8Rxhc9I5w
+    ixvzMgi+HpGLWzUIBS+P/XhekIjPAjA285rVmEP+DR255Ls65QbgYhJmTzIXQ2T9
+    luLvcmFBC6l35Uc4gTgg4ALsmXLn71MCMGMpSWspEvuGInayTCL+vEjmNBT+FAdO
+    W7D4zCpI43jRS9U06JVOeSc9CDk2lwiA3wIwCTB/6uc8Cq85D9YqpM10FuHjKpnP
+    REPPOyrAspdeOAV+6VKRavstea7+2DZmSUgE
+    -----END RSA PRIVATE KEY-----
+
+  rsa_public: ssh-rsa AAAAB3NzaC1yc2EAAAABIwAAAGEAoPRhIfLvedSDKw7XdewmZ3h8eIXJD7TRHtVW7aJX1ByifYtlL/HVzJ09nilCl+MSFrpbFnqjxyL8Rr/DSf7QcY/BrGUQbZn2Kc22PemAWthxHO18QJvWPocKJtlsDNi3 smoser@localhost
+
+  dsa_private: |
+    -----BEGIN DSA PRIVATE KEY-----
+    MIIBuwIBAAKBgQDP2HLu7pTExL89USyM0264RCyWX/CMLmukxX0Jdbm29ax8FBJT
+    pLrO8TIXVY5rPAJm1dTHnpuyJhOvU9G7M8tPUABtzSJh4GVSHlwaCfycwcpLv9TX
+    DgWIpSj+6EiHCyaRlB1/CBp9RiaB+10QcFbm+lapuET+/Au6vSDp9IRtlQIVAIMR
+    8KucvUYbOEI+yv+5LW9u3z/BAoGBAI0q6JP+JvJmwZFaeCMMVxXUbqiSko/P1lsa
+    LNNBHZ5/8MOUIm8rB2FC6ziidfueJpqTMqeQmSAlEBCwnwreUnGfRrKoJpyPNENY
+    d15MG6N5J+z81sEcHFeprryZ+D3Ge9VjPq3Tf3NhKKwCDQ0240aPezbnjPeFm4mH
+    bYxxcZ9GAoGAXmLIFSQgiAPu459rCKxT46tHJtM0QfnNiEnQLbFluefZ/yiI4DI3
+    8UzTCOXLhUA7ybmZha+D/csj15Y9/BNFuO7unzVhikCQV9DTeXX46pG4s1o23JKC
+    /QaYWNMZ7kTRv+wWow9MhGiVdML4ZN4XnifuO5krqAybngIy66PMEoQCFEIsKKWv
+    99iziAH0KBMVbxy03Trz
+    -----END DSA PRIVATE KEY----",15,42,6,33,,,,,
+generic-high-checkout-short-secret,低长度凭证检出,,doc/examples/cloud-config-user-groups.txt,password,0,2.75," password ",45,45,45,54,,,,,
+generic-high-checkout-short-secret,低长度凭证检出,,doc/examples/cloud-config-user-groups.txt,password,0,2.75," password ",45,45,65,74,,,,,
+generic-high-checkout-short-secret,低长度凭证检出,,doc/examples/cloud-config-user-groups.txt,password,0,2.75," password ",47,47,33,42,,,,,
+generic-high-checkout-short-secret,低长度凭证检出,,doc/examples/cloud-config-user-groups.txt,password,0,2.75," password ",47,47,59,68,,,,,
+generic-high-checkout-short-secret,低长度凭证检出,,doc/examples/cloud-config-user-groups.txt,password,0,2.75," password ",50,50,67,76,,,,,
+generic-high-checkout-short-secret,低长度凭证检出,,doc/examples/cloud-config-user-groups.txt,password,0,2.75," password ",53,53,52,61,,,,,
+generic-high-checkout-short-secret,低长度凭证检出,,doc/examples/cloud-config-user-groups.txt,password,0,2.75," password ",60,60,26,35,,,,,
+generic-high-checkout-short-secret,低长度凭证检出,,doc/examples/cloud-config-user-groups.txt,password,0,2.75," password ",88,88,25,34,,,,,
+generic-high-checkout-short-secret,低长度凭证检出,,doc/sources/cloudsigma/README.rst,base64_fields,5,3.39," ``base64_fields`",27,27,38,54,,,,,
+generic-high-checkout-short-secret,低长度凭证检出,,doc/sources/ovf/example/ovf-env.xml,password,0,2.75,"=""password""",43,43,26,36,,,,,
+generic-high-checkout-short-secret,低长度凭证检出,,doc/sources/nocloud/README.rst,password,0,2.75," password ",41,41,50,59,,,,,
+generic-high-checkout-short-secret,低长度凭证检出,,doc/sources/nocloud/README.rst,password,0,2.75," password ",42,42,34,43,,,,,
+generic-high-checkout-short-secret,低长度凭证检出,,doc/sources/nocloud/README.rst,password,0,2.75," password ",43,43,20,29,,,,,
+generic-high-checkout-short-secret,低长度凭证检出,,doc/sources/kernel-cmdline.txt,Xh234sdkljf,6,3.46,": Xh234sdkljf",38,38,20,33,,,,,
+generic-high-checkout-short-secret,低长度凭证检出,,doc/sources/ovf/README,password,0,2.75," password ",71,71,12,21,,,,,
+generic-high-checkout-short-secret,低长度凭证检出,,doc/sources/ovf/example/ubuntu-server.ovf,password,0,2.75,"=""password""",47,47,25,35,,,,,
+generic-high-checkout-short-secret,低长度凭证检出,,doc/sources/ovf/example/ubuntu-server.ovf,password,0,2.75," password ",49,49,51,60,,,,,
+generic-high-checkout-short-secret,低长度凭证检出,,doc/sources/ovf/example/ubuntu-server.ovf,password,0,2.75," password ",49,49,95,104,,,,,
+generic-high-checkout-short-secret,低长度凭证检出,,doc/sources/ovf/example/ubuntu-server.ovf,password,0,2.75," password ",49,49,122,131,,,,,
+generic-high-checkout-short-secret,低长度凭证检出,,doc/sources/ovf/example/ubuntu-server.ovf,password,0,2.75," password ",49,49,214,223,,,,,
+private-key,证书--Private Key,,doc/examples/cloud-config.txt,"-----BEGIN RSA PRIVATE KEY-----
+    MIIBxwIBAAJhAKD0YSHy73nUgysO13XsJmd4fHiFyQ+00R7VVu2iV9Qcon2LZS/x
+    1cydPZ4pQpfjEha6WxZ6o8ci/Ea/w0n+0HGPwaxlEG2Z9inNtj3pgFrYcRztfECb
+    1j6HCibZbAzYtwIBIwJgO8h72WjcmvcpZ8OvHSvTwAguO2TkR6mPgHsgSaKy6GJo
+    PUJnaZRWuba/HX0KGyhz19nPzLpzG5f0fYahlMJAyc13FV7K6kMBPXTRR6FxgHEg
+    L0MPC7cdqAwOVNcPY6A7AjEA1bNaIjOzFN2sfZX0j7OMhQuc4zP7r80zaGc5oy6W
+    p58hRAncFKEvnEq2CeL3vtuZAjEAwNBHpbNsBYTRPCHM7rZuG/iBtwp8Rxhc9I5w
+    ixvzMgi+HpGLWzUIBS+P/XhekIjPAjA285rVmEP+DR255Ls65QbgYhJmTzIXQ2T9
+    luLvcmFBC6l35Uc4gTgg4ALsmXLn71MCMGMpSWspEvuGInayTCL+vEjmNBT+FAdO
+    W7D4zCpI43jRS9U06JVOeSc9CDk2lwiA3wIwCTB/6uc8Cq85D9YqpM10FuHjKpnP
+    REPPOyrAspdeOAV+6VKRavstea7+2DZmSUgE
+    -----END RSA PRIVATE KEY-----
+
+  rsa_public: ssh-rsa AAAAB3NzaC1yc2EAAAABIwAAAGEAoPRhIfLvedSDKw7XdewmZ3h8eIXJD7TRHtVW7aJX1ByifYtlL/HVzJ09nilCl+MSFrpbFnqjxyL8Rr/DSf7QcY/BrGUQbZn2Kc22PemAWthxHO18QJvWPocKJtlsDNi3 smoser@localhost
+
+  dsa_private: |
+    -----BEGIN DSA PRIVATE KEY-----
+    MIIBuwIBAAKBgQDP2HLu7pTExL89USyM0264RCyWX/CMLmukxX0Jdbm29ax8FBJT
+    pLrO8TIXVY5rPAJm1dTHnpuyJhOvU9G7M8tPUABtzSJh4GVSHlwaCfycwcpLv9TX
+    DgWIpSj+6EiHCyaRlB1/CBp9RiaB+10QcFbm+lapuET+/Au6vSDp9IRtlQIVAIMR
+    8KucvUYbOEI+yv+5LW9u3z/BAoGBAI0q6JP+JvJmwZFaeCMMVxXUbqiSko/P1lsa
+    LNNBHZ5/8MOUIm8rB2FC6ziidfueJpqTMqeQmSAlEBCwnwreUnGfRrKoJpyPNENY
+    d15MG6N5J+z81sEcHFeprryZ+D3Ge9VjPq3Tf3NhKKwCDQ0240aPezbnjPeFm4mH
+    bYxxcZ9GAoGAXmLIFSQgiAPu459rCKxT46tHJtM0QfnNiEnQLbFluefZ/yiI4DI3
+    8UzTCOXLhUA7ybmZha+D/csj15Y9/BNFuO7unzVhikCQV9DTeXX46pG4s1o23JKC
+    /QaYWNMZ7kTRv+wWow9MhGiVdML4ZN4XnifuO5krqAybngIy66PMEoQCFEIsKKWv
+    99iziAH0KBMVbxy03Trz
+    -----END DSA PRIVATE KEY----",0,5.98,"-----BEGIN RSA PRIVATE KEY-----
+    MIIBxwIBAAJhAKD0YSHy73nUgysO13XsJmd4fHiFyQ+00R7VVu2iV9Qcon2LZS/x
+    1cydPZ4pQpfjEha6WxZ6o8ci/Ea/w0n+0HGPwaxlEG2Z9inNtj3pgFrYcRztfECb
+    1j6HCibZbAzYtwIBIwJgO8h72WjcmvcpZ8OvHSvTwAguO2TkR6mPgHsgSaKy6GJo
+    PUJnaZRWuba/HX0KGyhz19nPzLpzG5f0fYahlMJAyc13FV7K6kMBPXTRR6FxgHEg
+    L0MPC7cdqAwOVNcPY6A7AjEA1bNaIjOzFN2sfZX0j7OMhQuc4zP7r80zaGc5oy6W
+    p58hRAncFKEvnEq2CeL3vtuZAjEAwNBHpbNsBYTRPCHM7rZuG/iBtwp8Rxhc9I5w
+    ixvzMgi+HpGLWzUIBS+P/XhekIjPAjA285rVmEP+DR255Ls65QbgYhJmTzIXQ2T9
+    luLvcmFBC6l35Uc4gTgg4ALsmXLn71MCMGMpSWspEvuGInayTCL+vEjmNBT+FAdO
+    W7D4zCpI43jRS9U06JVOeSc9CDk2lwiA3wIwCTB/6uc8Cq85D9YqpM10FuHjKpnP
+    REPPOyrAspdeOAV+6VKRavstea7+2DZmSUgE
+    -----END RSA PRIVATE KEY-----
+
+  rsa_public: ssh-rsa AAAAB3NzaC1yc2EAAAABIwAAAGEAoPRhIfLvedSDKw7XdewmZ3h8eIXJD7TRHtVW7aJX1ByifYtlL/HVzJ09nilCl+MSFrpbFnqjxyL8Rr/DSf7QcY/BrGUQbZn2Kc22PemAWthxHO18QJvWPocKJtlsDNi3 smoser@localhost
+
+  dsa_private: |
+    -----BEGIN DSA PRIVATE KEY-----
+    MIIBuwIBAAKBgQDP2HLu7pTExL89USyM0264RCyWX/CMLmukxX0Jdbm29ax8FBJT
+    pLrO8TIXVY5rPAJm1dTHnpuyJhOvU9G7M8tPUABtzSJh4GVSHlwaCfycwcpLv9TX
+    DgWIpSj+6EiHCyaRlB1/CBp9RiaB+10QcFbm+lapuET+/Au6vSDp9IRtlQIVAIMR
+    8KucvUYbOEI+yv+5LW9u3z/BAoGBAI0q6JP+JvJmwZFaeCMMVxXUbqiSko/P1lsa
+    LNNBHZ5/8MOUIm8rB2FC6ziidfueJpqTMqeQmSAlEBCwnwreUnGfRrKoJpyPNENY
+    d15MG6N5J+z81sEcHFeprryZ+D3Ge9VjPq3Tf3NhKKwCDQ0240aPezbnjPeFm4mH
+    bYxxcZ9GAoGAXmLIFSQgiAPu459rCKxT46tHJtM0QfnNiEnQLbFluefZ/yiI4DI3
+    8UzTCOXLhUA7ybmZha+D/csj15Y9/BNFuO7unzVhikCQV9DTeXX46pG4s1o23JKC
+    /QaYWNMZ7kTRv+wWow9MhGiVdML4ZN4XnifuO5krqAybngIy66PMEoQCFEIsKKWv
+    99iziAH0KBMVbxy03Trz
+    -----END DSA PRIVATE KEY----",217,244,6,33,,,,,
+generic-high-checkout,高长度凭证检出,,doc/examples/cloud-config.txt,99iziAH0KBMVbxy03Trz,9,3.92,"   99iziAH0KBMVbxy03Trz",243,243,3,26,,,,,
+generic-high-checkout-short-secret,低长度凭证检出,,doc/examples/cloud-config.txt,password,0,2.75," password,",546,546,29,38,,,,,
+generic-high-checkout-short-secret,低长度凭证检出,,doc/examples/cloud-config.txt,password,0,2.75," 'password'",546,546,47,57,,,,,
+generic-high-checkout-short-secret,低长度凭证检出,,doc/examples/cloud-config.txt,password,0,2.75," password ",547,547,45,54,,,,,
+generic-high-checkout-short-secret,低长度凭证检出,,doc/examples/cloud-config.txt,password,0,2.75," password,",551,551,40,49,,,,,
+generic-high-checkout-short-secret,低长度凭证检出,,doc/examples/cloud-config.txt,password,0,2.75," password ",554,554,32,41,,,,,
+generic-high-checkout-short-secret,低长度凭证检出,,doc/examples/cloud-config.txt,password,0,2.75," 'password'",555,555,24,34,,,,,
+generic-high-checkout-short-secret,低长度凭证检出,,doc/examples/cloud-config.txt,password,0,2.75," password ",558,558,22,31,,,,,
+generic-high-checkout-short-secret,低长度凭证检出,,doc/examples/cloud-config.txt,password1,3,2.95,":password1",570,570,12,22,,,,,
+generic-tencent-connect-key-id,应用凭证--Tencent Connect Secret,,doc/examples/cloud-config.txt,0HGPwaxlEG2Z9inNtj3pgFrYcRztfECb,0,4.81,"0HGPwaxlEG2Z9inNtj3pgFrYcRztfECb",219,219,38,70,,,,,
+tencent QQ,腾讯QQ,,tests/unittests/test_datasource/test_cloudsigma.py,1073741824,0,2.72,""": 1073741824,",13,13,10,23,,,,,
+generic-high-checkout-short-secret,低长度凭证检出,,tests/unittests/test_datasource/test_cloudsigma.py,base64_fields,5,3.39,'base64_fields',65,65,34,48,,,,,
+generic-high-checkout-short-secret,低长度凭证检出,,tests/unittests/test_datasource/test_cloudsigma.py,aGkgd29ybGQK,7,3.42,= 'aGkgd29ybGQK',66,66,57,72,,,,,
+tencent QQ,腾讯QQ,,tests/unittests/test_cs_util.py,1073741824,0,2.72,""": 1073741824,",10,10,10,23,,,,,
+generic-high-checkout-short-secret,低长度凭证检出,,tests/unittests/test_datasource/test_configdrive.py,0123456789,0,3.32," ""0123456789""",270,270,31,43,,,,,
+generic-high-checkout-short-secret,低长度凭证检出,,tests/unittests/test_distros/test_sysconfig.py,IPV6TO4_ROUTING,5,3.51,'IPV6TO4_ROUTING',58,58,33,49,,,,,
+generic-high-checkout-short-secret,低长度凭证检出,,tests/unittests/test_distros/test_sysconfig.py,IPV6TO4_ROUTING,5,3.51,'IPV6TO4_ROUTING',59,59,15,31,,,,,
+generic-high-checkout-short-secret,低长度凭证检出,,tests/unittests/test_data.py,base_content1,5,3.24,"   base_content1 ",362,362,7,23,,,,,
+generic-high-checkout-short-secret,低长度凭证检出,,tests/unittests/test_data.py,base_content2,5,3.24,"   base_content2 ",367,367,7,23,,,,,
+generic-high-checkout,高长度凭证检出,,tests/unittests/test_handler/test_handler_timezone.py,0123456789abcdefgh,6,4.17,= '0123456789abcdefgh',64,64,25,46,,,,,
+generic-high-checkout-short-secret,低长度凭证检出,,tools/mock-meta.py,Ec2Handler,5,3.32," Ec2Handler)",444,444,41,52,,,,,
