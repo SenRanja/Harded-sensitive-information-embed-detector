@@ -1,0 +1,6 @@
+NSString *idcard = @"141181199904230013";
+idcard = @"222222222222222222";
+idcard = @"14118119990423001x";
+idcard = @"14118119990423001X";
+NSString *idcardFake = @"28118119990423001X";
+NSString *idcardFake2 = @"29118119990423001X";

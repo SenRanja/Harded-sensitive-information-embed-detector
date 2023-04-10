@@ -1,0 +1,38 @@
+nothing should be saved here
+
+password = "dolphininschedual123"
+
+pwd_1=1qaz@WSX
+password=$RFV5tgb
+email=shenyanjian@gmail.com
+url=www.scboy.cn
+url2:=ssh://shenyanjian.com:22
+url:=http://liquid.com:8080
+
+idcard=141181199904230013
+idcard=222222222222222222
+idcard=14118119990423001x
+idcard=14118119990423001X
+idcardFake=28118119990423001X
+idcardFake2=29118119990423001X
+
+qq=2409879947
+qq2= "479861969"
+qq3= "111111111"
+qq4= "222333333"
+qqFake="2332w21"
+qqFake2="2532w21"
+
+file=/Users/ranja/Documents/client.truststore"
+file=ranja/Documents/client.truststore"
+file=/Documents/client.truststore"
+file=/Users/ranja/Documents/client.truststore"
+error_utl:= ".dprint.json"
+C_path = "C:\Users\ranja\Downloads\deno"
+
+bankid="6222025642650232529"
+FakeBankid="6322025642650562529"
+FakeBankid="6422025642650642529"
+
+
+

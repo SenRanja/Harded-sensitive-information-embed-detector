@@ -1,0 +1,29 @@
+class User {
+    var name: String
+    var email: String
+    var qq: Int
+    var qq2: String
+    var qq3: String
+    var qq4: String
+    var qqFake: String
+    var qqFake2: String
+    
+    init(name: String, email: String) {
+        self.name = name
+        self.email = email
+        self.qq = 0
+        self.qq2 = ""
+        self.qq3 = ""
+        self.qq4 = ""
+        self.qqFake = ""
+        self.qqFake2 = ""
+        
+        // assign values to qq variables
+        qq = 2409879947
+        qq2 = "479861969"
+        qq3 = "111111111"
+        qq4 = "222333333"
+        qqFake = "2332w21"
+        qqFake2 = "2532w21"
+    }
+}
