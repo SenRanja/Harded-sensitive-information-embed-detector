@@ -1,9 +1,0 @@
-stages:
-  - test
-build:
-  stage: test
-  script:
-    - echo "dddddddddddddddddddd"
-  only:
-    - master
-    - dev
