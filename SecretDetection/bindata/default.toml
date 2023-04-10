@@ -320,9 +320,7 @@ keywords = [
 description = "应用凭证--EasyPost API token"
 id = "easypost-api-token"
 regex = '''EZAK(?i)[a-z0-9]{54}'''
-keywords = [
-    "ezak",
-]
+
 
 [[rules]]
 description = "应用凭证--EasyPost test API token"
@@ -737,7 +735,7 @@ keywords = [
 [[rules]]
 description = "应用凭证--New Relic user API Key"
 id = "new-relic-user-api-key"
-regex = '''(?i)(?:new-relic|newrelic|new_relic)(?:[0-9a-z\-_\t .]{0,20})(?:[\s|']|[\s|"]){0,3}(?:=|>|:=|\|\|:|<=|=>|:)(?:'|\"|\s|=|\x60){0,5}(NRAK-[a-z0-9]{27})(?:['|\"|\n|\r|\s|\x60|;]|$)'''
+regex = '''(?i)(?:new-relic|newrelic|new_relic)(?:[0-9a-z\-_\t .]{0,20})(?:[\s|']|[\s|"]){0,3}(?:=|>|:=|\|\|:|<=|=>|:)(?:'|\"|\s|=|\x60){0,5}(NRAK-[a-sz0-9]{27})(?:['|\"|\n|\r|\s|\x60|;]|$)'''
 secretGroup = 1
 keywords = [
     "nrak",
@@ -842,6 +840,14 @@ keywords = [
 ]
 
 [[rules]]
+description = "证书--Public Key"
+id = "public-key"
+regex = '''(?i)-----BEGIN[ A-Z0-9_-]{0,100}PUBLIC KEY-----[\s\S-]*KEY----'''
+keywords = [
+    "-----begin",
+]
+
+[[rules]]
 description = "编程语言凭证--Pulumi API token"
 id = "pulumi-api-token"
 regex = '''(?i)\b(pul-[a-f0-9]{40})(?:['|\"|\n|\r|\s|\x60|;]|$)'''
@@ -859,7 +865,7 @@ keywords = [
 ]
 
 [[rules]]
-description = "编程语言凭证--RapidAPI Access Token"
+description = "应用凭证--RapidAPI Access Token"
 id = "rapidapi-access-token"
 regex = '''(?i)(?:rapidapi)(?:[0-9a-z\-_\t .]{0,20})(?:[\s|']|[\s|"]){0,3}(?:=|>|:=|\|\|:|<=|=>|:)(?:'|\"|\s|=|\x60){0,5}([a-z0-9_-]{50})(?:['|\"|\n|\r|\s|\x60|;]|$)'''
 secretGroup = 1
@@ -1170,6 +1176,158 @@ secretGroup = 1
 keywords = [
     "zendesk",
 ]
+
+
+
+# [blingsec 自定义规则]
+
+# 腾讯云规则
+# https://cloud.tencent.com/developer/article/1385239?from=15425
+[[rules]]
+description = "应用凭证--Tencent Cloud AccessKey ID"
+id = "tencent-cloud-access-key-id"
+regex = '''(?i)\b((AKID)(?i)[a-z0-9]{32})(?:['|\"|\n|\r|\s|\x60]|$)'''
+secretGroup = 1
+keywords = [
+    "akid", "tencent", "tx"
+]
+
+# 华为云规则
+[[rules]]
+description = "应用凭证--Huawei Cloud AccessKey ID"
+id = "generic-huawei-cloud-access-key-id"
+regex = '''(?i)\b((?i)[a-f0-9]{32})(?:['|\"|\n|\r|\s|\x60]|$)'''
+secretGroup = 1
+entropy = 4.2
+keywords = [
+    "huawei",
+]
+
+[[rules]]
+description = "应用凭证--Huawei Cloud Secret Key"
+id = "generic-huawei-cloud-secret-key"
+regex = '''(?i)\b((?i)[a-f0-9]{64})(?:['|\"|\n|\r|\s|\x60]|$)'''
+secretGroup = 1
+entropy = 4.2
+keywords = [
+    "huawei",
+]
+
+# 百度云规则
+[[rules]]
+description = "应用凭证--Baidu Cloud AccessKey ID"
+id = "generic-baidu-api"
+regex = '''(?i)(?:key|api|token|secret|client|passwd|password|auth|access)((?i)[0-9a-z\-_\t .]{18,20})(?:[\s|']|[\s|"]){0,3}(?:=|>|:=|\|\|:|<=|=>|:)(?:'|\"|\s|=|\x60){0,5}([0-9a-z\-_.=]{10,150})(?:['|\"|\n|\r|\s|\x60]|$)'''
+secretGroup = 1
+entropy = 4.2
+keywords = [
+    "baidu",
+]
+
+# 金山云：AK开头，但样本太少
+# TODO:
+
+
+# 京东云
+# https://docs.jdcloud.com/cn/object-storage-service/sdk-go
+[[rules]]
+description = "应用凭证--JingDong Cloud AccessKey ID"
+id = "generic-jd-cloud-access-key-id"
+regex = '''(?i)\b((?i)[a-f0-9]{32})(?:['|\"|\n|\r|\s|\x60]|$)'''
+entropy = 4.2
+secretGroup = 1
+keywords = [
+    "jdcloud",
+]
+
+# 天翼云
+[[rules]]
+description = "应用凭证--Ctyun AccessKey ID/Secret"
+id = "generic-ctyun-access-key-id"
+regex = '''(?i)\b((?i)[a-f0-9]{32})(?:['|\"|\n|\r|\s|\x60]|$)'''
+entropy = 4.2
+secretGroup = 1
+keywords = [
+    "ctyun",
+]
+
+# 移动云
+[[rules]]
+description = "应用凭证--cmecloud AccessKey ID/Secret"
+id = "generic-cmecloud-access-key-id"
+regex = '''(?i)\b((?i)[a-f0-9]{32})(?:['|\"|\n|\r|\s|\x60]|$)'''
+entropy = 4.2
+secretGroup = 1
+keywords = [
+    "cmecloud",
+]
+
+# 联通云：cucloud.cn
+# TODO:
+
+# 腾讯开发者
+# eg: qMsHsFezmAbBFC5iLFFRW0VmclSfVeym
+[[rules]]
+description = "应用凭证--Tencent Connect Secret"
+id = "generic-tencent-connect-key-id"
+regex = '''(?i)(?:[0-9a-z\-_\t .]{0,20})(?:[\s|']|[\s|"]){0,3}(?:=|>|:=|\|\|:|<=|=>|:)(?:'|\"|\s|=|\x60){0,5}([a-z0-9]{32})(?:['|\"|\n|\r|\s|\x60]|$)'''
+secretGroup = 1
+entropy = 4.2
+keywords = [
+    "qq", "Tencent",
+]
+
+# 微信开发者
+# wx541e206dd166434a
+[[rules]]
+description = "应用凭证--WeiXin Developer App ID"
+id = "generic-weixin-developer-app-id"
+regex = '''(?i)\b((wx)(?i)[a-f0-9]{16})(?:['|\"|\n|\r|\s|\x60]|$)'''
+entropy = 4.2
+secretGroup = 1
+keywords = [
+    "weixin", "wx",
+]
+
+[[rules]]
+description = "应用凭证--WeiXin Developer App Secret"
+id = "generic-weixin-developer-app-secret"
+regex = '''(?i)\b((?i)[a-f0-9]{32})(?:['|\"|\n|\r|\s|\x60]|$)'''
+entropy = 4.2
+secretGroup = 1
+keywords = [
+    "weixin", "wx", "qy",
+]
+
+# 企业微信开发者
+# wwaa6fb8ff1b81
+[[rules]]
+description = "应用凭证--Qiye WeiXin Developer App ID"
+id = "qiye-weixin-developer-app-id"
+regex = '''(?i)\b((ww)(?i)[a-f0-9]{12})(?:['|\"|\n|\r|\s|\x60]|$)'''
+entropy = 4.2
+secretGroup = 1
+keywords = [
+    "qyapi",
+    "weixin",
+    "wx",
+    "qy",
+]
+
+
+[[rules]]
+description = "应用凭证--Qiye WeiXin Developer App Secret"
+id = "generic-qiye-weixin-developer-app-secret"
+regex = '''(?i)\b((?i)[a-z0-9]{37})(?:['|\"|\n|\r|\s|\x60]|$)'''
+secretGroup = 1
+entropy = 4.2
+keywords = [
+    "qyapi",
+    "weixin",
+    "wx",
+    "qy",
+]
+
 
 
 [[rules]]
@@ -2659,155 +2817,6 @@ stopwords= [
     "combo",
 ]
 
-# [blingsec 自定义规则]
-
-# 腾讯云规则
-# https://cloud.tencent.com/developer/article/1385239?from=15425
-[[rules]]
-description = "应用凭证--Tencent Cloud AccessKey ID"
-id = "tencent-cloud-access-key-id"
-regex = '''(?i)\b((AKID)(?i)[a-z0-9]{32})(?:['|\"|\n|\r|\s|\x60]|$)'''
-secretGroup = 1
-keywords = [
-    "akid", "tencent", "tx"
-]
-
-# 华为云规则
-[[rules]]
-description = "应用凭证--Huawei Cloud AccessKey ID"
-id = "generic-huawei-cloud-access-key-id"
-regex = '''(?i)\b((?i)[a-f0-9]{32})(?:['|\"|\n|\r|\s|\x60]|$)'''
-secretGroup = 1
-entropy = 4.2
-keywords = [
-    "huawei",
-]
-
-[[rules]]
-description = "应用凭证--Huawei Cloud Secret Key"
-id = "generic-huawei-cloud-secret-key"
-regex = '''(?i)\b((?i)[a-f0-9]{64})(?:['|\"|\n|\r|\s|\x60]|$)'''
-secretGroup = 1
-entropy = 4.2
-keywords = [
-    "huawei",
-]
-
-# 百度云规则
-[[rules]]
-description = "应用凭证--Baidu Cloud AccessKey ID"
-id = "generic-baidu-api"
-regex = '''(?i)(?:key|api|token|secret|client|passwd|password|auth|access)((?i)[0-9a-z\-_\t .]{18,20})(?:[\s|']|[\s|"]){0,3}(?:=|>|:=|\|\|:|<=|=>|:)(?:'|\"|\s|=|\x60){0,5}([0-9a-z\-_.=]{10,150})(?:['|\"|\n|\r|\s|\x60]|$)'''
-secretGroup = 1
-entropy = 4.2
-keywords = [
-    "baidu",
-]
-
-# 金山云：AK开头，但样本太少
-# TODO:
-
-
-# 京东云
-# https://docs.jdcloud.com/cn/object-storage-service/sdk-go
-[[rules]]
-description = "应用凭证--JingDong Cloud AccessKey ID"
-id = "generic-jd-cloud-access-key-id"
-regex = '''(?i)\b((?i)[a-f0-9]{32})(?:['|\"|\n|\r|\s|\x60]|$)'''
-entropy = 4.2
-secretGroup = 1
-keywords = [
-    "jdcloud",
-]
-
-# 天翼云
-[[rules]]
-description = "应用凭证--Ctyun AccessKey ID/Secret"
-id = "generic-ctyun-access-key-id"
-regex = '''(?i)\b((?i)[a-f0-9]{32})(?:['|\"|\n|\r|\s|\x60]|$)'''
-entropy = 4.2
-secretGroup = 1
-keywords = [
-    "ctyun",
-]
-
-# 移动云
-[[rules]]
-description = "应用凭证--cmecloud AccessKey ID/Secret"
-id = "generic-cmecloud-access-key-id"
-regex = '''(?i)\b((?i)[a-f0-9]{32})(?:['|\"|\n|\r|\s|\x60]|$)'''
-entropy = 4.2
-secretGroup = 1
-keywords = [
-    "cmecloud",
-]
-
-# 联通云：cucloud.cn
-# TODO:
-
-# 腾讯开发者
-# eg: qMsHsFezmAbBFC5iLFFRW0VmclSfVeym
-[[rules]]
-description = "应用凭证--Tencent Connect Secret"
-id = "generic-tencent-connect-key-id"
-regex = '''(?i)\b((?i)[a-z0-9]{32})(?:['|\"|\n|\r|\s|\x60]|$)'''
-secretGroup = 1
-entropy = 4.2
-keywords = [
-    "qq", "Tencent",
-]
-
-# 微信开发者
-# wx541e206dd166434a
-[[rules]]
-description = "应用凭证--WeiXin Developer App ID"
-id = "generic-weixin-developer-app-id"
-regex = '''(?i)\b((wx)(?i)[a-f0-9]{16})(?:['|\"|\n|\r|\s|\x60]|$)'''
-entropy = 4.2
-secretGroup = 1
-keywords = [
-    "weixin", "wx",
-]
-
-[[rules]]
-description = "应用凭证--WeiXin Developer App Secret"
-id = "generic-weixin-developer-app-secret"
-regex = '''(?i)\b((?i)[a-f0-9]{32})(?:['|\"|\n|\r|\s|\x60]|$)'''
-entropy = 4.2
-secretGroup = 1
-keywords = [
-    "weixin", "wx", "qy",
-]
-
-# 企业微信开发者
-# wwaa6fb8ff1b81
-[[rules]]
-description = "应用凭证--Qiye WeiXin Developer App ID"
-id = "qiye-weixin-developer-app-id"
-regex = '''(?i)\b((ww)(?i)[a-f0-9]{12})(?:['|\"|\n|\r|\s|\x60]|$)'''
-entropy = 4.2
-secretGroup = 1
-keywords = [
-    "qyapi",
-    "weixin",
-    "wx",
-    "qy",
-]
-
-
-[[rules]]
-description = "应用凭证--Qiye WeiXin Developer App Secret"
-id = "generic-qiye-weixin-developer-app-secret"
-regex = '''(?i)\b((?i)[a-z0-9]{37})(?:['|\"|\n|\r|\s|\x60]|$)'''
-secretGroup = 1
-entropy = 4.2
-keywords = [
-    "qyapi",
-    "weixin",
-    "wx",
-    "qy",
-]
-
 
 
 
@@ -2816,28 +2825,28 @@ keywords = [
 [[rules]]
 description = "高长度凭证检出"
 id = "generic-high-checkout"
-regex = '''(?i)(?:['|"|:|=| ]{1,3})((?i)[`*~%^$!&@#\w]{16,28})(?:[;|\)| |,|'|"|\n|\r|\s|\x60])'''
+regex = '''(?i)(?:[0-9a-z\-_\t .]{0,20})(?:[\s|']|[\s|"]){0,3}(?:=|>|:=|\|\|:|<=|=>|:)(?:'|\"|\s|=|\x60){0,5}([`*~%^$!&@#\w]{16,28})(?:[;|\)| |,|'|"|\n|\r|\s|\x60])'''
 secretGroup = 1
 entropy = 3.3
-keywords = [
-    "password","passwd","pwd","psd",
-    "secret",
-    "access",
-    "key","appkey",
-    "admin","adm",
-    "root",
-    "auth",
-    "user","usr",
-    "api",
-    "token",
-    "config",
-    "login",
-]
+#keywords = [
+#    "password","passwd","pwd","psd",
+#    "secret",
+#    "access",
+#    "key","appkey",
+#    "admin","adm",
+#    "root",
+#    "auth",
+#    "user","usr",
+#    "api",
+#    "token",
+#    "config",
+#    "login",
+#]
 
 [[rules]]
 description = "低长度凭证检出"
 id = "generic-high-checkout-short-secret"
-regex = '''(?i)(?:['|"|:|=| ]{1,3})((?i)[`*~%^$!&@#\w]{8,15})(?:[;|\)| |,|'|"|\n|\r|\s|\x60])'''
+regex = '''(?i)(?:[0-9a-z\-_\t .]{0,20})(?:[\s|']|[\s|"]){0,3}(?:=|>|:=|\|\|:|<=|=>|:)(?:'|\"|\s|=|\x60){0,5}([`*~%^$!&@#\w]{8,15})(?:[;|\)| |,|'|"|\n|\r|\s|\x60])'''
 secretGroup = 1
 entropy = 2.4
 keywords = [
@@ -2890,7 +2899,7 @@ entropy = 2.2
 [[rules]]
 description = "常见哈希值"
 id = "hash"
-regex = '''(?i)(?:['|"|:|=| ]{1,3})([0-9a-fA-F]{16}|[0-9a-fA-F]{32}|[0-9a-fA-F]{40}|[0-9a-fA-F]{64}|[0-9a-fA-F]{128})(?:[;|\)| |,|'|"|\n|\r|\s|\x60])'''
+regex = '''(?i)(?:['|"|:|=| ]{0,3})([0-9a-fA-F]{16}|[0-9a-fA-F]{32}|[0-9a-fA-F]{40}|[0-9a-fA-F]{64}|[0-9a-fA-F]{128})(?:[;|\)| |,|'|"|\n|\r|\s|\x60])'''
 secretGroup = 1
 entropy = 2.5
 
@@ -2918,5 +2927,3 @@ entropy = 2.5
 #regex = '''(?i)(?:['|"|:|=| ]{1,3})((\w+):\/\/[^\s]*)(?:[;|\)| |,|'|"|\n|\r|\s|\x60])'''
 #secretGroup = 1
 #entropy = 2.5
-
-
