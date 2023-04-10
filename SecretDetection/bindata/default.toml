@@ -7,7 +7,7 @@ useDefault = true
 [allowlist]
 description = "global allow lists"
 paths = [
-    '''(.*?)(jpg|gif|doc|docx|zip|xls|pdf|bin|svg|socket|xlsx|csr|cer|der|p12|pem|zip|ppt|pptx|exe|m|plist|cfg|sql|data|sqlite|db|bak)$''',
+    '''(.*?)(jpg|gif|doc|docx|zip|xls|pdf|bin|svg|socket|xlsx|zip|ppt|pptx|exe|plist|data|sqlite|db|bak)$''',
     '''(go.mod|go.sum)$''',
     '''node_modules''',
     '''vendor''',
@@ -598,7 +598,7 @@ keywords = [
 ]
 
 [[rules]]
-description = "应用凭证--LinkedIn Client ID"
+description = "个人隐私--LinkedIn Client ID"
 id = "linkedin-client-id"
 regex = '''(?i)(?:linkedin|linked-in)(?:[0-9a-z\-_\t .]{0,20})(?:[\s|']|[\s|"]){0,3}(?:=|>|:=|\|\|:|<=|=>|:)(?:'|\"|\s|=|\x60){0,5}([a-z0-9]{14})(?:['|\"|\n|\r|\s|\x60|;]|$)'''
 secretGroup = 1
@@ -1196,12 +1196,9 @@ keywords = [
 [[rules]]
 description = "应用凭证--Huawei Cloud AccessKey ID"
 id = "generic-huawei-cloud-access-key-id"
-regex = '''(?i)\b((?i)[a-f0-9]{32})(?:['|\"|\n|\r|\s|\x60]|$)'''
+regex = '''(?i)(?:huawei[0-9a-z\-_\t .]{0,20})(?:'|\"|\s|=|\x60){0,5}((?i)[a-f0-9]{32})(?:['|\"|\n|\r|\s|\x60]|$)'''
 secretGroup = 1
-entropy = 4.2
-keywords = [
-    "huawei",
-]
+entropy = 3.2
 
 [[rules]]
 description = "应用凭证--Huawei Cloud Secret Key"
@@ -2823,7 +2820,7 @@ stopwords= [
 #---------------【密码类】----------
 
 [[rules]]
-description = "高长度凭证检出"
+description = "通用匹配--高长度凭证检出"
 id = "generic-high-checkout"
 regex = '''(?i)(?:[0-9a-z\-_\t .]{0,20})(?:[\s|']|[\s|"]){0,3}(?:=|>|:=|\|\|:|<=|=>|:)(?:'|\"|\s|=|\x60){0,5}([`*~%^$!&@#\w]{16,28})(?:[;|\)| |,|'|"|\n|\r|\s|\x60])'''
 secretGroup = 1
@@ -2844,7 +2841,7 @@ entropy = 3.3
 #]
 
 [[rules]]
-description = "低长度凭证检出"
+description = "通用匹配--低长度凭证检出"
 id = "generic-high-checkout-short-secret"
 regex = '''(?i)(?:[0-9a-z\-_\t .]{0,20})(?:[\s|']|[\s|"]){0,3}(?:=|>|:=|\|\|:|<=|=>|:)(?:'|\"|\s|=|\x60){0,5}([`*~%^$!&@#\w]{8,15})(?:[;|\)| |,|'|"|\n|\r|\s|\x60])'''
 secretGroup = 1
@@ -2865,7 +2862,7 @@ keywords = [
 # -------【个人信息部分】--------------
 
 #[[rules]]
-#description = "邮箱"
+#description = "个人隐私--邮箱"
 #id = "email"
 #regex = '''(?i)(?:['|"|:|=| ]{1,3})(\w+([-]\w+)*@\w+[\w-]+\.(cn|com|xyz|top|net|tech|org|gov|ink|edu|int|mil|pub|red|biz|co|tv|mobi|travel|cc|pro|info|name|coop|aero|eu|kr|jp))(?:[;|\)| |,|'|"|\n|\r|\s|\x60])'''
 #secretGroup = 1
@@ -2873,14 +2870,14 @@ keywords = [
 
 
 [[rules]]
-description = "身份证号"
+description = "个人隐私--身份证号"
 id = "idcard"
 regex = '''(?i)(?:['|"|:|=| ]{1,3})((1[1-5]|2[1-3]|3[1-7]|4[1-6]|5[0-4]|6[1-5]|[7-9]1)\d{4}(18|19|20)\d{2}((0[1-9])|(1[0-2]))(([0-2][1-9])|10|20|30|31)\d{3}[0-9Xx])(?:[;|\)| |,|'|"|\n|\r|\s|\x60])'''
 secretGroup = 1
 entropy = 2.3
 
 [[rules]]
-description = "借记卡号,银联"
+description = "个人隐私--借记卡号,银联"
 id = "debit_card_account_number"
 regex = '''(?i)(?:['|"|:|=| ]{1,3})(62\d{11,17})(?:[;|\)| |,|'|"|\n|\r|\s|\x60])'''
 secretGroup = 1
@@ -2888,7 +2885,7 @@ entropy = 2.3
 
 
 [[rules]]
-description = "腾讯QQ"
+description = "个人隐私--腾讯QQ"
 id = "tencent QQ"
 regex = '''(?i)(?:['|"|:|=| ]{1,3})([1-9][0-9]{8,11})(?:[;|\)| |,|'|"|\n|\r|\s|\x60])'''
 secretGroup = 1
@@ -2897,7 +2894,7 @@ entropy = 2.2
 # -------【硬编码匹配】--------------
 
 [[rules]]
-description = "常见哈希值"
+description = "hash--常见哈希值"
 id = "hash"
 regex = '''(?i)(?:['|"|:|=| ]{0,3})([0-9a-fA-F]{16}|[0-9a-fA-F]{32}|[0-9a-fA-F]{40}|[0-9a-fA-F]{64}|[0-9a-fA-F]{128})(?:[;|\)| |,|'|"|\n|\r|\s|\x60])'''
 secretGroup = 1

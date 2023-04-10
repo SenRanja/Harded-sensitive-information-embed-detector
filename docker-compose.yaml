@@ -1,14 +1,9 @@
 version: "3"
 services:
   secretdetection_docker:
-    image: amd64/alpine:3.14
+    build: .
     container_name: secret_detection_http
     ports:
       - "8000:8000"
     restart: always
-    volumes:
-      - ./SecretDetectionDir:/secretDetection/
-    restart: always
-    working_dir: /secretDetection/
-    command: /bin/sh -c "apk update && apk add git && apk add tzdata && cp /usr/share/zoneinfo/Asia/Shanghai /etc/localtime && echo "Asia/Shanghai" > /etc/timezone && apk del tzdata && /secretDetection/http"
     
