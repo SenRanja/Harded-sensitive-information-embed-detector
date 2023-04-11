@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE note SYSTEM "note.dtd">
+<note>
+  <to>John</to>
+  <from>Doe</from>
+  <heading>GitHub Token</heading>
+  <body>
+  <gitPAT>ghp_d5344f4b4e6634378eae0d9b5e82a5a5c5a2</gitPAT>
+  <gitPAT3>and some other random strings here</gitPAT3>
+  <gitPAT2>ghp_a87a5f4e7d77bbd6d063cf4f4e4e4e4easda</gitPAT2>
+  <gitPAT4>and more random strings here</gitPAT4>
+  </body>
+</note>

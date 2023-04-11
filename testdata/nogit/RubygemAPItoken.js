@@ -1,0 +1,4 @@
+const secret1 = 'rubygems_1c6136d090d7ed9be6f24294b771f1846dd97b2f062744b1';
+const secret2 = 'rubygems_21f1c383f46f8a421ecee227e67b8221f4a4f1038c4d4b18';
+const otherString1 = 'rubygems_21f1c383f46f8a421ecee227e67b8221f4a4f1038c4d4b18sss';
+const otherString2 = 'rubygems_21f1c383f46f8a421ecee227e67b8221f4a4f1038c4d4b18d';
