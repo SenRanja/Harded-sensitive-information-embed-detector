@@ -1199,14 +1199,17 @@ description = "应用凭证--Huawei Cloud AccessKey ID"
 id = "generic-huawei-cloud-access-key-id"
 regex = '''(?i)(?:huawei[0-9a-z\-_\t .]{0,20})(?:'|\"|\s|=|\x60){0,5}((?i)[a-f0-9]{32})(?:['|\"|\n|\r|\s|\x60]|$)'''
 secretGroup = 1
-entropy = 3.2
+entropy = 3.1
+keywords = [
+    "huawei",
+]
 
 [[rules]]
 description = "应用凭证--Huawei Cloud Secret Key"
 id = "generic-huawei-cloud-secret-key"
 regex = '''(?i)\b((?i)[a-f0-9]{64})(?:['|\"|\n|\r|\s|\x60]|$)'''
 secretGroup = 1
-entropy = 4.2
+entropy = 3.3
 keywords = [
     "huawei",
 ]
@@ -1215,9 +1218,9 @@ keywords = [
 [[rules]]
 description = "应用凭证--Baidu Cloud AccessKey ID"
 id = "generic-baidu-api"
-regex = '''(?i)(?:key|api|token|secret|client|passwd|password|auth|access)((?i)[0-9a-z\-_\t .]{18,20})(?:[\s|']|[\s|"]){0,3}(?:=|>|:=|\|\|:|<=|=>|:)(?:'|\"|\s|=|\x60){0,5}([0-9a-z\-_.=]{10,150})(?:['|\"|\n|\r|\s|\x60]|$)'''
+regex = '''(?i)(?:key|api|token|secret|client|passwd|password|auth|access)((?i)[0-9a-z\-_\t .]{0,20})(?:[\s|']|[\s|"]){0,3}(?:=|>|:=|\|\|:|<=|=>|:)(?:'|\"|\s|=|\x60){0,5}([0-9a-z\-_.=]{10,150})(?:['|\"|\n|\r|\s|\x60]|$)'''
 secretGroup = 1
-entropy = 4.2
+entropy = 2.1
 keywords = [
     "baidu",
 ]
@@ -1232,7 +1235,7 @@ keywords = [
 description = "应用凭证--JingDong Cloud AccessKey ID"
 id = "generic-jd-cloud-access-key-id"
 regex = '''(?i)\b((?i)[a-f0-9]{32})(?:['|\"|\n|\r|\s|\x60]|$)'''
-entropy = 4.2
+entropy = 3.2
 secretGroup = 1
 keywords = [
     "jdcloud",
@@ -1254,7 +1257,7 @@ keywords = [
 description = "应用凭证--cmecloud AccessKey ID/Secret"
 id = "generic-cmecloud-access-key-id"
 regex = '''(?i)\b((?i)[a-f0-9]{32})(?:['|\"|\n|\r|\s|\x60]|$)'''
-entropy = 4.2
+entropy = 3.2
 secretGroup = 1
 keywords = [
     "cmecloud",
@@ -1281,7 +1284,7 @@ keywords = [
 description = "应用凭证--WeiXin Developer App ID"
 id = "generic-weixin-developer-app-id"
 regex = '''(?i)\b((wx)(?i)[a-f0-9]{16})(?:['|\"|\n|\r|\s|\x60]|$)'''
-entropy = 4.2
+entropy = 2.7
 secretGroup = 1
 keywords = [
     "weixin", "wx",
@@ -1303,7 +1306,7 @@ keywords = [
 description = "应用凭证--Qiye WeiXin Developer App ID"
 id = "qiye-weixin-developer-app-id"
 regex = '''(?i)\b((ww)(?i)[a-f0-9]{12})(?:['|\"|\n|\r|\s|\x60]|$)'''
-entropy = 4.2
+entropy = 2.4
 secretGroup = 1
 keywords = [
     "qyapi",

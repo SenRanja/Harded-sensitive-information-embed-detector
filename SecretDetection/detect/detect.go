@@ -534,10 +534,10 @@ func (d *Detector) Detect(fragment Fragment) []report.Finding {
 	// 这里传入文件的源码，然后，matches 是特定算法返回的多个值，然后给了map
 	matches := d.prefilter.FindAll(normalizedRaw)
 	// -----【调试】--------
-	//fmt.Println("AC自动机匹配结果：")
-	//for _, m := range matches {
-	//	fmt.Println(normalizedRaw[m.Start():m.End()])
-	//}
+	fmt.Println("AC自动机匹配结果：")
+	for _, m := range matches {
+		fmt.Println(normalizedRaw[m.Start():m.End()])
+	}
 	// -----【调试】--END--------
 	for _, m := range matches {
 		fragment.keywords[normalizedRaw[m.Start():m.End()]] = true
