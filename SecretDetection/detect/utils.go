@@ -313,23 +313,34 @@ func ShortPasswordCheck(s string) bool {
 // filter will dedupe and redact findings
 func filter(findings []report.Finding, redact bool) []report.Finding {
 	var retFindings []report.Finding
+	// 去重算法，对generic匹配到的值进行循环匹配，如果被匹配到准确规则，但是代码secret和位置一样，则去掉该generic的规则匹配
 	for _, f := range findings {
 		include := true
-		//if strings.Contains(strings.ToLower(f.RuleID), "generic") {
-		for _, fPrime := range findings {
-			if f.StartLine == fPrime.StartLine &&
-				f.Commit == fPrime.Commit &&
-				f.RuleID != fPrime.RuleID &&
-				strings.Contains(fPrime.Secret, f.Secret) &&
-				!strings.Contains(strings.ToLower(fPrime.RuleID), "generic") {
-
-				genericMatch := strings.Replace(f.Match, f.Secret, "REDACTED", -1)
-				betterMatch := strings.Replace(fPrime.Match, fPrime.Secret, "REDACTED", -1)
-				log.Trace().Msgf("skipping %s finding (%s), %s rule takes precendence (%s)", f.RuleID, genericMatch, fPrime.RuleID, betterMatch)
+		for _, ExistedFinding := range retFindings {
+			if f.StartLine == ExistedFinding.StartLine &&
+				f.Commit == ExistedFinding.Commit &&
+				f.RuleID == ExistedFinding.RuleID &&
+				f.Secret == ExistedFinding.Secret &&
+				f.Match == ExistedFinding.Match {
 				include = false
 				break
 			}
-			//}
+		}
+		if strings.Contains(strings.ToLower(f.RuleID), "generic") {
+			for _, fPrime := range findings {
+				if f.StartLine == fPrime.StartLine &&
+					f.Commit == fPrime.Commit &&
+					f.RuleID != fPrime.RuleID &&
+					strings.Contains(fPrime.Secret, f.Secret) &&
+					!strings.Contains(strings.ToLower(fPrime.RuleID), "generic") {
+
+					genericMatch := strings.Replace(f.Match, f.Secret, "REDACTED", -1)
+					betterMatch := strings.Replace(fPrime.Match, fPrime.Secret, "REDACTED", -1)
+					log.Trace().Msgf("skipping %s finding (%s), %s rule takes precendence (%s)", f.RuleID, genericMatch, fPrime.RuleID, betterMatch)
+					include = false
+					break
+				}
+			}
 		}
 
 		if redact {

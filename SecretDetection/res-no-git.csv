@@ -1,3 +1,242 @@
 规则ID,描述,Commit,文件位置,凭证,密码强度,香农熵,匹配内容,开始行,结束行,开始列,结束列,提交者,提交信息,提交时间,邮箱,Commit指纹
-gitter-access-token,VCS凭证--Gitter Access Token,,.,abcdefgh1234567890ijklmnopqstuvwxyz09876,0,5.07,"GitterAccessToken = ""abcdefgh1234567890ijklmnopqstuvwxyz09876""",8,8,8,69,,,,,
-gitter-access-token,VCS凭证--Gitter Access Token,,.,uvwxyz0987654321abcdefgijklmnopqrst54321,0,5.07,"gitterAccessToken2 := ""uvwxyz0987654321abcdefgijklmnopqrst54321""",15,15,3,66,,,,,
+adafruit-api-key,应用凭证--Adafruit API Key,,nogit/Adafruit.go,a7e891192e4c4c4d8ad4aa13f5586eb5,0,3.72,"adafruit_Key := ""a7e891192e4c4c4d8ad4aa13f5586eb5""",8,8,6,55,,,,,
+adafruit-api-key,应用凭证--Adafruit API Key,,nogit/Adafruit.go,9a1b2c3d4e5f6a7b8c9d0e1f2a3b4c5d,0,3.91,"adafruit_Key2 := ""9a1b2c3d4e5f6a7b8c9d0e1f2a3b4c5d""",15,15,3,53,,,,,
+aws-access-token,应用凭证--AWS,,nogit/AWS.go,AKIALALEMEL33243OLIA,0,3.08,AKIALALEMEL33243OLIA,15,15,17,36,,,,,
+atlassian-api-token,应用凭证--Atlassian API token,,nogit/AtlassianAPI.kt,ab12cd34ef56gh78ij90kl12,0,4.42,"jira=""ab12cd34ef56gh78ij90kl12""",3,3,10,40,,,,,
+atlassian-api-token,应用凭证--Atlassian API token,,nogit/AtlassianAPI.kt,xy12ab34cd56ef78gh90ij12,0,4.42,"atlassian=""xy12ab34cd56ef78gh90ij12""",4,4,10,45,,,,,
+adobe-client-id,应用凭证--Adobe Client ID (OAuth Web),,nogit/AdobeClientId.java,4d9f9e066dc11a82e8a292c3e30aef04,0,3.66,"adobeKey1 = ""4d9f9e066dc11a82e8a292c3e30aef04""",3,3,17,62,,,,,
+adobe-client-id,应用凭证--Adobe Client ID (OAuth Web),,nogit/AdobeClientId.java,b6a9e38fc1a008e8a8d218c6dc8835e5,0,3.57,"adobeKey2 = ""b6a9e38fc1a008e8a8d218c6dc8835e5""",4,4,17,62,,,,,
+generic-baidu-api,应用凭证--Baidu Cloud AccessKey ID,,nogit/BaiduCloudAccessKeyID.py,_key ,0,2.32,"access_key = ""a1b2c3d4e5f6g7h8i9""",4,4,8,40,,,,,
+generic-baidu-api,应用凭证--Baidu Cloud AccessKey ID,,nogit/BaiduCloudAccessKeyID.py,_key ,0,2.32,"secret_key = ""j0k1l2m3n4o5p6q7r8s""",14,14,12,45,,,,,
+generic-api-key,通用API--Generic API Key,,nogit/BaiduCloudAccessKeyID.py,j0k1l2m3n4o5p6q7r8s,0,4.25,"secret_key = ""j0k1l2m3n4o5p6q7r8s""",14,14,12,45,,,,,
+generic-high-checkout,通用匹配--高长度凭证检出,,nogit/BaiduCloudAccessKeyID.py,a1b2c3d4e5f6g7h8i9,6,4.17,"baidu_access_key = ""a1b2c3d4e5f6g7h8i9""",4,4,2,40,,,,,
+generic-high-checkout,通用匹配--高长度凭证检出,,nogit/BaiduCloudAccessKeyID.py,j0k1l2m3n4o5p6q7r8s,6,4.25,"    baidu_secret_key = ""j0k1l2m3n4o5p6q7r8s""",14,14,2,45,,,,,
+generic-ctyun-access-key-id,应用凭证--Ctyun AccessKey ID/Secret,,nogit/CtyunAccessKeyID.java,a06a174a9b9d47e3a36ec3e3d14c43e1,0,3.43,"ctyun_access_key_id = ""a06a174a9b9d47e3a36ec3e3d14c43e1""",4,4,13,68,,,,,
+generic-ctyun-access-key-id,应用凭证--Ctyun AccessKey ID/Secret,,nogit/CtyunAccessKeyID.java,c813f4de4b7c4ad4b5829a28f103b8a7,0,3.77,"ctyun_access_secret = ""c813f4de4b7c4ad4b5829a28f103b8a7""",6,6,13,68,,,,,
+generic-hash,hash--常见哈希值,,nogit/CtyunAccessKeyID.java,a06a174a9b9d47e3a36ec3e3d14c43e1,0,3.43,"= ""a06a174a9b9d47e3a36ec3e3d14c43e1""",4,4,33,68,,,,,
+generic-hash,hash--常见哈希值,,nogit/CtyunAccessKeyID.java,c813f4de4b7c4ad4b5829a28f103b8a7,0,3.77,"= ""c813f4de4b7c4ad4b5829a28f103b8a7""",6,6,33,68,,,,,
+facebook,应用凭证--Facebook,,nogit/FaceBook_key.js,43b95fc3730122fc3d3fc5e2f5b5e5d7,0,3.48,facebook0 = 43b95fc3730122fc3d3fc5e2f5b5e5d7',2,2,7,51,,,,,
+facebook,应用凭证--Facebook,,nogit/FaceBook_key.js,508cfb13d6785a6f31b6d66c24d1e9b8,0,3.79,facebook1:= 508cfb13d6785a6f31b6d66c24d1e9b8',3,3,7,51,,,,,
+github-pat,VCS凭证--GitHub Personal Access Token,,nogit/GitHubPersonalAccessToken.xml,ghp_d5344f4b4e6634378eae0d9b5e82a5a5c5a2,0,3.97,ghp_d5344f4b4e6634378eae0d9b5e82a5a5c5a2,8,8,12,51,,,,,
+github-pat,VCS凭证--GitHub Personal Access Token,,nogit/GitHubPersonalAccessToken.xml,ghp_a87a5f4e7d77bbd6d063cf4f4e4e4e4easda,0,3.83,ghp_a87a5f4e7d77bbd6d063cf4f4e4e4e4easda,10,10,13,52,,,,,
+github-app-token,VCS凭证--GitHub App Token,,nogit/GitHubAppToken.jsx,ghu_6789ghu01234567890abcdef1234567890gw,0,4.26,ghu_6789ghu01234567890abcdef1234567890gw,3,3,21,60,,,,,
+github-app-token,VCS凭证--GitHub App Token,,nogit/GitHubAppToken.jsx,ghu_456ghs890abcdef1234567890ijklmnopqrs,0,4.87,ghu_456ghs890abcdef1234567890ijklmnopqrs,4,4,22,61,,,,,
+github-app-token,VCS凭证--GitHub App Token,,nogit/GitHubAppToken.jsx,ghu_456ghs890abcdef1234567890ijklmnopqrs,0,4.87,ghu_456ghs890abcdef1234567890ijklmnopqrs,5,5,24,63,,,,,
+github-app-token,VCS凭证--GitHub App Token,,nogit/GitHubAppToken.jsx,ghu_456ghs890abcdef1234567890ijklmnopqrs,0,4.87,ghu_456ghs890abcdef1234567890ijklmnopqrs,6,6,24,63,,,,,
+gitlab-pat,VCS凭证--GitLab Personal Access Token,,nogit/GitlabPersonalAccessToken.go,glpat-12345abcde67890fghij,0,4.55,glpat-12345abcde67890fghij,8,8,21,46,,,,,
+gitlab-pat,VCS凭证--GitLab Personal Access Token,,nogit/GitlabPersonalAccessToken.go,glpat-98765zyxwv43210lmnop,0,4.55,glpat-98765zyxwv43210lmnop,15,15,18,43,,,,,
+github-refresh-token,VCS凭证--GitHub Refresh Token,,nogit/GitHubRefreshToken.cpp,ghr_c7c1fa8048b3d3c9c1djz2b42101a3b8af3c,0,4.03,ghr_c7c1fa8048b3d3c9c1djz2b42101a3b8af3c,4,4,29,68,,,,,
+github-refresh-token,VCS凭证--GitHub Refresh Token,,nogit/GitHubRefreshToken.cpp,ghr_8b3d3c92euu59cmc1d2b42101a3b8afc7c14,0,4.18,ghr_8b3d3c92euu59cmc1d2b42101a3b8afc7c14,5,5,29,68,,,,,
+generic-hash,hash--常见哈希值,,nogit/HuaweiCloudAccessKeyID.aspx,bca29dbf33134c958df5be5d5ce5b5bb,0,3.40,"= ""bca29dbf33134c958df5be5d5ce5b5bb""",7,7,24,59,,,,,
+generic-hash,hash--常见哈希值,,nogit/HuaweiCloudAccessKeyID.aspx,a2f93be183144b8cafcc58c62db93f51,0,3.69,"= ""a2f93be183144b8cafcc58c62db93f51""",8,8,24,59,,,,,
+generic-huawei-cloud-access-key-id,应用凭证--Huawei Cloud AccessKey ID,,nogit/HuaweiCloudAccessKeyID.aspx,bca29dbf33134c958df5be5d5ce5b5bb,0,3.40,"huawei = ""bca29dbf33134c958df5be5d5ce5b5bb""",7,7,17,59,,,,,
+generic-huawei-cloud-access-key-id,应用凭证--Huawei Cloud AccessKey ID,,nogit/HuaweiCloudAccessKeyID.aspx,a2f93be183144b8cafcc58c62db93f51,0,3.69,"huawei = ""a2f93be183144b8cafcc58c62db93f51""",8,8,17,59,,,,,
+gitter-access-token,VCS凭证--Gitter Access Token,,nogit/GitterAccessToken.go,abcdefgh1234567890ijklmnopqstuvwxyz09876,0,5.07,"GitterAccessToken = ""abcdefgh1234567890ijklmnopqstuvwxyz09876""",8,8,8,69,,,,,
+gitter-access-token,VCS凭证--Gitter Access Token,,nogit/GitterAccessToken.go,uvwxyz0987654321abcdefgijklmnopqrst54321,0,5.07,"gitterAccessToken2 := ""uvwxyz0987654321abcdefgijklmnopqrst54321""",15,15,3,66,,,,,
+jwt,JWT--JSON Web Token,,nogit/JWT.py,"eyJhbGciOieeeiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwic3ViZSI6IjEyMzQ1Njc4OTAiLCJuYW1lZWEiOiJKb2huIERvZSIsInN1ZmV3YWZiIjoiMTIzNDU2Nzg5MCIsIm5hbWVmZWF3ZnciOiJKb2huIERvZSIsIm5hbWVhZmV3ZmEiOiJKb2huIERvZSIsInN1ZndhZndlYWIiOiIxMjM0NTY3ODkwIiwibmFtZWZ3YWYiOiJKb2huIERvZSIsInN1YmZ3YWYiOiIxMjM0NTY3ODkwIiwibmFtZndhZSI6IkpvaG4gRG9lIiwiaWZ3YWZhYXQiOjE1MTYyMzkwMjJ9.a_5icKBDo-8EjUlrfvz2k2k-FYaindQ0DEYNrlsnRG0""",0,5.48,"eyJhbGciOieeeiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwic3ViZSI6IjEyMzQ1Njc4OTAiLCJuYW1lZWEiOiJKb2huIERvZSIsInN1ZmV3YWZiIjoiMTIzNDU2Nzg5MCIsIm5hbWVmZWF3ZnciOiJKb2huIERvZSIsIm5hbWVhZmV3ZmEiOiJKb2huIERvZSIsInN1ZndhZndlYWIiOiIxMjM0NTY3ODkwIiwibmFtZWZ3YWYiOiJKb2huIERvZSIsInN1YmZ3YWYiOiIxMjM0NTY3ODkwIiwibmFtZndhZSI6IkpvaG4gRG9lIiwiaWZ3YWZhYXQiOjE1MTYyMzkwMjJ9.a_5icKBDo-8EjUlrfvz2k2k-FYaindQ0DEYNrlsnRG0""",3,3,9,438,,,,,
+generic-hash,hash--常见哈希值,,nogit/HuaweiCloudSecretKey.cpp,1e05d17e3cb14e68a600197a11ccfe501e05d17e3cb14e68a600197a11ccfe50,0,3.62,"= ""1e05d17e3cb14e68a600197a11ccfe501e05d17e3cb14e68a600197a11ccfe50""",6,6,31,98,,,,,
+generic-hash,hash--常见哈希值,,nogit/HuaweiCloudSecretKey.cpp,ef5e94d7addd974410aa321a8336b4b4,0,3.68,"ef5e94d7addd974410aa321a8336b4b4""",8,8,34,66,,,,,
+generic-huawei-cloud-secret-key,应用凭证--Huawei Cloud Secret Key,,nogit/HuaweiCloudSecretKey.cpp,1e05d17e3cb14e68a600197a11ccfe501e05d17e3cb14e68a600197a11ccfe50,0,3.62,"1e05d17e3cb14e68a600197a11ccfe501e05d17e3cb14e68a600197a11ccfe50""",6,6,34,98,,,,,
+qiye-weixin-developer-app-id,应用凭证--Qiye WeiXin Developer App ID,,nogit/QiyeWeiXinDeveloperAppID.go,ww1234567890ab,0,3.66,"ww1234567890ab""",8,8,27,41,,,,,
+qiye-weixin-developer-app-id,应用凭证--Qiye WeiXin Developer App ID,,nogit/QiyeWeiXinDeveloperAppID.go,ww0987654321cd,0,3.66,"ww0987654321cd""",15,15,27,41,,,,,
+generic-hash,hash--常见哈希值,,nogit/JingDongCloudAccessKeyID.java,1e05d17e3cb14e68a600197a11ccfe50,0,3.62,"= ""1e05d17e3cb14e68a600197a11ccfe50""",4,4,53,88,,,,,
+generic-hash,hash--常见哈希值,,nogit/JingDongCloudAccessKeyID.java,ef5e94d7addd974410aa321a8336b4b4,0,3.68,"= ""ef5e94d7addd974410aa321a8336b4b4""",11,11,34,69,,,,,
+generic-jd-cloud-access-key-id,应用凭证--JingDong Cloud AccessKey ID,,nogit/JingDongCloudAccessKeyID.java,1e05d17e3cb14e68a600197a11ccfe50,0,3.62,"1e05d17e3cb14e68a600197a11ccfe50""",4,4,56,88,,,,,
+generic-jd-cloud-access-key-id,应用凭证--JingDong Cloud AccessKey ID,,nogit/JingDongCloudAccessKeyID.java,ef5e94d7addd974410aa321a8336b4b4,0,3.68,"ef5e94d7addd974410aa321a8336b4b4""",11,11,37,69,,,,,
+rubygems-api-token,编程语言凭证--Rubygem API token,,nogit/RubygemAPItoken.js,rubygems_1c6136d090d7ed9be6f24294b771f1846dd97b2f062744b1,0,4.08,rubygems_1c6136d090d7ed9be6f24294b771f1846dd97b2f062744b1',1,1,18,75,,,,,
+rubygems-api-token,编程语言凭证--Rubygem API token,,nogit/RubygemAPItoken.js,rubygems_21f1c383f46f8a421ecee227e67b8221f4a4f1038c4d4b18,0,4.05,rubygems_21f1c383f46f8a421ecee227e67b8221f4a4f1038c4d4b18',2,2,19,76,,,,,
+generic-hash,hash--常见哈希值,,nogit/RubygemAPItoken.js,46f8a421ecee227e67b8221f4a4f1038c4d4b18d,0,3.63,46f8a421ecee227e67b8221f4a4f1038c4d4b18d',4,4,42,82,,,,,
+easypost-api-token,应用凭证--EasyPost API token,,nogit/EasyPost.go,EZAKabcdefghio1234567890ABCDEFGHIJdwhfKL123456defghijklmno,0,5.16,EZAKabcdefghio1234567890ABCDEFGHIJdwhfKL123456defghijklmno,17,17,17,74,,,,,
+easypost-test-api-token,应用凭证--EasyPost test API token,,nogit/EasyPost.go,EZTKwedsc1236d7890sdwqqdefghijklmno12567890abcdefghijklmno,0,4.85,EZTKwedsc1236d7890sdwqqdefghijklmno12567890abcdefghijklmno,22,22,18,75,,,,,
+us_telephone_number,个人隐私--美国电话号码,,nogit/PersonalPrivateInformation.txt,2409879947,0,2.45,"=2409879947",19,19,4,15,,,,,
+generic-high-checkout-short-secret,通用匹配--低长度凭证检出,,nogit/PersonalPrivateInformation.txt,1qaz@WSX,7,3.00,"pwd_1=1qaz@WSX",5,5,2,16,,,,,
+generic-high-checkout-short-secret,通用匹配--低长度凭证检出,,nogit/PersonalPrivateInformation.txt,RFV5tgb,6,2.81,"password=$RFV5tgb",6,6,2,19,,,,,
+debit_card_account_number,个人隐私--信用卡号,,nogit/PersonalPrivateInformation.txt,141181199904230013,0,2.56,"=141181199904230013",12,12,8,27,,,,,
+debit_card_account_number,个人隐私--信用卡号,,nogit/PersonalPrivateInformation.txt,6222025642650232529,0,2.38,"=""6222025642650232529""",33,33,8,29,,,,,
+debit_card_account_number,个人隐私--信用卡号,,nogit/PersonalPrivateInformation.txt,6322025642650562529,0,2.48,"=""6322025642650562529""",34,34,12,33,,,,,
+debit_card_account_number,个人隐私--信用卡号,,nogit/PersonalPrivateInformation.txt,6422025642650642529,0,2.40,"=""6422025642650642529""",35,35,12,33,,,,,
+idcard,个人隐私--身份证号,,nogit/PersonalPrivateInformation.txt,141181199904230013,0,2.56,"=141181199904230013",12,12,8,27,,,,,
+idcard,个人隐私--身份证号,,nogit/PersonalPrivateInformation.txt,14118119990423001x,0,2.67,"=14118119990423001x",14,14,8,27,,,,,
+idcard,个人隐私--身份证号,,nogit/PersonalPrivateInformation.txt,14118119990423001X,0,2.67,"=14118119990423001X",15,15,8,27,,,,,
+generic-high-checkout,通用匹配--高长度凭证检出,,nogit/PersonalPrivateInformation.txt,dolphininschedual123,6,3.82,"password = ""dolphininschedual123""",3,3,2,34,,,,,
+generic-weixin-developer-app-id,应用凭证--WeiXin Developer App ID,,nogit/WeiXinDeveloperAppID.go,wx10aa321a8336b4b4,0,3.31,"wx10aa321a8336b4b4""",8,8,23,41,,,,,
+generic-weixin-developer-app-id,应用凭证--WeiXin Developer App ID,,nogit/WeiXinDeveloperAppID.go,wxef5e94d7addd9744,0,3.13,"wxef5e94d7addd9744""",15,15,23,41,,,,,
+generic-high-checkout,通用匹配--高长度凭证检出,,nogit/WeiXinDeveloperAppID.go,wx10aa321a8336b4b4,6,3.31,"const WeixinAppID = ""wx10aa321a8336b4b4""",8,8,2,41,,,,,
+new-relic-user-api-key,应用凭证--New Relic user API Key,,nogit/NewRelicUserAPI.java,NRAK-abcdefghijklmn123456CDEFGHI,0,5.00,"newrelic = ""NRAK-abcdefghijklmn123456CDEFGHI""",12,12,17,61,,,,,
+clojars-api-token,应用凭证--Clojars API token,,nogit/Clojars.java,CLOJARS_123456789012345678901234567890123456789012345678901234567890,0,3.81,CLOJARS_123456789012345678901234567890123456789012345678901234567890,12,12,29,96,,,,,
+clojars-api-token,应用凭证--Clojars API token,,nogit/Clojars.java,CLOJARS_ABCDEF0123GHIJKLMNOPQ234567890RSTUVWXYZ0123456789ABCDEFHIJKL,0,5.10,CLOJARS_ABCDEF0123GHIJKLMNOPQ234567890RSTUVWXYZ0123456789ABCDEFHIJKL,13,13,29,96,,,,,
+tencent-cloud-access-key-id,应用凭证--Tencent Cloud AccessKey ID,,nogit/TencentCloudAccessKeyID.pls,AKID1234567890abcdefg123456dwqas7890,0,4.50,AKID1234567890abcdefg123456dwqas7890',2,2,37,73,,,,,
+tencent-cloud-access-key-id,应用凭证--Tencent Cloud AccessKey ID,,nogit/TencentCloudAccessKeyID.pls,AKIDabcdd23124efghij1234567890klmnop,0,4.82,AKIDabcdd23124efghij1234567890klmnop',3,3,37,73,,,,,
+debit_card_account_number,个人隐私--信用卡号,,nogit/debit_card_account_number.cbl,6222025642650232529,0,2.38," ""6222025642650232529""",6,6,27,48,,,,,
+debit_card_account_number,个人隐私--信用卡号,,nogit/debit_card_account_number.cbl,6322025642650562529,0,2.48," ""6322025642650562529""",7,7,32,53,,,,,
+debit_card_account_number,个人隐私--信用卡号,,nogit/debit_card_account_number.cbl,6422025642650642529,0,2.40," ""6422025642650642529""",8,8,32,53,,,,,
+codecov-access-token,应用凭证--Codecov Access Token,,nogit/codeCOV.php,4fc0fb736fc32f16fc1f9b2666d1ce40,0,3.44,codecov0=4fc0fb736fc32f16fc1f9b2666d1ce40;,3,3,2,43,,,,,
+codecov-access-token,应用凭证--Codecov Access Token,,nogit/codeCOV.php,9a3d3f2e694a23f16e8f20b0d1a1a620,0,3.57,"codecov1 = ""9a3d3f2e694a23f16e8f20b0d1a1a620""",5,5,2,46,,,,,
+codecov-access-token,应用凭证--Codecov Access Token,,nogit/codeCOV.php,d9b9db635a1666dc01ddba4a8d1314b4,0,3.34,"codecov-2=""d9b9db635a1666dc01ddba4a8d1314b4""",6,6,2,45,,,,,
+codecov-access-token,应用凭证--Codecov Access Token,,nogit/codeCOV.php,12ab34cd56ef78gh90ij12kl34mn56op,0,4.62,"codecov: 12ab34cd56ef78gh90ij12kl34mn56op",7,7,2,43,,,,,
+codecov-access-token,应用凭证--Codecov Access Token,,nogit/codeCOV.php,2ba2e50b857d9e0ee6c0f1b2448a9657,0,3.78,"codecov_3 = ""2ba2e50b857d9e0ee6c0f1b2448a9657""",9,9,2,47,,,,,
+generic-hash,hash--常见哈希值,,nogit/cmecloudAccessKeyID_Secret.jsx,1e05d17e3cb14e68a600197a11ccfe50,0,3.62,"= ""1e05d17e3cb14e68a600197a11ccfe50""",4,4,27,62,,,,,
+generic-hash,hash--常见哈希值,,nogit/cmecloudAccessKeyID_Secret.jsx,ef5e94d7addd974410aa321a8336b4b4,0,3.68,"= ""ef5e94d7addd974410aa321a8336b4b4""",13,13,28,63,,,,,
+generic-cmecloud-access-key-id,应用凭证--cmecloud AccessKey ID/Secret,,nogit/cmecloudAccessKeyID_Secret.jsx,1e05d17e3cb14e68a600197a11ccfe50,0,3.62,"1e05d17e3cb14e68a600197a11ccfe50""",4,4,30,62,,,,,
+generic-cmecloud-access-key-id,应用凭证--cmecloud AccessKey ID/Secret,,nogit/cmecloudAccessKeyID_Secret.jsx,ef5e94d7addd974410aa321a8336b4b4,0,3.68,"ef5e94d7addd974410aa321a8336b4b4""",13,13,31,63,,,,,
+debit_card_account_number,个人隐私--信用卡号,,nogit/bankId.vue,6222025642650232529,0,2.38,: '6222025642650232529',18,18,14,36,,,,,
+debit_card_account_number,个人隐私--信用卡号,,nogit/bankId.vue,6322025642650562529,0,2.48,: '6322025642650562529',19,19,18,40,,,,,
+debit_card_account_number,个人隐私--信用卡号,,nogit/bankId.vue,6422025642650642529,0,2.40,: '6422025642650642529',20,20,19,41,,,,,
+confluent-access-token,应用凭证--Confluent Access Token,,nogit/confluent.go,g9f8d3h7y3q1r0c1,0,3.75,"confluentAccessToken = ""g9f8d3h7y3q1r0c1""",7,7,17,57,,,,,
+confluent-access-token,应用凭证--Confluent Access Token,,nogit/confluent.go,a2b3c4d5e6f7g8h9,0,4.00,"confluentAccessToken = ""a2b3c4d5e6f7g8h9""",16,16,17,57,,,,,
+hubspot-api-key,应用凭证--HubSpot API Token,,nogit/hubspot.jsp,12345678-ABCD-ABCD-ABCD-1234567890AB,0,3.79,"hubspotKey = ""12345678-ABCD-ABCD-ABCD-1234567890AB""",1,1,7,57,,,,,
+github-oauth,VCS凭证--GitHub OAuth Access Token,,nogit/githubOauthPAT.rb,gho_123456789012345678901234567890123456,0,3.65,gho_123456789012345678901234567890123456,2,2,7,46,,,,,
+github-oauth,VCS凭证--GitHub OAuth Access Token,,nogit/githubOauthPAT.rb,gho_ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789,0,5.32,gho_ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789,3,3,7,46,,,,,
+github-oauth,VCS凭证--GitHub OAuth Access Token,,nogit/githubOauthPAT.rb,gho_987654321098765432109876543210987654,0,3.65,gho_987654321098765432109876543210987654,4,4,7,46,,,,,
+github-oauth,VCS凭证--GitHub OAuth Access Token,,nogit/githubOauthPAT.rb,gho_EFGHIJKLMNOPQRSTUVWXYZ0123456789ABCD,0,5.32,gho_EFGHIJKLMNOPQRSTUVWXYZ0123456789ABCD,5,5,7,46,,,,,
+debit_card_account_number,个人隐私--信用卡号,,nogit/idcard.m,141181199904230013,0,2.56,"""141181199904230013""",1,1,21,40,,,,,
+idcard,个人隐私--身份证号,,nogit/idcard.m,141181199904230013,0,2.56,"""141181199904230013""",1,1,21,40,,,,,
+idcard,个人隐私--身份证号,,nogit/idcard.m,14118119990423001x,0,2.67,"""14118119990423001x""",3,3,12,31,,,,,
+idcard,个人隐私--身份证号,,nogit/idcard.m,14118119990423001X,0,2.67,"""14118119990423001X""",4,4,12,31,,,,,
+hubspot-api-key,应用凭证--HubSpot API Token,,nogit/hubspotkey.config,12345678-ABCD-ABCD-ABCD-1234567890AB,0,3.79,"hubspotKey = ""12345678-ABCD-ABCD-ABCD-1234567890AB""",1,1,1,51,,,,,
+alibaba-secret-key,应用凭证--Alibaba Secret Key,,nogit/alibabaSecret.java,S3cr3tK3y012dr3tK3y9gwc3456789,0,3.99,"alibabaSecret    Key1 = ""S3cr3tK3y012dr3tK3y9gwc3456789""",12,12,17,72,,,,,
+alibaba-secret-key,应用凭证--Alibaba Secret Key,,nogit/alibabaSecret.java,S4cr5tK3S012dr3tK3y9gwc3456789,0,4.11,"alibabaPWD = ""S4cr5tK3S012dr3tK3y9gwc3456789""",14,14,17,61,,,,,
+github-pat,VCS凭证--GitHub Personal Access Token,,nogit/githubPAT.cpp,ghp_123456789012345678901234567890123456,0,3.65,ghp_123456789012345678901234567890123456,7,7,11,50,,,,,
+github-pat,VCS凭证--GitHub Personal Access Token,,nogit/githubPAT.cpp,ghp_ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789,0,5.32,ghp_ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789,8,8,11,50,,,,,
+github-pat,VCS凭证--GitHub Personal Access Token,,nogit/githubPAT.cpp,ghp_987654321098765432109876543210987654,0,3.65,ghp_987654321098765432109876543210987654,9,9,11,50,,,,,
+github-pat,VCS凭证--GitHub Personal Access Token,,nogit/githubPAT.cpp,ghp_EFGHIJKLMNOPQRSTUVWXYZ0123456789ABCD,0,5.32,ghp_EFGHIJKLMNOPQRSTUVWXYZ0123456789ABCD,10,10,11,50,,,,,
+generic-hash,hash--常见哈希值,,nogit/huawei-cloud-access-key-id.php,1e05d17e3cb14e68a600197a11ccfe50,0,3.62,"= ""1e05d17e3cb14e68a600197a11ccfe50""",3,3,29,64,,,,,
+generic-hash,hash--常见哈希值,,nogit/huawei-cloud-access-key-id.php,ef5e94d7addd974410aa321a8336b4b4,0,3.68,"= ""ef5e94d7addd974410aa321a8336b4b4""",5,5,29,64,,,,,
+generic-huawei-cloud-access-key-id,应用凭证--Huawei Cloud AccessKey ID,,nogit/huawei-cloud-access-key-id.php,1e05d17e3cb14e68a600197a11ccfe50,0,3.62,"huawei_cloud_access_key_1 = ""1e05d17e3cb14e68a600197a11ccfe50""",3,3,3,64,,,,,
+generic-huawei-cloud-access-key-id,应用凭证--Huawei Cloud AccessKey ID,,nogit/huawei-cloud-access-key-id.php,ef5e94d7addd974410aa321a8336b4b4,0,3.68,"huawei_cloud_access_key_2 = ""ef5e94d7addd974410aa321a8336b4b4""",5,5,3,64,,,,,
+npm-access-token,编程语言凭证--npm access token,,nogit/npm.py,npm_qwsadewqwsqwe890qw89213u01jwidas0dsa,0,3.98,"npm_qwsadewqwsqwe890qw89213u01jwidas0dsa""",2,2,9,49,,,,,
+linkedin-client-id,个人隐私--LinkedIn Client ID,,nogit/linkelinding.cs,12f4567890abcd,0,3.81,"LinkedIn Client ID: 12f4567890abcd""",8,8,47,81,,,,,
+generic-high-checkout,通用匹配--高长度凭证检出,,nogit/linkelinding.cs,12f4567890abcd2222,6,3.52,"f LinkedIn Client ID: 12f4567890abcd2222""",9,9,50,90,,,,,
+generic-high-checkout-short-secret,通用匹配--低长度凭证检出,,nogit/longSecret.go,ShenYanjian@123,10,3.46,"ShortPassword8 = ""ShenYanjian@123""",6,6,2,35,,,,,
+generic-high-checkout-short-secret,通用匹配--低长度凭证检出,,nogit/longSecret.go,p@ssword!,4,2.95,"apiKey3 := ""p@ssword!""",11,11,2,23,,,,,
+generic-high-checkout,通用匹配--高长度凭证检出,,nogit/longSecret.go,ShenYanjian$okjw,7,3.45,"ShortPassword9 = ""ShenYanjian$okjw""",7,7,2,36,,,,,
+generic-high-checkout,通用匹配--高长度凭证检出,,nogit/longSecret.go,ShenYanjianLove123,9,3.68,"ShortPassword0 = ""ShenYanjianLove123""",8,8,2,38,,,,,
+generic-high-checkout,通用匹配--高长度凭证检出,,nogit/longSecret.go,ImThEPaSsWoRd@3456!,12,4.25,"apiKey2 := ""ImThEPaSsWoRd@3456!""",10,10,2,33,,,,,
+public-key,证书--Public Key,,nogit/perPub.py,"-----BEGIN PUBLIC KEY-----
+MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQDMYfnvWtC8Id5bPKae5yXSxQTt
++Zpul6AnnZWfI2TtIarvjHBFUtXRo96y7hoL4VWOPKGCsRqMFDkrbeUjRrx8iL91
+4/srnyf6sh9c8Zk04xEOpK1ypvBz+Ks4uZObtjnnitf0NBGdjMKxveTq+VE7BWUI
+yQjtQ8mbDOsiLLvh7wIDAQAB
+-----END PUBLIC KEY----",0,5.77,"-----BEGIN PUBLIC KEY-----
+MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQDMYfnvWtC8Id5bPKae5yXSxQTt
++Zpul6AnnZWfI2TtIarvjHBFUtXRo96y7hoL4VWOPKGCsRqMFDkrbeUjRrx8iL91
+4/srnyf6sh9c8Zk04xEOpK1ypvBz+Ks4uZObtjnnitf0NBGdjMKxveTq+VE7BWUI
+yQjtQ8mbDOsiLLvh7wIDAQAB
+-----END PUBLIC KEY----",4,9,11,24,,,,,
+rapidapi-access-token,应用凭证--RapidAPI Access Token,,nogit/RapidAPI.java,y4hE9tN3qU1zC5xR8wS7vG0fJ6kL5oP4aQ2sD1fG8hJ9kL0oP3,0,5.04,"rapidapi = ""y4hE9tN3qU1zC5xR8wS7vG0fJ6kL5oP4aQ2sD1fG8hJ9kL0oP3""",13,13,14,76,,,,,
+rapidapi-access-token,应用凭证--RapidAPI Access Token,,nogit/RapidAPI.java,a1b2c3d4e5f6g7h8i9j0k1l2m3n4o5p6q7r8s9t0u1v2w3x4y5,0,4.97,"rapidapi: ""a1b2c3d4e5f6g7h8i9j0k1l2m3n4o5p6q7r8s9t0u1v2w3x4y5""",14,14,14,75,,,,,
+generic-api-key,通用API--Generic API Key,,nogit/RapidAPI.java,a1c3d4e5f6g7h8i9j0k1l2m3n4o5p6q7r8s9t0u1v2w3x4y5,0,4.94,"apidapiFake: ""a1c3d4e5f6g7h8i9j0k1l2m3n4o5p6q7r8s9t0u1v2w3x4y5""",15,15,15,77,,,,,
+generic-api-key,通用API--Generic API Key,,nogit/RapidAPI.java,a1c3d4e5f6g7h80k1l2m3n4o5p6q7r8s9t0u1v2w3x4y5,0,4.85,"apidapiFake2: ""a1c3d4e5f6g7h80k1l2m3n4o5p6q7r8s9t0u1v2w3x4y5""",16,16,15,75,,,,,
+private-key,证书--Private Key,,nogit/perPriv2.java,"-----BEGIN RSA PRIVATE KEY-----\n"" +
+    ""MIICvDCCAaQCCQDF0RbE/kfB/jANBgkqhkiG9w0BAQUFADBFMQswCQYDVQQGEwJB\n"" +
+    ""VTEPMA0GA1UECAwGQmF5ZXJuMRIwEAYDVQQHDAlNeSBCYW5nZWxvMQ0wCwYDVQQK\n"" +
+    ""DAROb25lMQ0wCwYDVQQDDAROZXcgSW50MB4XDTIxMDMxNzE2MTgxMloXDTIyMDMx\n"" +
+    ""NzE2MTgxMlowRTELMAkGA1UEBhMCQVUxDzANBgNVBAgMBkJheWVybjESMBAGA1UE\n"" +
+    ""BwwJTXkgQmFuZ2VsbzENMAsGA1UECgwETm9uZTE0MDIGA1UEAwwrTm9uZSBJbnRl\n"" +
+    ""cnZhbGlkIFJvb3QgQ0EgVGVzdCAyMDIwMIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8A\n"" +
+    ""MIIBCgKCAQEAhJjPzYPG8FLvaj+xuA4GAdsw4wRrpAgZX+o7V9o9OxgkSb5ulxr\n"" +
+    ""d+Z7wBcF8BX/bY/FJOfnDkLUt2SEyvj8WunhJnNL4jZ/7/z4wJ8WAVC2brvN5yX\n"" +
+    ""5b5q3NvEaJ6zzgyeH1MHp6Y3+qUJ06EuUyOS6B8G6z+oFMe0KrGJQoT+kJdnBo1f\n"" +
+    ""uzx78xJkPLD+7QLsIVdU6Z2erTncfAAslYcI02aegXp/vmE9iqs+DgIbFexwwZJ/\n"" +
+    ""6pLq6NefUy9rU6dIlCI6/2c72zDZaO4ipLlFEmR4Q7a+kfH9xBVOKcIK5y5rk3i5\n"" +
+    ""w7c/k48P8h0YvJ0tXdiQ65xM8t00iJzvBwIDAQABMA0GCSqGSIb3DQEBBQUAA4IB\n"" +
+    ""AQAxoKzTpJtwF0DHSZiL//q3g0eLr\n""+
+    ""-----END RSA PRIVATE KEY----",0,5.84,"-----BEGIN RSA PRIVATE KEY-----\n"" +
+    ""MIICvDCCAaQCCQDF0RbE/kfB/jANBgkqhkiG9w0BAQUFADBFMQswCQYDVQQGEwJB\n"" +
+    ""VTEPMA0GA1UECAwGQmF5ZXJuMRIwEAYDVQQHDAlNeSBCYW5nZWxvMQ0wCwYDVQQK\n"" +
+    ""DAROb25lMQ0wCwYDVQQDDAROZXcgSW50MB4XDTIxMDMxNzE2MTgxMloXDTIyMDMx\n"" +
+    ""NzE2MTgxMlowRTELMAkGA1UEBhMCQVUxDzANBgNVBAgMBkJheWVybjESMBAGA1UE\n"" +
+    ""BwwJTXkgQmFuZ2VsbzENMAsGA1UECgwETm9uZTE0MDIGA1UEAwwrTm9uZSBJbnRl\n"" +
+    ""cnZhbGlkIFJvb3QgQ0EgVGVzdCAyMDIwMIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8A\n"" +
+    ""MIIBCgKCAQEAhJjPzYPG8FLvaj+xuA4GAdsw4wRrpAgZX+o7V9o9OxgkSb5ulxr\n"" +
+    ""d+Z7wBcF8BX/bY/FJOfnDkLUt2SEyvj8WunhJnNL4jZ/7/z4wJ8WAVC2brvN5yX\n"" +
+    ""5b5q3NvEaJ6zzgyeH1MHp6Y3+qUJ06EuUyOS6B8G6z+oFMe0KrGJQoT+kJdnBo1f\n"" +
+    ""uzx78xJkPLD+7QLsIVdU6Z2erTncfAAslYcI02aegXp/vmE9iqs+DgIbFexwwZJ/\n"" +
+    ""6pLq6NefUy9rU6dIlCI6/2c72zDZaO4ipLlFEmR4Q7a+kfH9xBVOKcIK5y5rk3i5\n"" +
+    ""w7c/k48P8h0YvJ0tXdiQ65xM8t00iJzvBwIDAQABMA0GCSqGSIb3DQEBBQUAA4IB\n"" +
+    ""AQAxoKzTpJtwF0DHSZiL//q3g0eLr\n""+
+    ""-----END RSA PRIVATE KEY----",1,15,44,34,,,,,
+public-key,证书--Public Key,,nogit/perPub2.go,"-----BEGIN PUBLIC KEY-----
+MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEArsyRh86Q2zUaR5U6Zzpu
+X5YjrggSfB/4RoQrlwCAkgNalmd4VP4eP/qC8b/UH9hYzr57rL76O99t8drjWcA0
+gkl0sMmsfO8jHt9XvYEM2AeRfwXTx8IKCw+wKnmf3ILqVTRz0i50St7VbXZjOx4M
+06Ekb4hBjC4OBUdTT2fCqlzw0SxybCKO8HJ6guxDU6yn5d6y5U6jR0esEg0k+5a3
+AaDhcSrKuMn08PTG7j3qy3nmywkVTRm1JjK7VfzZuj8RUDmKfQ2/2gDfrs/1H/7w
+erjKzCrSCN9NvY8VKPZjKkn2fBtJHczGv8Ow7aOAdTJilVAGr9YvM8WzdeORFv7d
+CwIDAQAB
+-----END PUBLIC KEY----",0,5.91,"-----BEGIN PUBLIC KEY-----
+MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEArsyRh86Q2zUaR5U6Zzpu
+X5YjrggSfB/4RoQrlwCAkgNalmd4VP4eP/qC8b/UH9hYzr57rL76O99t8drjWcA0
+gkl0sMmsfO8jHt9XvYEM2AeRfwXTx8IKCw+wKnmf3ILqVTRz0i50St7VbXZjOx4M
+06Ekb4hBjC4OBUdTT2fCqlzw0SxybCKO8HJ6guxDU6yn5d6y5U6jR0esEg0k+5a3
+AaDhcSrKuMn08PTG7j3qy3nmywkVTRm1JjK7VfzZuj8RUDmKfQ2/2gDfrs/1H/7w
+erjKzCrSCN9NvY8VKPZjKkn2fBtJHczGv8Ow7aOAdTJilVAGr9YvM8WzdeORFv7d
+CwIDAQAB
+-----END PUBLIC KEY----",13,21,2,24,,,,,
+netlify-access-token,应用凭证--Netlify Access Token,,nogit/netlify.c,fH9XJ1L7IeP6eI2Q2yW1C8KvF7X9C5N1mZmOMgHv,0,4.70,"netlify1 = ""fH9XJ1L7IeP6eI2Q2yW1C8KvF7X9C5N1mZmOMgHv""",10,10,10,62,,,,,
+netlify-access-token,应用凭证--Netlify Access Token,,nogit/netlify.c,zU5WkK8q6qptNf4naypn4drWJc8RhvQGJy0fzr7E,0,4.77,"netlify-2 = ""zU5WkK8q6qptNf4naypn4drWJc8RhvQGJy0fzr7E""",11,11,10,63,,,,,
+netlify-access-token,应用凭证--Netlify Access Token,,nogit/netlify.c,y98jKvjP7Szbc3MY8zA63qyivxgub1tUL76HtMye,0,4.70,"netlify_3 = ""y98jKvjP7Szbc3MY8zA63qyivxgub1tUL76HtMye""",12,12,10,63,,,,,
+generic-qiye-weixin-developer-app-secret,应用凭证--Qiye WeiXin Developer App Secret,,nogit/qiye-weixin-developer-app-secret.go,9j0k1l2m3n4o5p6q7w1r8s9t0u1v2w3x4y5z6,0,4.65,"9j0k1l2m3n4o5p6q7w1r8s9t0u1v2w3x4y5z6""",10,10,15,52,,,,,
+generic-qiye-weixin-developer-app-secret,应用凭证--Qiye WeiXin Developer App Secret,,nogit/qiye-weixin-developer-app-secret.go,0s9r8q7p6o5n4m3l2k1j0i9g7f6e5d4c3b2a1,0,4.72,"0s9r8q7p6o5n4m3l2k1j0i9g7f6e5d4c3b2a1""",14,14,15,52,,,,,
+generic-high-checkout-short-secret,通用匹配--低长度凭证检出,,nogit/shortSecret.go,1qaz@WSX,7,3.00,"ShortPassword1 = ""1qaz@WSX""",3,3,2,28,,,,,
+generic-high-checkout-short-secret,通用匹配--低长度凭证检出,,nogit/shortSecret.go,P@ssWord,5,2.75,"ShortPassword2 = ""P@ssWord""",4,4,2,28,,,,,
+generic-high-checkout-short-secret,通用匹配--低长度凭证检出,,nogit/shortSecret.go,1QAZzaq1,6,2.75,"ShortPassword5 = ""1QAZzaq1""",9,9,2,28,,,,,
+postman-api-token,测试阶段API--Postman API token,,nogit/postmanToken.java,PMAK-1234abcd1234abcd1234abcd-1234abcd1234abcd1234abcd1234abcd12,0,3.38,"PMAK-1234abcd1234abcd1234abcd-1234abcd1234abcd1234abcd1234abcd12""",9,9,20,84,,,,,
+postman-api-token,测试阶段API--Postman API token,,nogit/postmanToken.java,PMAK-abcd1234abcd1234abcd1234-1234abcd1234abcd1234abcd1234abcd12,0,3.38,"PMAK-abcd1234abcd1234abcd1234-1234abcd1234abcd1234abcd1234abcd12""",10,10,20,84,,,,,
+private-key,证书--Private Key,,nogit/perPub3.php,"-----BEGIN PRIVATE KEY-----
+MIIEvgIBADANBgkqhkiG9w0BAQEFAASCBKgwggSkAgEAAoIBAQDYFQvdN14d+CjB
+7CUJZPx/Su02XV/9vIrEx+H1C8zoKwFBp/FgJvsiAqaYr8OQOprIVJ9tLEv5AB5e
+8twgJwafB5E5vZLcckW+GIDfJuxHeFqzJLR39D1jQWtPNrMC+Hxn9PpN05LcFQQw
+/1tIcBq3vZ8cJYm68+sgG9a9jJSkEpPblnRn+bx5x5Q5U21iz6djUMY0MjH6yzh2
+A3v+8B7FlLpSl0Ux/kJdnZvT8Z7VicfS/pH/qXVahyvSEe+2VEuhJ4rsxKsA59uT
+T41fu7zDZSfN9KzSnM17F1NQ4w4HGMxVb61U6ZirU6injKkOt2F6Xm3qyBfGrmBm
+ptx/Gm7ZAgMBAAECggEABChbbz+I9Xkrn03ZKj5HvzeyZB1tE0fAfwRhPTEaexHt
+jM65/XX1tll2dok/QvP8X0WdJAZsIflxRjKvA8O2Wmk3r44bWSl1lYvpu8XvhWJd
+C31EX+byK/FJvNL8WQvcqPrI3+1rhZJzvZ8WkggvBOlmeaBfMcBVtuyvJyWjMNks
++EWUEdQoZ43vXZFeJc5ly5gjAlBb/6etJ5y0pHiVRMVf23jMz+GvXN1F3fm4IO4h
+7pUwvp+U6yjK/W/Ti+rR7bMy1mOYV2ly5E5e5+b5MQcPPKGy5SPizcdGk5D7zHh5
+84aJRU9ZZ4qONV7fU6vA82VhbnU6SjMkRzM+Ex1/jQKBgQDdzhJdRiRcqI1FXj2Q
+8rJq3f1QQb02cGpW+Z8N/UGGJH/82+JisQTWf0yG1Nt2NkZkz/9gIjtiyHtDBieJ
+xgz+LgjWtJ1OsrbTeUKdJolZ36zWeZktDOnUpLn/jJxRpwflvRKjMkQ8DOcbf
+-----END PRIVATE KEY----",0,6.01,"-----BEGIN PRIVATE KEY-----
+MIIEvgIBADANBgkqhkiG9w0BAQEFAASCBKgwggSkAgEAAoIBAQDYFQvdN14d+CjB
+7CUJZPx/Su02XV/9vIrEx+H1C8zoKwFBp/FgJvsiAqaYr8OQOprIVJ9tLEv5AB5e
+8twgJwafB5E5vZLcckW+GIDfJuxHeFqzJLR39D1jQWtPNrMC+Hxn9PpN05LcFQQw
+/1tIcBq3vZ8cJYm68+sgG9a9jJSkEpPblnRn+bx5x5Q5U21iz6djUMY0MjH6yzh2
+A3v+8B7FlLpSl0Ux/kJdnZvT8Z7VicfS/pH/qXVahyvSEe+2VEuhJ4rsxKsA59uT
+T41fu7zDZSfN9KzSnM17F1NQ4w4HGMxVb61U6ZirU6injKkOt2F6Xm3qyBfGrmBm
+ptx/Gm7ZAgMBAAECggEABChbbz+I9Xkrn03ZKj5HvzeyZB1tE0fAfwRhPTEaexHt
+jM65/XX1tll2dok/QvP8X0WdJAZsIflxRjKvA8O2Wmk3r44bWSl1lYvpu8XvhWJd
+C31EX+byK/FJvNL8WQvcqPrI3+1rhZJzvZ8WkggvBOlmeaBfMcBVtuyvJyWjMNks
++EWUEdQoZ43vXZFeJc5ly5gjAlBb/6etJ5y0pHiVRMVf23jMz+GvXN1F3fm4IO4h
+7pUwvp+U6yjK/W/Ti+rR7bMy1mOYV2ly5E5e5+b5MQcPPKGy5SPizcdGk5D7zHh5
+84aJRU9ZZ4qONV7fU6vA82VhbnU6SjMkRzM+Ex1/jQKBgQDdzhJdRiRcqI1FXj2Q
+8rJq3f1QQb02cGpW+Z8N/UGGJH/82+JisQTWf0yG1Nt2NkZkz/9gIjtiyHtDBieJ
+xgz+LgjWtJ1OsrbTeUKdJolZ36zWeZktDOnUpLn/jJxRpwflvRKjMkQ8DOcbf
+-----END PRIVATE KEY----",4,19,2,25,,,,,
+generic-qiye-weixin-developer-app-secret,应用凭证--Qiye WeiXin Developer App Secret,,nogit/perPub3.php,I9Xkrn03ZKj5HvzeyZB1tE0fAfwRhPTEaexHt,0,4.83,"I9Xkrn03ZKj5HvzeyZB1tE0fAfwRhPTEaexHt",11,11,29,66,,,,,
+generic-tencent-connect-key-id,应用凭证--Tencent Connect Secret,,nogit/tencentConnectSecret.php,CsWWeGHGHsWWeG5iLFFRW0VmclSfVeym,0,4.03,"tencent1 = ""CsWWeGHGHsWWeG5iLFFRW0VmclSfVeym""",3,3,3,47,,,,,
+generic-tencent-connect-key-id,应用凭证--Tencent Connect Secret,,nogit/tencentConnectSecret.php,cDbwqe2fEDsq2EseGGec0136d7df6dc8,0,4.05,"tencent2 = ""cDbwqe2fEDsq2EseGGec0136d7df6dc8""",4,4,3,47,,,,,
+generic-tencent-connect-key-id,应用凭证--Tencent Connect Secret,,nogit/tencentConnectSecret.php,qMsHsFezmAbBFC5iLFFRW0VmclSfVeym,0,4.41,"tencent3 = ""qMsHsFezmAbBFC5iLFFRW0VmclSfVeym""",5,5,3,47,,,,,
+generic-high-checkout-short-secret,通用匹配--低长度凭证检出,,nogit/tencentConnectSecret.php,fakeQQsecret1,6,3.18,"fakeqq = ""fakeQQsecret1""",6,6,3,26,,,,,
+generic-high-checkout-short-secret,通用匹配--低长度凭证检出,,nogit/tencentConnectSecret.php,fakeQQsecret12,7,3.32,"fakeqq2 = ""fakeQQsecret12""",7,7,3,28,,,,,
+sumologic-access-id,应用凭证--SumoLogic Access ID,,nogit/sumologic.kt,s1r2x3456789w0,0,3.81,"sumoAccessId = ""s1r2x3456789w0""",2,2,10,40,,,,,
+IP address,个人隐私--IP地址,,tmp.txt,192.168.3.38,0,2.69,"=""192.168.3.38""",15,15,5,19,,,,,
+debit_card_account_number,个人隐私--信用卡号,,tmp.txt,6228481234567890123,0,3.16,"= ""6228481234567890123""",2,2,13,35,,,,,
+debit_card_account_number,个人隐私--信用卡号,,tmp.txt,6210987654321098765,0,3.26,"= ""6210987654321098765""",8,8,13,35,,,,,
+mac_address,个人隐私--MAC地址,,tmp.txt,00-0C-29-22-65-4D,0,2.85,"=""00-0C-29-22-65-4D""",13,13,6,25,,,,,
+telephone,个人隐私--手机号,,tmp.txt,13753348923,0,2.73,"= ""13753348923""",11,11,8,22,,,,,
+telephone,个人隐私--手机号,,tmp.txt,18536864913,0,2.73,"= ""18536864913""",12,12,8,22,,,,,
+mailgun-signing-key,webhook--Mailgun webhook signing key,,nogit/webhook.java,12345678901234567890123456789012-12345678-12345678,0,3.40,"mailgun: 12345678901234567890123456789012-12345678-12345678""",11,11,15,74,,,,,
+mailgun-signing-key,webhook--Mailgun webhook signing key,,nogit/webhook.java,abcdefabcdefabcdefabcdefabcdefab-abcdefab-abcdefab,0,2.70,"mailgun: abcdefabcdefabcdefabcdefabcdefab-abcdefab-abcdefab""",13,13,15,74,,,,,
+private-key,证书--Private Key,,nogit/private-key.java,"-----BEGIN RSA PRIVATE KEY-----\n"" +
+                ""MIICXAIBAAKBgQDdlatRjRjogo3WojgGHFHYLugdUWAY9iR3fy4arWNA1KoS8kVw\n"" +
+                ""KEY----",0,4.71,"-----BEGIN RSA PRIVATE KEY-----\n"" +
+                ""MIICXAIBAAKBgQDdlatRjRjogo3WojgGHFHYLugdUWAY9iR3fy4arWNA1KoS8kVw\n"" +
+                ""KEY----",12,14,36,25,,,,,
+pulumi-api-token,应用凭证--Pulumi API token,,nogit/pulumi.java,pul-1234abcd1234ab34abcd1234abcd1234abcd1234,0,3.34,"pul-1234abcd1234ab34abcd1234abcd1234abcd1234""",13,13,15,59,,,,,
+pulumi-api-token,应用凭证--Pulumi API token,,nogit/pulumi.java,pul-abcd1234abcd12cd1234abcd1234abcd1234abcd,0,3.34,"pul-abcd1234abcd12cd1234abcd1234abcd1234abcd""",14,14,15,59,,,,,
+pulumi-api-token,应用凭证--Pulumi API token,,nogit/pulumi.java,pul-5678abcd5678abcdabcd5678abcd5678abcd5678,0,3.35,"pul-5678abcd5678abcdabcd5678abcd5678abcd5678""",15,15,15,59,,,,,
+pypi-upload-token,编程语言凭证--PyPI upload token,,nogit/pypi.java,pypi-AgEIcHlwaS5vcmcabcdefghijklmnoprstuvwxyzABCDEFGabcdef1234-ageichlwas5vcmc,0,5.08,pypi-AgEIcHlwaS5vcmcabcdefghijklmnoprstuvwxyzABCDEFGabcdef1234-ageichlwas5vcmc,13,13,15,92,,,,,
+pypi-upload-token,编程语言凭证--PyPI upload token,,nogit/pypi.java,pypi-AgEIcHlwaS5vcmc1234567890abcdefghijklmnoprstuvwxyzABCDEFGabcdef-pypi-ageichlwas5vcmc,0,5.22,pypi-AgEIcHlwaS5vcmc1234567890abcdefghijklmnoprstuvwxyzABCDEFGabcdef-pypi-ageichlwas5vcmc,14,14,15,103,,,,,
+pypi-upload-token,编程语言凭证--PyPI upload token,,nogit/pypi.java,pypi-AgEIcHlwaS5vcmc1234567890abcdefghijklmnoprstuvwxyzABCDEFGabcdef1234-pypi-ageichlwas5vcmc,0,5.25,pypi-AgEIcHlwaS5vcmc1234567890abcdefghijklmnoprstuvwxyzABCDEFGabcdef1234-pypi-ageichlwas5vcmc,15,15,15,107,,,,,

@@ -292,6 +292,24 @@ func (d *Detector) detectRule(fragment Fragment, rule config.Rule) []report.Find
 			if finding.ScoreStrength < 5 {
 				continue
 			}
+		} else if strings.Contains(rule.RuleID, "generic-hash") {
+			// 计算香农熵
+			entropy := shannonEntropy(finding.Secret)
+			finding.Entropy = float32(entropy)
+			if rule.Entropy != 0.0 {
+				if entropy <= rule.Entropy {
+					//跳过非允许熵值的地方
+					// entropy is too low, skip this finding
+					continue
+				}
+			}
+			UpDownRate := UpAndDownRate(finding.Secret)
+			if UpDownRate <= 0.4 {
+				continue
+			} else {
+				findings = append(findings, finding)
+			}
+
 		} else if rule.RuleID == "filepath" {
 			if IsStaticFilePath(finding.Secret) {
 				continue
@@ -534,10 +552,10 @@ func (d *Detector) Detect(fragment Fragment) []report.Finding {
 	// 这里传入文件的源码，然后，matches 是特定算法返回的多个值，然后给了map
 	matches := d.prefilter.FindAll(normalizedRaw)
 	// -----【调试】--------
-	fmt.Println("AC自动机匹配结果：")
-	for _, m := range matches {
-		fmt.Println(normalizedRaw[m.Start():m.End()])
-	}
+	//fmt.Println("AC自动机匹配结果：")
+	//for _, m := range matches {
+	//	fmt.Println(normalizedRaw[m.Start():m.End()])
+	//}
 	// -----【调试】--END--------
 	for _, m := range matches {
 		fragment.keywords[normalizedRaw[m.Start():m.End()]] = true

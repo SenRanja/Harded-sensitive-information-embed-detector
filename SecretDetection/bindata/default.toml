@@ -849,7 +849,7 @@ keywords = [
 
 
 [[rules]]
-description = "编程语言凭证--Pulumi API token"
+description = "应用凭证--Pulumi API token"
 id = "pulumi-api-token"
 regex = '''(?i)\b(pul-[a-f0-9]{40})(?:['|\"|\n|\r|\s|\x60|;]|$)'''
 secretGroup = 1
@@ -2865,12 +2865,12 @@ keywords = [
 
 # -------【个人信息部分】--------------
 
-#[[rules]]
-#description = "个人隐私--邮箱"
-#id = "email"
-#regex = '''(?i)(?:['|"|:|=| ]{1,3})(\w+([-]\w+)*@\w+[\w-]+\.(cn|com|xyz|top|net|tech|org|gov|ink|edu|int|mil|pub|red|biz|co|tv|mobi|travel|cc|pro|info|name|coop|aero|eu|kr|jp))(?:[;|\)| |,|'|"|\n|\r|\s|\x60])'''
-#secretGroup = 1
-#entropy = 3.6
+[[rules]]
+description = "个人隐私--邮箱"
+id = "email"
+regex = '''(?i)(?:['|"|:|=| ]{1,3})(\w+([-]\w+)*@\w+[\w-]+\.(cn|com|xyz|top|net|tech|org|gov|ink|edu|int|mil|pub|red|biz|co|tv|mobi|travel|cc|pro|info|name|coop|aero|eu|kr|jp))(?:[;|\)| |,|'|"|\n|\r|\s|\x60])'''
+secretGroup = 1
+entropy = 3.6
 
 
 [[rules]]
@@ -2880,20 +2880,125 @@ regex = '''(?i)(?:['|"|:|=| ]{1,3})((1[1-5]|2[1-3]|3[1-7]|4[1-6]|5[0-4]|6[1-5]|[
 secretGroup = 1
 entropy = 2.3
 
+
+
 [[rules]]
-description = "个人隐私--借记卡号,银联"
-id = "debit_card_account_number"
-regex = '''(?i)(?:['|"|:|=| ]{1,3})(62\d{11,17})(?:[;|\)| |,|'|"|\n|\r|\s|\x60])'''
+description = "个人隐私--手机号"
+id = "telephone"
+regex = '''(?i)(?:['|"|:|=| ]{1,3})(1(((3[0-9])|(4[5-9])|(5[0-35-9])|(6[2,5-7])|(7[0135-8])|(8[0-9])|(9[0-35-9]))[ -]?\d{4}[ -]?\d{4})|((74)[ -]?[0-5]\d{3}[ -]?\d{4}))(?:[;|\)| |,|'|"|\n|\r|\s|\x60])'''
 secretGroup = 1
 entropy = 2.3
 
 
 [[rules]]
-description = "个人隐私--腾讯QQ"
-id = "tencent QQ"
-regex = '''(?i)(?:['|"|:|=| ]{1,3})([1-9][0-9]{8,11})(?:[;|\)| |,|'|"|\n|\r|\s|\x60])'''
+description = "个人隐私--信用卡号"
+id = "debit_card_account_number"
+regex = '''(?i)(?:['|"|:|=| ]{1,3})(((([1-9]\d{3})[\s-](\d{4})[\s-](\d{4})[\s-](\d{4})))|62\d{11, 14}|[1-9]\d{12,18})(?:[;|\)| |,|'|"|\n|\r|\s|\x60])'''
 secretGroup = 1
-entropy = 2.2
+entropy = 2.3
+
+
+[[rules]]
+description = "个人隐私--中国护照"
+id = "chinese_passport"
+regex = '''(?i)(?:['|"|:|=| ]{1,3})(((1[45]\d{7})|([P|p|S|s]\d{7})|([S|s|G|g|E|e]\d{8})|([Gg|Tt|Ss|Ll|Qq|Dd|Aa|Ff]\d{8})|([H|h|M|m]\d{8,10})))(?:[;|\)| |,|'|"|\n|\r|\s|\x60])'''
+secretGroup = 1
+entropy = 2.3
+
+
+[[rules]]
+description = "个人隐私--中国地址"
+id = "chinese_address"
+regex = '''(?i)(?:['|"|:|=| ]{1,3})(((1[45]\d{7})|([P|p|S|s]\d{7})|([S|s|G|g|E|e]\d{8})|([Gg|Tt|Ss|Ll|Qq|Dd|Aa|Ff]\d{8})|([H|h|M|m]\d{8,10})))(?:[;|\)| |,|'|"|\n|\r|\s|\x60])'''
+secretGroup = 1
+entropy = 2.3
+
+[[rules]]
+description = "个人隐私--MAC地址"
+id = "mac_address"
+regex = '''(?i)(?:['|"|:|=| ]{1,3})(([0-9a-fA-F]{2}(:[0-9a-fA-F]{2}){5})|(([0-9A-Fa-f]{2}[:-]){5}([0-9A-Fa-f]{2})))(?:[;|\)| |,|'|"|\n|\r|\s|\x60])'''
+secretGroup = 1
+entropy = 2.3
+
+[[rules]]
+description = "个人隐私--银行分支机构号"
+id = "bank_branch_code"
+regex = '''(?i)(?:['|"|:|=| ]{1,3})(([0123678]\d{8})|([0123678]\d{3}-\d{4}-\d))(?:[;|\)| |,|'|"|\n|\r|\s|\x60])'''
+secretGroup = 1
+entropy = 2.3
+
+# 不适合写，和身份证号严重冲突
+#[[rules]]
+#description = "个人隐私--中国驾照"
+#id = "driving_license"
+#regex = '''(?i)(?:['|"|:|=| ]{1,3})((1[1-5]|2[1-3]|3[1-7]|4[1-6]|5[0-4]|6[1-5]|[7-9]1)\d{4}(18|19|20)\d{2}((0[1-9])|(1[0-2]))(([0-2][1-9])|10|20|30|31)\d{3}[0-9Xx])(?:[;|\)| |,|'|"|\n|\r|\s|\x60])'''
+#secretGroup = 1
+#entropy = 2.3
+
+[[rules]]
+description = "个人隐私--比特币钱包地址"
+id = "bitcoin_address"
+regex = '''(?i)(?:['|"|:|=| ]{1,3})([13][a-km-zA-HJ-NP-Z1-9]{26,33})(?:[;|\)| |,|'|"|\n|\r|\s|\x60])'''
+secretGroup = 1
+entropy = 2.3
+
+[[rules]]
+description = "个人隐私--IP地址"
+id = "IP address"
+regex = '''(?i)(?:['|"|:|=| ]{1,3})((((?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)))|((?:(\s|\A))((([0-9a-fA-F]{1,4}:){7,7}[0-9a-fA-F]{1,4}|fe80:(:|(:[0-9a-fA-F]{1,4}){0,4})%[0-9a-zA-Z]{1,}|::(ffff(:0{1,4}){0,1}:){0,1}((25[0-5]|(2[0-4]|1{0,1}[0-9]){0,1}[0-9])\.){3,3}(25[0-5]|(2[0-4]|1{0,1}[0-9]){0,1}[0-9])|([0-9a-fA-F]{1,4}:){1,4}:((25[0-5]|(2[0-4]|1{0,1}[0-9]){0,1}[0-9])\.){3,3}(25[0-5]|(2[0-4]|1{0,1}[0-9]){0,1}[0-9])|[0-9a-fA-F]{1,4}:((:[0-9a-fA-F]{1,4}){1,6})|([0-9a-fA-F]{1,4}:){1,2}(:[0-9a-fA-F]{1,4}){1,5}|([0-9a-fA-F]{1,4}:){1,3}(:[0-9a-fA-F]{1,4}){1,4}|([0-9a-fA-F]{1,4}:){1,4}(:[0-9a-fA-F]{1,4}){1,3}|([0-9a-fA-F]{1,4}:){1,5}(:[0-9a-fA-F]{1,4}){1,2}|([0-9a-fA-F]{1,4}:){1,6}:[0-9a-fA-F]{1,4}|([0-9a-fA-F]{1,4}:){1,7}:)|:((:[0-9a-fA-F]{1,4}){1,7}|:))(?:(\s|\z))))(?:[;|\)| |,|'|"|\n|\r|\s|\x60])'''
+secretGroup = 1
+entropy = 2.3
+
+
+[[rules]]
+description = "个人隐私--美国护照"
+id = "america_passport"
+regex = '''(?i)(?:['|"|:|=| ]{1,3})([0-9]{8,17})(?:[;|\)| |,|'|"|\n|\r|\s|\x60])'''
+secretGroup = 1
+entropy = 2.3
+keywords = ["usa","passport","citizenship"]
+
+# 和手机号严重冲突
+#[[rules]]
+#description = "个人隐私--美国银行账号"
+#id = "america_bankid"
+#regex = '''(?i)(?:['|"|:|=| ]{1,3})([0-9]{8,17})(?:[;|\)| |,|'|"|\n|\r|\s|\x60])'''
+#secretGroup = 1
+#entropy = 2.3
+#keywords = ["usa","bank","check","account","account#","acct","save","debit"]
+
+
+[[rules]]
+description = "个人隐私--美国纳税人识别号"
+id = "taxpayer_identification_number"
+regex = '''(?i)(?:['|"|:|=| ]{1,3})((1[1-5]|2[1-3]|3[1-7]|4[1-6]|5[0-4]|6[1-5]|[7-9]1)\d{4}(18|19|20)\d{2}((0[1-9])|(1[0-2]))(([0-2][1-9])|10|20|30|31)\d{3}[0-9Xx])(?:[;|\)| |,|'|"|\n|\r|\s|\x60])'''
+secretGroup = 1
+entropy = 2.3
+keywords = ["individual","taxpayer","itin","tax","payer","taxid","tin"]
+
+[[rules]]
+description = "个人隐私--美国电话号码"
+id = "us_telephone_number"
+regex = '''(?i)(?:['|"|:|=| ]{1,3})(((\d{3})\s*\d{3}[-\.\s]??\d{4}|\d{3}[-\.\s]\d{3}[-\.\s]\d{4})|(\d{3}[-\.\s]\d{3}[-\.\s]??\d{4}) )(?:[;|\)| |,|'|"|\n|\r|\s|\x60])'''
+secretGroup = 1
+entropy = 2.3
+keywords = ["phone","phones","number","telephone","telephones","cell","mobile","office","call","cellphone","cellphones","smartphone","smartphones","num","no","tel","linktel","contact","contactinfo","phoneno","phonenum","phonenumber","telephone_no","telephoneno","telephonenum","telephonenumber","mobilephoneno","mobliephonenum","mobilephonenumber","mobileno","moblieenum","mobilenumber","mobilecode","手机号","传真","手机","号码","联系","电话"]
+
+[[rules]]
+description = "个人隐私--新加坡身份证"
+id = "sg_id_card"
+regex = '''(?i)(?:['|"|:|=| ]{1,3})([STFG][0-9]{7}[A-Z])(?:[;|\)| |,|'|"|\n|\r|\s|\x60])'''
+secretGroup = 1
+entropy = 2.3
+keywords = ["fin","fin#","nric","nric#"]
+
+
+#[[rules]]
+#description = "个人隐私--腾讯QQ"
+#id = "tencent QQ"
+#regex = '''(?i)(?:['|"|:|=| ]{1,3})([1-9][0-9]{8,11})(?:[;|\)| |,|'|"|\n|\r|\s|\x60])'''
+#secretGroup = 1
+#entropy = 2.2
 
 # -------【硬编码匹配】--------------
 
@@ -2902,7 +3007,7 @@ description = "hash--常见哈希值"
 id = "generic-hash"
 regex = '''(?i)(?:['|"|:|=| ]{0,3})([0-9a-fA-F]{16}|[0-9a-fA-F]{32}|[0-9a-fA-F]{40}|[0-9a-fA-F]{64}|[0-9a-fA-F]{128})(?:[;|\)| |,|'|"|\n|\r|\s|\x60])'''
 secretGroup = 1
-entropy = 2.5
+entropy = 3.3
 
 
 #[[rules]]
