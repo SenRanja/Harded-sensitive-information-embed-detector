@@ -292,7 +292,7 @@ func (d *Detector) detectRule(fragment Fragment, rule config.Rule) []report.Find
 			if finding.ScoreStrength < 5 {
 				continue
 			}
-		} else if strings.Contains(rule.RuleID, "generic-hash") {
+		} else if strings.Contains(rule.RuleID, "generic-hash") && containsDigit(finding.Secret) && (containsUpCharacter(finding.Secret) || containsDownCharacter(finding.Secret)) {
 			// 计算香农熵
 			entropy := shannonEntropy(finding.Secret)
 			finding.Entropy = float32(entropy)

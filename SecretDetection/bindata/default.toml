@@ -484,7 +484,7 @@ keywords = [
 ]
 
 [[rules]]
-description = "VCS凭证--Gitter Access Token"
+description = "应用凭证--Gitter Access Token"
 id = "gitter-access-token"
 regex = '''(?i)(?:gitter)(?:[0-9a-z\-_\t .]{0,20})(?:[\s|']|[\s|"]){0,3}(?:=|>|:=|\|\|:|<=|=>|:)(?:'|\"|\s|=|\x60){0,5}([a-z0-9_-]{40})(?:['|\"|\n|\r|\s|\x60|;]|$)'''
 secretGroup = 1
