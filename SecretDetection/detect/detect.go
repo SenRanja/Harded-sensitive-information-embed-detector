@@ -243,6 +243,10 @@ func (d *Detector) detectRule(fragment Fragment, rule config.Rule) []report.Find
 			finding.Secret = TrimDoubleQuote(finding.Secret)
 		}
 
+		// 自动将单词识别率数据写入csv文件
+		//tmp_test_isWords := IsWords(finding.Secret)
+		//appendToCSV([]string{finding.Secret, strconv.FormatBool(tmp_test_isWords)}, "isWordTest.csv")
+
 		// 如果认为不是凭证，就让他continue；如果检测是凭证，就让他进入
 		// `长密码`和`短密码` 分开对待
 		if rule.RuleID == "generic-high-checkout-short-secret" {

@@ -38,15 +38,19 @@ func (mux *SecretDetectionHttpStruct) ServeHTTP(w http.ResponseWriter, r *http.R
 	// 在此处进行手动路由处理
 	switch r.URL.Path {
 	case "/static_zip_scanAction":
+		// 处理传来的zip源代码包
 		static_zip_scanAction(w, r)
 		return
 	case "/get_descriptions_0":
+		// 获取规则，已废弃
 		get_descriptions_0(w, r)
 		return
 	case "/get_descriptions_1":
+		// 获取规则
 		get_descriptions_1(w, r)
 		return
 	default:
+		// 默认路由，无用
 		RootAction(w, r)
 		return
 	}
@@ -61,7 +65,7 @@ func RootAction(w http.ResponseWriter, r *http.Request) {
 
 // 路由: /git_scan ，接收 post文本传参 的 git clone凭证，用来进行gitclone
 func get_descriptions_0(w http.ResponseWriter, r *http.Request) {
-	data, err := config.Asset("SecretDetection-n-all-kill.toml")
+	data, err := config.Asset("config/default.toml")
 	resJson, err := config.RuleJson(data)
 	if err != nil {
 		log.Fatal(err)
@@ -73,7 +77,7 @@ func get_descriptions_0(w http.ResponseWriter, r *http.Request) {
 
 // 路由: /git_scan ，接收 post文本传参 的 git clone凭证，用来进行gitclone
 func get_descriptions_1(w http.ResponseWriter, r *http.Request) {
-	data, err := config.Asset("SecretDetection-all-kill.toml")
+	data, err := config.Asset("config/default.toml")
 	resJson, err := config.RuleJson(data)
 	if err != nil {
 		log.Fatal(err)
@@ -185,6 +189,7 @@ func static_zip_scanAction(w http.ResponseWriter, r *http.Request) {
 	}
 	fmt.Println("压缩包删除完毕 ")
 
+	// 加载规则文件
 	Viper := InitConfig()
 	SecretDetectionEXE := Viper.GetString("SecretDetection_exe_path")
 	DetectReportFile := Viper.GetString("SecretDetection_report_file")
@@ -192,7 +197,7 @@ func static_zip_scanAction(w http.ResponseWriter, r *http.Request) {
 	TomlRule1 := Viper.GetString("TomlRule1")
 	TomlRule2 := Viper.GetString("TomlRule2")
 	ExitCode := Viper.GetString("exit-code")
-
+	// 0业务模式，1安全模式
 	if scan_mode == "0" {
 		TomlRule = TomlRule1
 	} else if scan_mode == "1" {
@@ -253,6 +258,8 @@ func static_zip_scanAction(w http.ResponseWriter, r *http.Request) {
 		fmt.Println("未检测到 .git 目录")
 	}
 
+	// 如果是git项目，依次进行 no-git -> git 扫描
+	// 如果是非git项目，只进行 no-git 扫描
 	if gitExistBool == true {
 		// 【进行 no-git 扫描】
 		fmt.Println("【再进行 no-git 扫描】")
@@ -299,18 +306,21 @@ func static_zip_scanAction(w http.ResponseWriter, r *http.Request) {
 		}
 
 		// ultimateJson就是经过处理后的最终结果
-		var resGitJson, resNoGitJson, ultimateJson resjson
+		var resGitJson, resNoGitJson, ultimateJson Resjson
 		resGitJsonFile, _ := ioutil.ReadFile(SDgitJsonFilePath)
 		json.Unmarshal(resGitJsonFile, &resGitJson)
 		resNoGitJsonFile, _ := ioutil.ReadFile(SDNogitJsonFilePath)
 		json.Unmarshal(resNoGitJsonFile, &resNoGitJson)
 
 		// 进行贝总遍历
+		// 因为最终根据nogit结果确认最终扫描。故外层nogit，内层git，然后根据nogit的找git中的数据。
+		// 此处手动赋值 GitScan 是因为进行了nogit和git两轮结果合并，而后面nogit没有赋值扫描模式是因为被调用的程序自己会写localscan
 		ultimateJson.ScanSourceMode = "GitScan"
 		for _, singleNoGitFinding := range resNoGitJson.Res {
 			for _, singleGitFinding := range resGitJson.Res {
-				if singleNoGitFinding.File == singleGitFinding.File && singleNoGitFinding.Secret == singleGitFinding.Secret && singleNoGitFinding.StartLine == singleGitFinding.StartLine {
+				if singleNoGitFinding.File == singleGitFinding.File && (singleNoGitFinding.StartLine == singleGitFinding.StartLine || singleNoGitFinding.EndLine == singleGitFinding.EndLine) {
 					ultimateJson.Res = append(ultimateJson.Res, singleGitFinding)
+					// 根据nogit找到git标识就跳出，继续找下个nogit数据
 					break
 				}
 			}
@@ -318,6 +328,8 @@ func static_zip_scanAction(w http.ResponseWriter, r *http.Request) {
 
 		fmt.Println("\n\n【最终json数据】", ultimateJson)
 		fmt.Println("\n\n【最终json数量】", len(ultimateJson.Res))
+
+		// 将结果写入.SD.json
 		ultimateJsonFile, _ := os.OpenFile(filepath.Join(ZipDestFileDir, DetectReportFile), os.O_RDWR|os.O_CREATE, 0755)
 		defer ultimateJsonFile.Close()
 		ultimateJsonByte, _ := json.Marshal(ultimateJson)
@@ -326,6 +338,7 @@ func static_zip_scanAction(w http.ResponseWriter, r *http.Request) {
 	} else if gitExistBool == false {
 		//	进行 无.git 的扫描检测
 		fmt.Println("【no-git 扫描】")
+		// 此处 -r 直接生成.SD.json文件
 		cmd := exec.Command(SecretDetectionEXE, "detect", "--no-git", "-f", "json", "-r", filepath.Join(ZipDestFileDir, DetectReportFile), "-v", "-s", GitPath, "-c", TomlRule, "--exit-code", ExitCode)
 		// ./SecretDetection detect -f json -r test_tmp.json -v -s -c --exit-code 0
 		var stdout, stderr bytes.Buffer
@@ -347,6 +360,7 @@ func static_zip_scanAction(w http.ResponseWriter, r *http.Request) {
 		}
 	}
 
+	// 加载.SD.json获取结果数据
 	_, err = os.Stat(filepath.Join(ZipDestFileDir, DetectReportFile))
 
 	if os.IsNotExist(err) {
@@ -482,6 +496,7 @@ func GenerateZipDestFileDir() (string, error) {
 }
 
 func InitConfig() *viper.Viper {
+	// 从config/local_config.yaml中读取配置
 	config := viper.New()
 	config.AddConfigPath("./config/")
 	config.SetConfigName("local_config")
@@ -490,4 +505,43 @@ func InitConfig() *viper.Viper {
 		panic(err)
 	}
 	return config
+}
+
+type Resjson struct {
+	ScanSourceMode string    `json:"ScanSource"`
+	Res            []Finding `json:"ScanRes"`
+}
+
+type Finding struct {
+	Description string
+	StartLine   int
+	EndLine     int
+	StartColumn int
+	EndColumn   int
+
+	Match string
+
+	// Secret contains the full content of what is matched in
+	// the tree-sitter query.
+	Secret string
+
+	// File is the name of the file containing the finding
+	File string
+
+	Commit string
+
+	// Entropy is the shannon entropy of Value
+	Entropy float32
+
+	Author  string
+	Email   string
+	Date    string
+	Message string
+	Tags    []string
+
+	// Rule is the name of the rule that was matched
+	RuleID string
+
+	// unique identifer
+	Fingerprint string
 }

@@ -4,12 +4,14 @@ import (
 	"SecretDetection/bindata"
 	"SecretDetection/report"
 	"crypto/sha1"
+	"encoding/csv"
 	"encoding/json"
 	"fmt"
 	regexp "github.com/dlclark/regexp2"
 	"github.com/gitleaks/go-gitdiff/gitdiff"
 	"github.com/rs/zerolog/log"
 	"math"
+	"os"
 	"strconv"
 	"strings"
 )
@@ -111,15 +113,6 @@ func PasswordStrengthCheck(s string) int {
 	// 【长度加权】
 	// pwd长度	8-10: 0  11-13: 2 14-15: 4
 	length := len(s)
-	//if 8 <= length && length <= 10 {
-	//	strengthScore += 10
-	//} else if 11 <= length && length <= 13 {
-	//	strengthScore += 20
-	//} else if 14 <= length && length <= 15 {
-	//	strengthScore += 30
-	//} else {
-	//	strengthScore += 40
-	//}
 
 	// 【复杂度组合加权】
 	//pwd长度		8-10: 0  11-13: 2 14-15: 4
@@ -315,29 +308,44 @@ func filter(findings []report.Finding, redact bool) []report.Finding {
 	var retFindings []report.Finding
 	// 去重算法，对generic匹配到的值进行循环匹配，如果被匹配到准确规则，但是代码secret和位置一样，则去掉该generic的规则匹配
 	for _, f := range findings {
-		include := true
+		// need_save 是“要保留”的意思，标志位，true则留，false则不留
+		need_save := true
+
+		// 去重
 		for _, ExistedFinding := range retFindings {
-			if f.StartLine == ExistedFinding.StartLine &&
-				f.Commit == ExistedFinding.Commit &&
+			if (f.StartLine == ExistedFinding.StartLine || f.EndLine == ExistedFinding.EndLine) &&
 				f.RuleID == ExistedFinding.RuleID &&
-				f.Secret == ExistedFinding.Secret &&
-				f.Match == ExistedFinding.Match {
-				include = false
+				f.Secret == ExistedFinding.Secret {
+				need_save = false
 				break
 			}
 		}
+
+		// 处理同位置同凭证  一个generic一个非generic
+		// 此段针对generic过滤，若已有非generic的同凭证，则不录本记录
+		// 首先自己就是generic，即f；重新匹配findings，即fPrime
 		if strings.Contains(strings.ToLower(f.RuleID), "generic") {
 			for _, fPrime := range findings {
-				if f.StartLine == fPrime.StartLine &&
+				if (f.StartLine == fPrime.StartLine || f.EndLine == fPrime.EndLine) &&
 					f.Commit == fPrime.Commit &&
 					f.RuleID != fPrime.RuleID &&
-					strings.Contains(fPrime.Secret, f.Secret) &&
+					// fPrime重新的findings循环，可以临时理解为旧规则，旧规则不是generic且密钥同，就不要新数据
 					!strings.Contains(strings.ToLower(fPrime.RuleID), "generic") {
-
 					genericMatch := strings.Replace(f.Match, f.Secret, "REDACTED", -1)
 					betterMatch := strings.Replace(fPrime.Match, fPrime.Secret, "REDACTED", -1)
 					log.Trace().Msgf("skipping %s finding (%s), %s rule takes precendence (%s)", f.RuleID, genericMatch, fPrime.RuleID, betterMatch)
-					include = false
+					need_save = false
+					break
+				}
+			}
+		}
+
+		// 针对同secret同位置 的两个generic过滤情况
+		if strings.Contains(strings.ToLower(f.RuleID), "generic") {
+			for _, ExistedFinding := range retFindings {
+				if strings.Contains(strings.ToLower(ExistedFinding.RuleID), "generic") && (f.StartLine == ExistedFinding.StartLine || f.EndLine == ExistedFinding.EndLine) && f.File == ExistedFinding.File &&
+					f.Secret == ExistedFinding.Secret {
+					need_save = false
 					break
 				}
 			}
@@ -346,10 +354,11 @@ func filter(findings []report.Finding, redact bool) []report.Finding {
 		if redact {
 			f.Redact()
 		}
-		if include {
+		if need_save {
 			retFindings = append(retFindings, f)
 		}
 	}
+
 	return retFindings
 }
 
@@ -473,6 +482,27 @@ func containsDownCharacter(s string) bool {
 	return false
 }
 
+func appendToCSV(data []string, filename string) error {
+	// 打开文件，准备追加数据
+	file, err := os.OpenFile(filename, os.O_WRONLY|os.O_CREATE|os.O_APPEND, 0644)
+	if err != nil {
+		return err
+	}
+	defer file.Close()
+
+	// 创建CSV writer
+	writer := csv.NewWriter(file)
+	defer writer.Flush()
+
+	// 写入数据
+	err = writer.Write(data)
+	if err != nil {
+		return err
+	}
+
+	return nil
+}
+
 func UpAndDownRate(s string) float32 {
 	if len(s) <= 2 {
 		panic(fmt.Errorf("升降值计算，字符过少"))
@@ -502,7 +532,9 @@ func UpAndDownRate(s string) float32 {
 			}
 		}
 	}
-	return float32(InterruptNum) / float32(len(s))
+	upAndDownRateValue := float32(InterruptNum) / float32(len(s))
+	//appendToCSV([]string{s, fmt.Sprintf("%f", upAndDownRateValue)}, "UpDownTest.csv")
+	return upAndDownRateValue
 }
 
 func KeyboardWalkDetect(s string) bool {

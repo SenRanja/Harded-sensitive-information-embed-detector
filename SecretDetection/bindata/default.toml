@@ -1217,8 +1217,8 @@ keywords = [
 # 百度云规则
 [[rules]]
 description = "应用凭证--Baidu Cloud AccessKey ID"
-id = "generic-baidu-api"
-regex = '''(?i)(?:key|api|token|secret|client|passwd|password|auth|access)((?i)[0-9a-z\-_\t .]{0,20})(?:[\s|']|[\s|"]){0,3}(?:=|>|:=|\|\|:|<=|=>|:)(?:'|\"|\s|=|\x60){0,5}([0-9a-z\-_.=]{10,150})(?:['|\"|\n|\r|\s|\x60]|$)'''
+id = "baidu-api"
+ragex = '''(?i)(?:key|api|token|secret|client|passwd|password|auth)(?:[0-9a-z\-_\t .]{0,20})(?:[\s|']|[\s|"]{0,3})(?:=|>|:=|\|\|:|<=|=>|:)(?:['|\"|\s|=|\x60]{0,5})([0-9a-z-_=]{10,150})(?:[;|\)| |,|'|"|\n|\r|\s|\x60])'''
 secretGroup = 1
 entropy = 2.1
 keywords = [
@@ -2860,7 +2860,6 @@ keywords = [
     "api",
     "apikey"
 ]
-
 
 
 # -------【个人信息部分】--------------
