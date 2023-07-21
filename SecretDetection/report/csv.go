@@ -12,6 +12,8 @@ func writeCsv(f []Finding, w io.WriteCloser) error {
 		return nil
 	}
 	defer w.Close()
+	/* 处理导出CSV中文乱码 bug*/
+	w.Write([]byte("\xEF\xBB\xBF"))
 	cw := csv.NewWriter(w)
 	err := cw.Write([]string{
 		"规则ID",
