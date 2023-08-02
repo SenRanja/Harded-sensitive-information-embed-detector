@@ -82,6 +82,19 @@ func TrimDoubleQuote(s string) string {
 	return s
 }
 
+// 去掉转义字符
+func TrimHTMLSpecialChars(s string) string {
+	var result string
+	result = s
+	HTMLSpecialCharsList := []string{"&amp", "&quest", "&lt", "&gt", "&quot", "&copy", "&reg", "&times", "&divide", "&ensp", "&emsp", "&nbsp"}
+
+	for _, singleHTMLSpecialCharsList := range HTMLSpecialCharsList {
+		result = strings.Replace(result, singleHTMLSpecialCharsList, "", -1)
+	}
+
+	return result
+}
+
 // 递归去除 前或后的 引号
 func TrimCustomCharacter(s string) string {
 	trimCharacters := []string{"\"", "*", "%", "@", "$", "'", "`", "_", ",", ":", ";", "(", ")", "?", "{", "}", "[", "]"}
@@ -550,9 +563,12 @@ func KeyboardWalkDetect(s string) bool {
 }
 
 func WeakPasswordTop100Detect(s string) bool {
-	if strings.Contains(weakPasswordTop100BytesText, s) {
-		return true
+	for _, value := range weakPasswordTop100List {
+		if strings.Contains(s, value) {
+			return true
+		}
 	}
+
 	return false
 }
 
@@ -658,7 +674,7 @@ var err error
 
 var wordListText string
 var keyboardListText string
-var weakPasswordTop100BytesText string
+var weakPasswordTop100List []string
 
 func init() {
 	// 正则表达式
@@ -692,8 +708,8 @@ func init() {
 	if err != nil {
 		fmt.Println("弱密码本字典读取失败")
 	}
-	weakPasswordTop100BytesText = strings.ToLower(string(weakPasswordTop100Bytes))
-
+	weakPasswordTop100StringContent := strings.ToLower(string(weakPasswordTop100Bytes))
+	weakPasswordTop100List = strings.Split(weakPasswordTop100StringContent, "\n")
 }
 
 func regexp2FindAllString(re *regexp.Regexp, s string) []string {

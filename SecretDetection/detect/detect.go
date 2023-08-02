@@ -238,7 +238,10 @@ func (d *Detector) detectRule(fragment Fragment, rule config.Rule) []report.Find
 			continue
 		}
 
-		// secret手动对模糊匹配的secret进行一下过滤
+		// 过滤转义字符
+		finding.Secret = TrimHTMLSpecialChars(finding.Secret)
+
+		// secret手动对模糊匹配的secret进行一下左侧和右侧影响字符的过滤
 		if finding.Secret != "" && strings.HasPrefix(rule.RuleID, "generic") {
 			finding.Secret = TrimDoubleQuote(finding.Secret)
 		}
@@ -249,15 +252,22 @@ func (d *Detector) detectRule(fragment Fragment, rule config.Rule) []report.Find
 
 		// 如果认为不是凭证，就让他continue；如果检测是凭证，就让他进入
 		// `长密码`和`短密码` 分开对待
+		// 【短密码】
 		if rule.RuleID == "generic-high-checkout-short-secret" {
 			// 短密码规则
 			finding.Secret = TrimCustomCharacter(finding.Secret)
 			entropy := shannonEntropy(finding.Secret)
 			finding.Entropy = float32(entropy)
 			if rule.Entropy != 0.0 {
-				if entropy <= rule.Entropy {
+				if entropy < rule.Entropy {
 					continue
 				}
+			}
+
+			// 短密码新增字符串升降率匹配，此处会导致top100弱密码被跳过
+			UpDownRate := UpAndDownRate(finding.Secret)
+			if UpDownRate <= 0.5 {
+				continue
 			}
 
 			finding.ScoreStrength = PasswordStrengthCheck(finding.Secret)
@@ -269,7 +279,7 @@ func (d *Detector) detectRule(fragment Fragment, rule config.Rule) []report.Find
 			}
 
 			if KeyboardWalkDetect(finding.Secret) {
-				// 检测到短密码，就计入统计
+				// 检测到键盘密码，就计入统计
 				findings = append(findings, finding)
 				continue
 			}
@@ -314,22 +324,18 @@ func (d *Detector) detectRule(fragment Fragment, rule config.Rule) []report.Find
 				findings = append(findings, finding)
 			}
 
-		} else if rule.RuleID == "filepath" {
-			if IsStaticFilePath(finding.Secret) {
-				continue
-			} else {
-				findings = append(findings, finding)
-				continue
+		} else if rule.RuleID == "private-key" || rule.RuleID == "public-key" {
+			certificationFlag := false
+			for _, specialCharacter := range []string{"$", "(", ")"} {
+				if strings.Contains(finding.Secret, specialCharacter) {
+					certificationFlag = true
+				}
 			}
-		} else if rule.RuleID == "url" {
-			if IsStaticFilePath(finding.Secret) {
-				continue
-			} else {
-				findings = append(findings, finding)
+			if certificationFlag == true {
 				continue
 			}
 		} else {
-			// 非密码规则
+			// 非特定类型规则
 
 			// 计算香农熵
 			entropy := shannonEntropy(finding.Secret)
