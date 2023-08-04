@@ -1,4 +1,0 @@
-﻿规则ID,描述,Commit,文件位置,凭证,密码强度,香农熵,匹配内容,开始行,结束行,开始列,结束列,提交者,提交信息,提交时间,邮箱,Commit指纹
-username_password_in_url,URL账号密码--username password in url,,.,http://username:password@symfony.com,0,4.18,http://username:password@symfony.com,8,8,23,58,,,,,
-generic-high-checkout,通用匹配--高长度凭证检出,,.,WSXxsw2#EDCcde%T222223GBbgt5,12,4.32,"    otherString := ""@WSXxsw2#EDCcde%T222223&ampGBbgt5""",12,12,2,55,,,,,
-email,个人隐私--邮箱,,.,password@symfony.com,0,3.65,":password@symfony.com""",8,8,38,59,,,,,

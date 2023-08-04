@@ -1330,42 +1330,43 @@ keywords = [
 #---------------【密码类】----------
 
 [[rules]]
-description = "通用匹配--高长度凭证检出"
+description = "通用匹配--通用凭证检出"
 id = "generic-high-checkout"
-regex = '''(?i)(?:[0-9a-z\-_\t .]{0,20})(?:[\s|']|[\s|"]){0,3}(?:=|>|:=|\|\|:|<=|=>|:)(?:'|\"|\s|=|\x60){0,5}([`*~%^$!&@#\w]{16,40})(?:[;|\)| |,|'|"|\n|\r|\s|\x60])'''
+regex = '''(?i)(?:[0-9a-z\-_\t .]{0,20})(?:[\s|']|[\s|"]){0,3}(?:=|>|:=|\|\|:|<=|=>|:)(?:'|\"|\s|=|\x60){0,5}([`*~%^$!&@#\w]{8,40})(?:[;|\)| |,|'|"|\n|\r|\s|\x60])'''
 secretGroup = 1
 entropy = 3.3
+keywords = [
+    "password","passwd","pwd","psd",
+    "secret",
+    "access",
+    "key",
+    "appkey",
+    "admin",
+    "root",
+    "auth",
+    "username",
+    "api",
+    "token",
+    "config",
+    "login",
+]
+
+#[[rules]]
+#description = "通用匹配--低长度凭证检出"
+#id = "generic-high-checkout-short-secret"
+#regex = '''(?i)(?:[0-9a-z\-_\t .]{0,20})(?:[\s|']|[\s|"]){0,3}(?:=|>|:=|\|\|:|<=|=>|:)(?:'|\"|\s|=|\x60){0,5}([`*~%^$!&@#\w]{8,15})(?:[;|\)| |,|'|"|\n|\r|\s|\x60])'''
+#secretGroup = 1
+#entropy = 2.4
 #keywords = [
 #    "password","passwd","pwd","psd",
 #    "secret",
 #    "access",
 #    "key","appkey",
-#    "admin","adm",
-#    "root",
-#    "auth",
 #    "user","usr",
-#    "api",
-#    "token",
-#    "config",
 #    "login",
+#    "api",
+#    "apikey"
 #]
-
-[[rules]]
-description = "通用匹配--低长度凭证检出"
-id = "generic-high-checkout-short-secret"
-regex = '''(?i)(?:[0-9a-z\-_\t .]{0,20})(?:[\s|']|[\s|"]){0,3}(?:=|>|:=|\|\|:|<=|=>|:)(?:'|\"|\s|=|\x60){0,5}([`*~%^$!&@#\w]{8,15})(?:[;|\)| |,|'|"|\n|\r|\s|\x60])'''
-secretGroup = 1
-entropy = 2.4
-keywords = [
-    "password","passwd","pwd","psd",
-    "secret",
-    "access",
-    "key","appkey",
-    "user","usr",
-    "login",
-    "api",
-    "apikey"
-]
 
 
 # -------【个人信息部分】--------------
@@ -1395,12 +1396,12 @@ keywords = [
     "linkedin","linked-in",
 ]
 
-[[rules]]
-description = "个人隐私--手机号"
-id = "telephone"
-regex = '''(?i)(?:['|"|:|=| ]{1,3})(1(((3[0-9])|(4[5-9])|(5[0-35-9])|(6[2,5-7])|(7[0135-8])|(8[0-9])|(9[0-35-9]))[ -]?\d{4}[ -]?\d{4})|((74)[ -]?[0-5]\d{3}[ -]?\d{4}))(?:[;|\)| |,|'|"|\n|\r|\s|\x60])'''
-secretGroup = 1
-entropy = 2.3
+#[[rules]]
+#description = "个人隐私--手机号"
+#id = "telephone"
+#regex = '''(?i)(?:['|"|:|=| ]{1,3})(1(((3[0-9])|(4[5-9])|(5[0-35-9])|(6[2,5-7])|(7[0135-8])|(8[0-9])|(9[0-35-9]))[ -]?\d{4}[ -]?\d{4})|((74)[ -]?[0-5]\d{3}[ -]?\d{4}))(?:[;|\)| |,|'|"|\n|\r|\s|\x60])'''
+#secretGroup = 1
+#entropy = 2.3
 
 
 [[rules]]
@@ -1410,12 +1411,13 @@ regex = '''(?i)(?:['|"|:|=| ]{1,3})(([0-9a-fA-F]{2}(:[0-9a-fA-F]{2}){5})|(([0-9A
 secretGroup = 1
 entropy = 2.3
 
-[[rules]]
-description = "个人隐私--银行分支机构号"
-id = "bank_branch_code"
-regex = '''(?i)(?:['|"|:|=| ]{1,3})(([0123678]\d{8})|([0123678]\d{3}-\d{4}-\d))(?:[;|\)| |,|'|"|\n|\r|\s|\x60])'''
-secretGroup = 1
-entropy = 2.3
+#[[rules]]
+#description = "个人隐私--银行分支机构号"
+#id = "bank_branch_code"
+#regex = '''(?i)(?:['|"|:|=| ]{1,3})(([0123678]\d{8})|([0123678]\d{3}-\d{4}-\d))(?:[;|\)| |,|'|"|\n|\r|\s|\x60])'''
+#secretGroup = 1
+#entropy = 2.3
+#keywords = ["bank", "branch"]
 
 [[rules]]
 description = "个人隐私--比特币钱包地址"
@@ -1431,13 +1433,13 @@ regex = '''(?i)(?:['|"|:|=| ]{1,3})((((?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.
 secretGroup = 1
 entropy = 2.3
 
-[[rules]]
-description = "个人隐私--美国纳税人识别号"
-id = "taxpayer_identification_number"
-regex = '''(?i)(?:['|"|:|=| ]{1,3})((1[1-5]|2[1-3]|3[1-7]|4[1-6]|5[0-4]|6[1-5]|[7-9]1)\d{4}(18|19|20)\d{2}((0[1-9])|(1[0-2]))(([0-2][1-9])|10|20|30|31)\d{3}[0-9Xx])(?:[;|\)| |,|'|"|\n|\r|\s|\x60])'''
-secretGroup = 1
-entropy = 2.3
-keywords = ["individual","taxpayer","itin","tax","payer","taxid","tin"]
+#[[rules]]
+#description = "个人隐私--美国纳税人识别号"
+#id = "taxpayer_identification_number"
+#regex = '''(?i)(?:['|"|:|=| ]{1,3})((1[1-5]|2[1-3]|3[1-7]|4[1-6]|5[0-4]|6[1-5]|[7-9]1)\d{4}(18|19|20)\d{2}((0[1-9])|(1[0-2]))(([0-2][1-9])|10|20|30|31)\d{3}[0-9Xx])(?:[;|\)| |,|'|"|\n|\r|\s|\x60])'''
+#secretGroup = 1
+#entropy = 2.3
+#keywords = ["individual","taxpayer","itin","tax","payer","taxid","tin"]
 
 # -------【硬编码匹配】--------------
 

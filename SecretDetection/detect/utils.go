@@ -572,6 +572,12 @@ func WeakPasswordTop100Detect(s string) bool {
 	return false
 }
 
+func ReplaceN(s string) string {
+	// 将换行完全换为单个的\n
+	ret := strings.Replace(s, "\r\n", "\n", -1)
+	return ret
+}
+
 func IsWords(s string) bool {
 	// 返回 false表示识别是个密钥，返回 true表示非密钥而变量名
 	// 返回越高，说明识别率越高
@@ -581,6 +587,31 @@ func IsWords(s string) bool {
 	//if len(s) <= 2 {
 	//	return true
 	//}
+
+	var _CountNumber int
+	// 匹配下划线出现次数
+	_CountNumber = strings.Count(s, "_")
+	if _CountNumber >= 2 {
+		return true
+	}
+
+	// 匹配#出现次数
+	_CountNumber = strings.Count(s, "#")
+	if _CountNumber >= 2 {
+		return true
+	}
+
+	// 匹配%出现次数
+	_CountNumber = strings.Count(s, "%")
+	if _CountNumber >= 3 {
+		return true
+	}
+
+	// 匹配*出现次数
+	_CountNumber = strings.Count(s, "*")
+	if _CountNumber >= 4 {
+		return true
+	}
 
 	//将含有>=5的数字个数直接认为是密钥
 	reg_digitNum, err := regexp.Compile(`\d`, 0)

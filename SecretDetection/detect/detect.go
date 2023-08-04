@@ -335,7 +335,12 @@ func (d *Detector) detectRule(fragment Fragment, rule config.Rule) []report.Find
 				continue
 			}
 		} else {
-			// 非特定类型规则
+			// 非特定类型规则 和密码规则
+
+			UpDownRate := UpAndDownRate(finding.Secret)
+			if UpDownRate <= 0.4 {
+				continue
+			}
 
 			// 计算香农熵
 			entropy := shannonEntropy(finding.Secret)
@@ -348,6 +353,26 @@ func (d *Detector) detectRule(fragment Fragment, rule config.Rule) []report.Find
 				}
 
 				if rule.RuleID == "generic-high-checkout" {
+					// 模糊匹配需要比较所在行中是否有关键字内容
+					// matchedContent是匹配内容源文件完整的所在行（含多行）
+					handled_raw_rows := ReplaceN(fragment.Raw)
+					raw_rows := strings.Split(handled_raw_rows, "\n")
+					//tmp := raw_rows[finding.StartLine:finding.EndLine]
+					//fmt.Println(tmp)
+					matchedContent := strings.Join(raw_rows[finding.StartLine:finding.EndLine+1], "\n")
+					//fmt.Println(matchedContent)
+					// 检测matchedContent中是否包含关键字
+					KeywordFlag := false
+					for _, single_keyword := range rule.Keywords {
+						if strings.Contains(matchedContent, single_keyword) {
+							KeywordFlag = true
+							break
+						}
+					}
+					if KeywordFlag == false {
+						continue
+					}
+
 					// 长密码规则
 					finding.Secret = TrimCustomCharacter(finding.Secret)
 					finding.ScoreStrength = PasswordStrengthCheck(finding.Secret)
@@ -560,22 +585,20 @@ func (d *Detector) Detect(fragment Fragment) []report.Finding {
 	//  先利用AC自动机(ahocorasick.AhoCorasick) 提炼出多个关键字，随后会和 [[rule]] 中的关键字比较，来看要不要进行匹配
 	// 不清楚这里是为了快速检出什么，我看下面循环里是 password 字符串
 	// 这里传入文件的源码，然后，matches 是特定算法返回的多个值，然后给了map
+
+	// matches是AC自动机识别后的keyword
+	// fragment.keywords 存入 AC自动机识别到的关键字，以 map[string]bool 结构存储
 	matches := d.prefilter.FindAll(normalizedRaw)
-	// -----【调试】--------
-	//fmt.Println("AC自动机匹配结果：")
-	//for _, m := range matches {
-	//	fmt.Println(normalizedRaw[m.Start():m.End()])
-	//}
-	// -----【调试】--END--------
 	for _, m := range matches {
+		// 如果要看AC自动机对此文件识别出什么，则放开下面的注释可以看到内容
+		// fmt.Println(normalizedRaw[m.Start():m.End()])
 		fragment.keywords[normalizedRaw[m.Start():m.End()]] = true
 	}
 
 	// 这里进行[[rule]]遍历，进行规则匹配，检测到关键字就把`行`加入findings
 	for _, rule := range d.Config.Rules {
 		if len(rule.Keywords) == 0 {
-			// if not keywords are associated with the rule always scan the
-			// fragment using the rule
+			// if not keywords are associated with the rule always scan the fragment using the rule
 			// [[rule]]中如果没有关键字，就直接检测然后返回
 			findings = append(findings, d.detectRule(fragment, rule)...)
 		} else {
@@ -584,9 +607,11 @@ func (d *Detector) Detect(fragment Fragment) []report.Finding {
 			for _, rk := range rule.Keywords {
 				if _, ok := fragment.keywords[strings.ToLower(rk)]; ok {
 					fragmentContainsKeyword = true
+					break
 				}
 			}
 
+			// 代码触发rule的关键字，就存入待匹配规则及数据
 			if fragmentContainsKeyword {
 				findings = append(findings, d.detectRule(fragment, rule)...)
 			}
