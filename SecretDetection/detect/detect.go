@@ -306,6 +306,26 @@ func (d *Detector) detectRule(fragment Fragment, rule config.Rule) []report.Find
 			if finding.ScoreStrength < 5 {
 				continue
 			}
+		} else if rule.RuleID == "IP address" {
+			// 判断是 ipv4 还是 ipv6
+			splitedString := strings.Split(finding.Secret, ".")
+
+			fakeIpFlag := false
+
+			if len(splitedString) == 4 {
+				//	处理ipv4
+				for _, sigmentSplitedString := range splitedString {
+					if !DetectIpLegal(sigmentSplitedString) {
+						fakeIpFlag = true
+					}
+				}
+			} else {
+				//	处理ipv6
+
+			}
+			if fakeIpFlag == true {
+				continue
+			}
 		} else if strings.Contains(rule.RuleID, "generic-hash") && containsDigit(finding.Secret) && (containsUpCharacter(finding.Secret) || containsDownCharacter(finding.Secret)) {
 			// 计算香农熵
 			entropy := shannonEntropy(finding.Secret)

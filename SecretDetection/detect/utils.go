@@ -252,7 +252,7 @@ func PasswordStrengthCheck(s string) int {
 			year, _ = strconv.Atoi(s[0 : length-4])
 		}
 		if year != 0 {
-			size = len(string(year))
+			size = len(strconv.Itoa(year))
 		} else {
 			size = 0
 		}
@@ -570,6 +570,18 @@ func WeakPasswordTop100Detect(s string) bool {
 	}
 
 	return false
+}
+
+func DetectIpLegal(ip_segment string) bool {
+	//	过滤传入的 02 00 01 为不合法 返回 false
+	// 正常IP段数字则返回true
+	ip_int, _ := strconv.Atoi(ip_segment)
+	if ip_int != 0 {
+		if ip_segment[0] == '0' {
+			return false
+		}
+	}
+	return true
 }
 
 func ReplaceN(s string) string {
