@@ -611,7 +611,7 @@ func (d *Detector) Detect(fragment Fragment) []report.Finding {
 	matches := d.prefilter.FindAll(normalizedRaw)
 	for _, m := range matches {
 		// 如果要看AC自动机对此文件识别出什么，则放开下面的注释可以看到内容
-		// fmt.Println(normalizedRaw[m.Start():m.End()])
+		fmt.Println(normalizedRaw[m.Start():m.End()])
 		fragment.keywords[normalizedRaw[m.Start():m.End()]] = true
 	}
 
