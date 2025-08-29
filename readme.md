@@ -1,81 +1,63 @@
 
 
-# Ö÷ÒªÄ¿Â¼ËµÃ÷
+# ä¸»è¦ç›®å½•è¯´æ˜Ž
 
-### DockerÏà¹Ø²¿·Ö
+### Dockerç›¸å…³éƒ¨åˆ†
 
-docker-compose.yaml DockerÈÝÆ÷ÔËÐÐ£¬Õ¼ÓÃ¶Ë¿Ú8000
-http ÊÇDockerµÄHTTP·þÎñ²¿·Ö
-SecretDetection ÊÇSDÉ¨ÃèÄÜÁ¦Ô´Âë¡£
-SecretDetectionDir ·ÅÒÑ¾­±àÒëºÃµÄ³ÌÐòÒÔ¼°¹æÔò
+docker-compose.yaml Dockerå®¹å™¨è¿è¡Œï¼Œå ç”¨ç«¯å£8000
+http æ˜¯Dockerçš„HTTPæœåŠ¡éƒ¨åˆ†
+SecretDetection æ˜¯SDæ‰«æèƒ½åŠ›æºç ã€‚
+SecretDetectionDir æ”¾å·²ç»ç¼–è¯‘å¥½çš„ç¨‹åºä»¥åŠè§„åˆ™
 
-### ¹ý¶ÈÎÄ¼þ£¬·Ç²¿Êð
+### è¿‡åº¦æ–‡ä»¶ï¼Œéžéƒ¨ç½²
 
-**RulesDescriptionMatch** ·ÇÕýÊ½Ä¿Â¼£¬¸øÈÎöÎÌá¹©½Ó¿ÚÊ±µÄ¹ý¶ÈÎÄ¼þ
+**RulesDescriptionMatch** éžæ­£å¼ç›®å½•ï¼Œç»™ä»»é‘«æä¾›æŽ¥å£æ—¶çš„è¿‡åº¦æ–‡ä»¶
 
-**SecretDetectionDriver** ÓÃÀ´ÅúÁ¿²é¿´²»Í¬ìØÖµÉ¨ÃèµÄÓ°Ïì
+**SecretDetectionDriver** ç”¨æ¥æ‰¹é‡æŸ¥çœ‹ä¸åŒç†µå€¼æ‰«æçš„å½±å“
 
 
 # SD Docker
 
-## ²¿Êð
+## éƒ¨ç½²
 
-¸´ÖÆ 1. docker-compose.yaml ºÍ 2. SecretDetectionDir µ½·þÎñÆ÷Ä³Ä¿Â¼ÏÂ£¬Ëæºó`docker-compose up -d` ÔËÐÐ¼´¿É¡£
+å¤åˆ¶ 1. docker-compose.yaml å’Œ 2. SecretDetectionDir åˆ°æœåŠ¡å™¨æŸç›®å½•ä¸‹ï¼ŒéšåŽ`docker-compose up -d` è¿è¡Œå³å¯ã€‚
 
-### ×é³É²¿·Ö½éÉÜ
+### ç»„æˆéƒ¨åˆ†ä»‹ç»
 
-Ö÷ÒªÓÐÁ½²¿·Ö×é³É:
+ä¸»è¦æœ‰ä¸¤éƒ¨åˆ†ç»„æˆ:
 
 * http
 * SecretDetection
 
 ![](images/mdmd2022-10-10-14-09-06.png)
 
-## Ô´´úÂë
+## æºä»£ç 
 
-Ä¿Â¼ `http` Ê¹ÓÃgolangµÄ`net/http`Ð´µÄhttp·þÎñ£¬ÃüÁîÐÐµ÷ÓÃSD½øÐÐ¹¤×÷£¬´ó²¿·ÖÅäÖÃ¿ÉÒÔ´Ó`config/local_config.yaml`Ö±½Ó½øÐÐÅäÖÃ
+ç›®å½• `http` ä½¿ç”¨golangçš„`net/http`å†™çš„httpæœåŠ¡ï¼Œå‘½ä»¤è¡Œè°ƒç”¨SDè¿›è¡Œå·¥ä½œï¼Œå¤§éƒ¨åˆ†é…ç½®å¯ä»¥ä»Ž`config/local_config.yaml`ç›´æŽ¥è¿›è¡Œé…ç½®
 
-Ä¿Â¼ `SecretDetection` ÊÇ¾­¹ýÓÅ»¯ºóµÄSecretDetection£¬¶ÔÆäÖÐµÄÏß³ÌÊý¡¢²ÎÊýµÈÐÅÏ¢½øÐÐÁË¸ü¸Ä¡£
+ç›®å½• `SecretDetection` æ˜¯ç»è¿‡ä¼˜åŒ–åŽçš„SecretDetectionï¼Œå¯¹å…¶ä¸­çš„çº¿ç¨‹æ•°ã€å‚æ•°ç­‰ä¿¡æ¯è¿›è¡Œäº†æ›´æ”¹ã€‚
 
-`config/SD.toml`Ã»Ê²Ã´ÓÃÁËÆäÊµ£¬³ÌÐòÊ¹ÓÃµÄ`SD-all-kill.toml`ºÍ`SD-n-all-kill.toml`¸ü¶àÒ»Ð©¡£`SD-all-kill.toml`ÖÐÓÐ·Ç³£ÈÝÒ×µ¼ÖÂÎó±¨µÄ¹æÔò£¬ÓÃÀ´½øÐÐ·è¿ñÄ£Ê½µÄÓ²±àÂëÆ¥Åä£»`SD-n-all-kill.toml`½ÏÎª±ê×¼Ò»Ð©£¬Îó±¨ÂÊµÍ¡£
+`config/SD.toml`æ²¡ä»€ä¹ˆç”¨äº†å…¶å®žï¼Œç¨‹åºä½¿ç”¨çš„`SD-all-kill.toml`å’Œ`SD-n-all-kill.toml`æ›´å¤šä¸€äº›ã€‚`SD-all-kill.toml`ä¸­æœ‰éžå¸¸å®¹æ˜“å¯¼è‡´è¯¯æŠ¥çš„è§„åˆ™ï¼Œç”¨æ¥è¿›è¡Œç–¯ç‹‚æ¨¡å¼çš„ç¡¬ç¼–ç åŒ¹é…ï¼›`SD-n-all-kill.toml`è¾ƒä¸ºæ ‡å‡†ä¸€äº›ï¼Œè¯¯æŠ¥çŽ‡ä½Žã€‚
 
-# ½Ó¿Ú
+# æŽ¥å£
 
 ![](images/mdmd2022-09-05-17-15-28.png)
 
-# ²âÊÔ
+# æµ‹è¯•
 
-ÓÃ¼¸¸öÈçÍ¼µÄzip°ü½øÐÐÁË²âÊÔ£¬·¢ÏÖÔËÐÐÁ¼ºÃ¡£Ö»ÓÐscaÏîÄ¿ÓÃÊ±¹ý³¤£¬ÒÀÈ»ÔÚ·ÖÎöÆäÔ­Òò¡£
+ç”¨å‡ ä¸ªå¦‚å›¾çš„zipåŒ…è¿›è¡Œäº†æµ‹è¯•ï¼Œå‘çŽ°è¿è¡Œè‰¯å¥½ã€‚åªæœ‰scaé¡¹ç›®ç”¨æ—¶è¿‡é•¿ï¼Œä¾ç„¶åœ¨åˆ†æžå…¶åŽŸå› ã€‚
 
-¶àÏß³Ì´¦Àí¡¢sdmµÄ»ØÁ¬URIÒì³£µÈÎÊÌâ¾ùÎÈ¶¨£¬²»Ó°ÏìÖ÷½ø³ÌµÄhttp¿ªÆô¡£
+å¤šçº¿ç¨‹å¤„ç†ã€sdmçš„å›žè¿žURIå¼‚å¸¸ç­‰é—®é¢˜å‡ç¨³å®šï¼Œä¸å½±å“ä¸»è¿›ç¨‹çš„httpå¼€å¯ã€‚
 
 ![](images/mdmd2022-09-05-17-22-34.png)
 
 # TODO
 
-- [x] ÓÅ»¯tomlÖÐµÄ¹æÔòÃüÃû£¬Ê¹µÃsdm½øÐÐÍ³¼ÆÊ±¿ÉÒÔÇø±ð´óÀàÍ³¼ÆÓëÏêÏ¸Í³¼ÆÄ£Ê½
-- [x] Òì³£´¦Àí£¬Èç¹ûÓöµ½ÀàËÆsca.zipµÄÕâÀàÎÄ¼þ£¬É¨ÃèÊ±³¤¹ýÓÚ³¤
-- [x] ½â¾ögit log É¨ÃèÎÊÌâ£º·¢ÏÖ³ÌÐò±¾ÉíÊ¹ÓÃgitÉ¨Ãè£¬¸ÃÎÊÌâºÍÈÎöÎÖ®Ç°ÒÅÁôÁË½Ï³¤Ê±¼ä£¬µ¥´¿ÊÇÒòÎªÃ»ÓÐ°²×°git£¬ÒÑ½â¾ö¡£
+- [x] ä¼˜åŒ–tomlä¸­çš„è§„åˆ™å‘½åï¼Œä½¿å¾—sdmè¿›è¡Œç»Ÿè®¡æ—¶å¯ä»¥åŒºåˆ«å¤§ç±»ç»Ÿè®¡ä¸Žè¯¦ç»†ç»Ÿè®¡æ¨¡å¼
+- [x] å¼‚å¸¸å¤„ç†ï¼Œå¦‚æžœé‡åˆ°ç±»ä¼¼sca.zipçš„è¿™ç±»æ–‡ä»¶ï¼Œæ‰«ææ—¶é•¿è¿‡äºŽé•¿
+- [x] è§£å†³git log æ‰«æé—®é¢˜ï¼šå‘çŽ°ç¨‹åºæœ¬èº«ä½¿ç”¨gitæ‰«æï¼Œè¯¥é—®é¢˜å’Œä»»é‘«ä¹‹å‰é—ç•™äº†è¾ƒé•¿æ—¶é—´ï¼Œå•çº¯æ˜¯å› ä¸ºæ²¡æœ‰å®‰è£…gitï¼Œå·²è§£å†³ã€‚
 
 
-
-# ±³¾°
-
-2022-11-16 ¿ªÊ¼ÔÚdockerÖÐÒþ²Ø¹æÔòÎÄ¼þ£¬È«ÃæÏû³ýSD±êÊ¶£¬ÒÆ³ýµ¥¶ÀµÄ´ò°üÄ¿Â¼ÏîÄ¿£¬ÒÆ¶¯µ½±¾ÏîÄ¿ÖÐ¡£
-
-SecretDetection 2022-11-2ÒªÇó´ò°üÆ¾Ö¤¼ì²â³ÌÐò
-
-2022/10/10 ÒÀÕÕÎÂº£ÁÖÒªÇó¸üÐÂÏÂ²¿ÊðÎÄµµ
-
-2022.9.5 »ù±¾Íê±ÏSD Docker
-
-8.31 ±´×ÜÒªÇóSD½øÐÐdocker»¯
-
-8.18-8.30 ÔÚ¹¤ÉÌÒøÐÐ½øÐÐÁËÓ²±àÂëµÄ·þÎñ
-
-2023.3.17
-
-²ß»®ÐÂÒ»°æSD£¬Ê¹ÓÃ×Ô¶¯»ú£¬Ê¶±ðÃô¸ÐÊý¾Ý£¬½µµÍÎó±¨£¬Ôö´ó¶ÌÃÜÂëÊ¶±ðÄÜÁ¦¡£
 
 
 
